@@ -54,3 +54,38 @@ class Book(models.Model):
 #     cupboardno=models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(24)])
 #     rackno=models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(4)])
 #     position=models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(9)])
+
+class ActiveBooks(models.Model):
+    book=models.ForeignKey(Book, on_delete=models.CASCADE, related_name='book', blank=True, null=True)
+    date_of_issue=models.DateField(default=datetime.date.today())
+    date_of_return=models.DateField(default=datetime.date.today())
+    due_date=models.DateField(default=datetime.date.today())
+    max_date_of_reserve=models.DateField(default=datetime.date.today())
+    def __str__(self):
+        return self.book
+class User(models.Model):
+
+    UG=1
+    PG=2
+    RS=3
+    FACULTY=4
+    TYPES=(
+        (UG, 'Undergraduate Student'),
+        (PG, 'Postgraduate Student'),
+        (RS, 'Research Scholar'),
+        (FACULTY, 'Faculty Member'),
+    )
+    name=models.CharField(max_length=100)
+    code=models.CharField(max_length=9)
+    email=models.EmailField(unique=True)
+    username=models.CharField(max_length=20)
+    password=models.CharField(max_length=12)
+    notification=models.CharField(max_length=1000)
+    type=models.PositiveSmallIntegerField(choices=TYPES, blank=True, null=True, default=0)
+    max_books=models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(10)])
+    active_no=models.IntegerField(default=0)#, validators=[MinValueValidator(0), MaxValueValidator(max_books)])
+    reserve_no=models.IntegerField(default=0)#, validators=[MinValueValidator(0), MaxValueValidator(max_books)])
+    active_books=models.ForeignKey(Book, on_delete=models.CASCADE, related_name='active_books', blank=True, null=True)
+    reserve_books=models.ForeignKey(Book, on_delete=models.CASCADE, related_name='reserve_books', blank=True, null=True)
+    def __str__(self):
+        return self.name
