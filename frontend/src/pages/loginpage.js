@@ -1,17 +1,21 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const LoginPage = () => {
     const [userType, setUserType] = useState('user');
     const [userId, setUserId] = useState('');
     const [password, setPassword] = useState('');
 
+    const validateUser = (userType, userId, password) => {
+        // Assuming you have a function to validate the userType and userId
+        return (userId === 'admin' && password === 'password');
+    }
+
     const handleLogin = () => {
         // Handle login logic here
         if(userType && userId) {
             // Assuming you have a function to validate the userType and userId
-            if(validateUser(userType, userId)) {
-            // Assuming you have a function to navigate to another page
-            navigateToPage('/homepage');
+            if(validateUser(userType, userId, password)) {
             } else {
             console.log('Invalid userType or userId');
             }
@@ -30,7 +34,7 @@ const LoginPage = () => {
             </select>
             <input type="text" placeholder="User ID" onChange={(e) => setUserId(e.target.value)} />
             <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
-            <button onClick={handleLogin}>Login</button>
+            <button onClick={handleLogin}><Link to='/search'>Login</Link></button>
         </div>
     );
 };

@@ -1,24 +1,15 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-function HomePage1() {
-    const history = useHistory();
-
-    const handleSearchBooks = () => {
-        history.push('/search-books');
-    };
-
-    const handleLogin = () => {
-        history.push('/loginpage');
-    };
+function Home() {
 
     return (
         <div>
             <h1>Welcome to our website!</h1>
-            <button onClick={handleSearchBooks}>Search for Books</button>
-            <button onClick={handleLogin}>Login</button>
+            <div><Link to ='/search'>Search for Books</Link></div>
+            <div><Link to ='/login'>Login</Link></div>
         </div>
     );
 }
 
-export default HomePage1;
+export default Home;
