@@ -4,14 +4,13 @@ import {
   Route,
   Link
 } from 'react-router-dom';
-
-import Home from './pages/homepage';
+import Search from './searchPage';
 
 import React from "react";
 
 function App() {
   return (
-    <Home />
+    <Search />
   );
 }
 
