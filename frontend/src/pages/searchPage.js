@@ -1,17 +1,35 @@
 import React, { useState } from 'react';
+import Books from '../components/BookList';
 
 const Search = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedOption, setSelectedOption] = useState('name');
   const [selectedCategory, setSelectedCategory] = useState(1); // Default to Adventure
+  const [searchResults, setSearchResults] = useState([]);
 
-  const handleSearch = (e) => {
+  const handleSearch = async (e) => {
     e.preventDefault();
-    // Use the selectedOption, searchTerm, and selectedCategory as needed
-    console.log(`Searching for ${searchTerm} in ${selectedOption} - Category: ${selectedCategory}`);
+
+    // Construct the URL based on the selected option
+    let url;
+    if (selectedOption === 'category') {
+      url = `http://localhost:8000/api/books/category/${selectedCategory}`;
+    } else if (selectedOption === 'author') {
+      url = `http://localhost:8000/api/books/author/${searchTerm}`;
+    } else {
+      url = `http://localhost:8000/api/books/${searchTerm}`;
+    }
+
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      setSearchResults(data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
   };
 
-  const renderAdditionalField = () => {
+    const renderAdditionalField = () => {
     if (selectedOption === 'category') {
       // Render another dropdown for categories
       return (
@@ -57,14 +75,20 @@ const Search = () => {
           <option value="name">Name</option>
           <option value="title">Title</option>
           <option value="category">Category</option>
+          <option value="author">Author</option>
         </select>
 
         {renderAdditionalField()}
 
         <button type="submit">Search</button>
       </form>
+
+      <div>
+        <Books books={searchResults} />
+      </div>
     </div>
   );
 };
 
 export default Search;
+
