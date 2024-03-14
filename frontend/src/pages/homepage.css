@@ -1,5 +1,4 @@
-/* Reset some basic elements */
-/* Center title and links */
+
 body {
     background-image: url('../back1.jpg');
     background-size: cover;
@@ -14,15 +13,69 @@ h1 {
     /* border-bottom: #e8491d 3px solid; */
 }   
 div.link {
+    text-decoration: none;
+    margin-left: 600px;
+    margin-right: 600px;
+    padding: 10px 20px;
+    position: center;
+    text-align: center;
+    text-shadow: #dc810a 1px 1px 1px;  
+    color: #ffffff;
+    background-color: #dc810a;
+    border-radius: 5px;
+}
+div.search {
     
     margin-left: 600px;
     margin-right: 600px;
     padding: 10px 20px;
     position: center;
     text-align: center;
-    text-shadow: #dc810a 1px 1px 1px;
-    text-decoration: none;
     color: #ffffff;
-    background-color: #dc810a;
-    border-radius: 5px;
+    font-size: xx-large;
+}
+button {
+    padding: 15px 25px;
+    /* font-size: 50px; */
+    text-align: center;
+    cursor: pointer;
+    outline: none;
+    color: #db0a0a;
+    background-color: #ffa600;
+    border: none;
+    border-radius: 15px;
+    /* box-shadow: 0 9px #999; */
+}
+
+button:hover {background-color: #ff9100}
+
+button:active {
+    background-color: #ffa600;
+    /* box-shadow: 0 5px #666; */
+    transform: translateY(4px);
+}
+select {
+
+    padding: 15px 25px;
+    /* font-size: 50px; */
+    text-align: center;
+    cursor: pointer;
+    outline: none;
+    color: #db0a0a;
+    background-color: #ffa600;
+    border: none;
+    border-radius: 15px;
+    /* box-shadow: 0 9px #999; */
+}
+form {
+    padding: 15px 25px;
+    /* font-size: 50px; */
+    text-align: center;
+    cursor: pointer;
+    outline: none;
+    color: #db0a0a;
+    background-color: #ffa600;
+    border: none;
+    border-radius: 15px;
+    /* box-shadow: 0 9px #999; */
 }

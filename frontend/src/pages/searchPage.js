@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import './homepage.css';
 const Search = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedOption, setSelectedOption] = useState('name');
