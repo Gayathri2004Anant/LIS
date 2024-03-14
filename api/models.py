@@ -9,6 +9,23 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 import datetime
 
+class AllotISBN(models.Model):
+    lastcupboard=models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(24)])
+    lastrack=models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(4)])
+    lastposn=models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(9)])
+
+    def __str__(self):
+        return self.lastcupboard
+
+class ISBN(models.Model):
+    cupboardno=models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(24)])
+    rackno=models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(4)])
+    position=models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(9)])
+    track=models.ForeignKey(AllotISBN, on_delete=models.CASCADE, related_name='track', blank=True, null=True)
+
+    def __str__(self):
+        return self.cupboardno
+
 # Create your models here.
 class Book(models.Model):
 
@@ -39,8 +56,8 @@ class Book(models.Model):
     title=models.CharField(max_length=200)
     author=models.CharField(max_length=100)
     publisher=models.CharField(max_length=100)
-    edition=models.CharField(max_length=50)
-    year=models.CharField(max_length=4)
+    edition=models.IntegerField(default=0, validators=[MinValueValidator(1), MaxValueValidator(10000)])
+    year=models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(2101)])
     category=models.PositiveSmallIntegerField(choices=CATEGORIES, blank=True, null=True, default=0)
     # #ISBN[key][value-0/1]
     last_issue_date=models.DateField(default=datetime.date.today())
@@ -69,11 +86,13 @@ class User(models.Model):
     PG=2
     RS=3
     FACULTY=4
+    ADMIN=5
     TYPES=(
         (UG, 'Undergraduate Student'),
         (PG, 'Postgraduate Student'),
         (RS, 'Research Scholar'),
         (FACULTY, 'Faculty Member'),
+        (ADMIN, 'Administrator'),
     )
     name=models.CharField(max_length=100)
     code=models.CharField(max_length=9)
@@ -82,10 +101,19 @@ class User(models.Model):
     password=models.CharField(max_length=12)
     notification=models.CharField(max_length=1000)
     type=models.PositiveSmallIntegerField(choices=TYPES, blank=True, null=True, default=0)
-    max_books=models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(10)])
     active_no=models.IntegerField(default=0)#, validators=[MinValueValidator(0), MaxValueValidator(max_books)])
     reserve_no=models.IntegerField(default=0)#, validators=[MinValueValidator(0), MaxValueValidator(max_books)])
+    max_books=models.IntegerField(default=0, validators=[MinValueValidator(2), MaxValueValidator(10)])
     active_books=models.ForeignKey(Book, on_delete=models.CASCADE, related_name='active_books', blank=True, null=True)
     reserve_books=models.ForeignKey(Book, on_delete=models.CASCADE, related_name='reserve_books', blank=True, null=True)
+    class Meta():
+        if type==1:
+            max_books=2
+        if type==2:
+            max_books=4
+        if type==3:
+            max_books=6
+        if type==4:
+            max_books=10
     def __str__(self):
         return self.name
