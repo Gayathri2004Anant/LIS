@@ -2,7 +2,9 @@ import Home from './pages/homepage';
 import Search from './pages/searchPage';
 import LoginPage from './pages/loginpage';
 import BookPage from './pages/bookPage';
-
+import UserLogin from './pages/userlogin';
+import AdminLogin from './pages/adminlogin';
+import UserStatus from './pages/userstatus';
 import {
   BrowserRouter as Router,
   Switch,
@@ -18,12 +20,20 @@ function App() {
     <div className="app">
       <Router>
         <Switch>
-
-        <Route path="/login">
+          <Route path="/login">
             <LoginPage />
           </Route>
           <Route path="/search">
             <Search />
+          </Route>
+          <Route path="/userlogin">
+            <UserLogin />
+          </Route>
+          <Route path="/userstatus">
+            <UserStatus />
+          </Route>
+          <Route path="/adminlogin">
+            <AdminLogin />
           </Route>
           <Route path="/book/:id">
             <BookPage/>

@@ -16,6 +16,11 @@ const LoginPage = () => {
         if(userType && userId) {
             // Assuming you have a function to validate the userType and userId
             if(validateUser(userType, userId, password)) {
+                if(userType === 'user') {
+                    return <Link to='/userlogin'>User Login</Link>
+                } else if(userType === 'admin') {
+                    return <Link to='/adminlogin'>Admin Login</Link>
+                }
             } else {
             console.log('Invalid userType or userId');
             }
@@ -34,7 +39,7 @@ const LoginPage = () => {
             </select>
             <input type="text" placeholder="User ID" onChange={(e) => setUserId(e.target.value)} />
             <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
-            <button onClick={handleLogin}><Link to='/search'>Login</Link></button>
+            <button onClick={handleLogin}><Link to='/userlogin'>Login</Link></button>
         </div>
     );
 };
