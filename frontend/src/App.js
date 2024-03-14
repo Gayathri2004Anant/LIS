@@ -2,6 +2,8 @@ import Home from './pages/homepage';
 import Search from './pages/searchPage';
 import LoginPage from './pages/loginpage';
 import BookPage from './pages/bookPage';
+import "./styles/searchStyles.css";
+import "./styles/bookStyles.css";
 
 import {
   BrowserRouter as Router,

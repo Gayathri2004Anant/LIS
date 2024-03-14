@@ -33,6 +33,7 @@ const Search = () => {
     if (selectedOption === 'category') {
       // Render another dropdown for categories
       return (
+        <div className="custom-select">
         <select
           value={selectedCategory}
           onChange={(e) => setSelectedCategory(parseInt(e.target.value))}
@@ -49,6 +50,7 @@ const Search = () => {
           <option value={10}>Science</option>
           <option value={11}>Mechanics</option>
         </select>
+        </div>
       );
     } else {
       // Render a text field for author or title
@@ -64,7 +66,12 @@ const Search = () => {
 
   return (
     <div className="search">
+      <div className="halfScreen">
+        <div className="searchWrapper">
+      <h1>EXPLORE</h1>
+      <h3>We have a wide range of books with 10+ categories. Go ahead and hit the search bar</h3>
       <form onSubmit={handleSearch}>
+        <div className="custom-select">
         <select
           value={selectedOption}
           onChange={(e) => {
@@ -72,19 +79,24 @@ const Search = () => {
             setSelectedCategory(1); // Reset to Adventure
           }}
         >
-          <option value="name">Name</option>
           <option value="title">Title</option>
           <option value="category">Category</option>
           <option value="author">Author</option>
         </select>
+        </div>
 
         {renderAdditionalField()}
 
         <button type="submit">Search</button>
       </form>
-
-      <div>
+      </div>
+      </div>
+      <div className="restOfScreen">
+      <h2 className='headerSearch'>Your search results turn up here!</h2>
+      <div className='BookSearchList'>
+        
         <Books books={searchResults} />
+      </div>
       </div>
     </div>
   );
