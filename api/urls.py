@@ -12,6 +12,8 @@ urlpatterns=[
     path('users/code/<str:ucode>', views.getUserCode),
     path('users/reserve_n/<int:reserve>', views.getUserReserve),
     path('users/login/<str:username>/<str:passwd>', views.login),
-    path('adm/books/add/<str:tit>/<str:auth>/<str:pub>/<int:ed>/<int:yr>', views.addbook),
-    path('adm/books/remove/<str:tit>/<str:auth>/<str:pub>/<int:ed>/<int:yr>', views.removebook),
+    path('adm/books/add',views.addBook),
+    # path('adm/books/add/<str:tit>/<str:auth>/<str:pub>/<int:ed>/<int:yr>', views.addbook),
+    # path('adm/books/remove/<str:tit>/<str:auth>/<str:pub>/<int:ed>/<int:yr>', views.removebook),
+    path('adm/books/delete/<int:pk>', views.deleteBook),
 ]

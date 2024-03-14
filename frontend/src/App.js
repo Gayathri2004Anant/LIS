@@ -2,8 +2,14 @@ import Home from './pages/homepage';
 import Search from './pages/searchPage';
 import LoginPage from './pages/loginpage';
 import BookPage from './pages/bookPage';
+import AdminPage from './pages/adminPage';
+import BookHome from './pages/bookHome';
+import UserHome from './pages/userHome';
 import "./styles/searchStyles.css";
 import "./styles/bookStyles.css";
+import "./styles/adminPage.css";
+import "./styles/userHome.css";
+import "./styles/bookHome.css";
 
 import {
   BrowserRouter as Router,
@@ -20,7 +26,15 @@ function App() {
     <div className="app">
       <Router>
         <Switch>
-
+        <Route path="/user-home">
+          <UserHome />
+        </Route>
+        <Route path="/book-home">
+          <BookHome />
+        </Route>
+        <Route path="/admin">
+          <AdminPage />
+        </Route>
         <Route path="/login">
             <LoginPage />
           </Route>

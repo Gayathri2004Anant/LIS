@@ -78,25 +78,41 @@ def login(request, username, passwd):
             users=users.filter(password=passwd)
             userSerializer=UserSerializer(users, many=True)
     return Response(userSerializer.data)
-@api_view(['GET'])
-def addbook(request, tit, auth, pub, ed, yr):
-    bookc=Book.objects.all()
-    bookcSerializer=BookSerializer(bookc, many=True)
-    b=Book(title=tit, author=auth, publisher=pub, edition=ed, year=yr, category=1)
-    if Book.objecjts.filter(title=tit, author=auth, publisher=pub, edition=ed, year=yr):
-        return Response(bookcSerializer.data)
-    else:
-        b.save()
-        books=Book.objects.all()
-        bookSerializer=BookSerializer(books, many=True)
-        print("Succesfully Added!!\n")
-        return Response(bookSerializer.data)
-@api_view(['GET'])
-def removebook(request, tit, auth, pub, ed, yr):
-    Book.objects.filter(title=tit, author=auth, publisher=pub, edition=ed, year=yr).delete()
-    books=Book.objects.all()
-    bookSerializer=BookSerializer(books, many=True)
-    return Response(bookSerializer.data)
+
+# @api_view(['GET'])
+# def addbook(request, tit, auth, pub, ed, yr):
+#     bookc=Book.objects.all()
+#     bookcSerializer=BookSerializer(bookc, many=True)
+#     b=Book(title=tit, author=auth, publisher=pub, edition=ed, year=yr, category=1)
+#     if Book.objecjts.filter(title=tit, author=auth, publisher=pub, edition=ed, year=yr):
+#         return Response(bookcSerializer.data)
+#     else:
+#         b.save()
+#         books=Book.objects.all()
+#         bookSerializer=BookSerializer(books, many=True)
+#         print("Succesfully Added!!\n")
+#         return Response(bookSerializer.data)    
+# @api_view(['GET'])
+# def removebook(request, tit, auth, pub, ed, yr):
+#     Book.objects.filter(title=tit, author=auth, publisher=pub, edition=ed, year=yr).delete()
+#     books=Book.objects.all()
+#     bookSerializer=BookSerializer(books, many=True)
+#     return Response(bookSerializer.data)
+
 @api_view(['GET'])
 def modifybook(request, tit, auth, pub, ed, yr):
     book=Book.objects.get(title=tit, author=auth, publisher=pub, edition=ed, year=yr)
+
+@api_view(['POST'])
+def addBook(request):
+    data = request.data
+    bookSerializer = BookSerializer(data=data)
+    if bookSerializer.is_valid():
+        bookSerializer.save()
+    return Response(bookSerializer.data)
+
+@api_view(['DELETE'])
+def deleteBook(request, pk):
+    book = Book.objects.get(id = pk)
+    book.delete()
+    return Response('Book was deleted')
