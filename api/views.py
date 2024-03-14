@@ -83,7 +83,7 @@ def addbook(request, tit, auth, pub, ed, yr):
     bookc=Book.objects.all()
     bookcSerializer=BookSerializer(bookc, many=True)
     b=Book(title=tit, author=auth, publisher=pub, edition=ed, year=yr, category=1)
-    if Book.objects.filter(title=tit, author=auth, publisher=pub, edition=ed, year=yr):
+    if Book.objecjts.filter(title=tit, author=auth, publisher=pub, edition=ed, year=yr):
         return Response(bookcSerializer.data)
     else:
         b.save()
@@ -100,4 +100,3 @@ def removebook(request, tit, auth, pub, ed, yr):
 @api_view(['GET'])
 def modifybook(request, tit, auth, pub, ed, yr):
     book=Book.objects.get(title=tit, author=auth, publisher=pub, edition=ed, year=yr)
-    
