@@ -1,6 +1,7 @@
 import Home from './pages/homepage';
 import Search from './pages/searchPage';
 import LoginPage from './pages/loginpage';
+import BookPage from './pages/bookPage';
 
 import {
   BrowserRouter as Router,
@@ -17,11 +18,15 @@ function App() {
     <div className="app">
       <Router>
         <Switch>
+
         <Route path="/login">
             <LoginPage />
           </Route>
           <Route path="/search">
             <Search />
+          </Route>
+          <Route path="/book/:id">
+            <BookPage/>
           </Route>
           <Route path="/">
             <Home />
