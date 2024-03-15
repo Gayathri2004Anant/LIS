@@ -5,6 +5,7 @@ import BookPage from './pages/bookPage';
 import AdminPage from './pages/adminPage';
 import BookHome from './pages/bookHome';
 import UserHome from './pages/userHome';
+import IssueOrReservePage from './pages/issueOrReserve';
 import "./styles/searchStyles.css";
 import "./styles/bookStyles.css";
 import "./styles/adminPage.css";
@@ -26,6 +27,9 @@ function App() {
     <div className="app">
       <Router>
         <Switch>
+        <Route path="/issue-reserve">
+          <IssueOrReservePage />
+        </Route>
         <Route path="/user-home">
           <UserHome />
         </Route>

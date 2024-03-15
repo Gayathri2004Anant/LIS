@@ -7,8 +7,12 @@ const BookHome = () => {
         <div className="bookHome">
            {/* <h1>Manage Books</h1> */}
            <div className="homeContainer">
-           <AddBook className="left_bh"/>
-              <ViewBook className="right_bh"/>
+            <div className="left_bh">
+           <AddBook/>
+           </div>
+           <div className="right_bh">
+              <ViewBook/>
+              </div>
               </div>
         </div>
      );
