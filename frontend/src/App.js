@@ -4,6 +4,7 @@ import LoginPage from './pages/loginpage';
 import BookPage from './pages/bookPage';
 import "./styles/searchStyles.css";
 import "./styles/bookStyles.css";
+import "./styles/homeStyles.css";
 
 import UserLogin from './pages/userlogin';
 import AdminLogin from './pages/adminlogin';
