@@ -70,33 +70,64 @@ def getUserReserve(request, reserve):
         userSerializer=UserSerializer(users, many=True)
     return Response(userSerializer.data)
 @api_view(['GET'])
-def login(request, username, passwd):
+def login(request, usern, passwd):
     users=User.objects.all()
-    if username is not None:
-        users=users.filter(name=username)
+    if usern is not None:
+        users=users.filter(username=usern)
         if passwd is not None:
             users=users.filter(password=passwd)
             userSerializer=UserSerializer(users, many=True)
     return Response(userSerializer.data)
-@api_view(['GET'])
-def addbook(request, tit, auth, pub, ed, yr):
-    bookc=Book.objects.all()
-    bookcSerializer=BookSerializer(bookc, many=True)
-    b=Book(title=tit, author=auth, publisher=pub, edition=ed, year=yr, category=1)
-    if Book.objecjts.filter(title=tit, author=auth, publisher=pub, edition=ed, year=yr):
-        return Response(bookcSerializer.data)
-    else:
-        b.save()
-        books=Book.objects.all()
-        bookSerializer=BookSerializer(books, many=True)
-        print("Succesfully Added!!\n")
-        return Response(bookSerializer.data)
-@api_view(['GET'])
-def removebook(request, tit, auth, pub, ed, yr):
-    Book.objects.filter(title=tit, author=auth, publisher=pub, edition=ed, year=yr).delete()
-    books=Book.objects.all()
-    bookSerializer=BookSerializer(books, many=True)
+@api_view(['POST'])
+def addBook(request):
+    data=request.data
+    bookSerializer=BookSerializer(data=data)
+    if bookSerializer.is_valid():
+        bookSerializer.save()
     return Response(bookSerializer.data)
+@api_view(['DELETE'])
+def deleteBook(request, pk):
+    book=Book.objects.get(id=pk)
+    book.delete()
+    return Response('Book was deleted')
+@api_view(['POST'])
+def register(request):
+    data=request.data
+    userSerializer=UserSerializer(data=data)
+    if userSerializer.is_valid():
+        userSerializer.save()
+    return Response(userSerializer.data)
+@api_view(['POST'])
+def edituser(request, pk):
+    data=request.data
+    user=User.objects.get(id=pk)
+    userSerializer=UserSerializer(instance=user, data=data)
+    if userSerializer.is_valid():
+        userSerializer.save()
+    return Response(userSerializer.data)
+@api_view(['DELETE'])
+def deleteuser(request, pk):
+    user=User.objects.get(id=pk)
+    user.delete()
+    return Response('User was deleted')
 @api_view(['GET'])
-def modifybook(request, tit, auth, pub, ed, yr):
-    book=Book.objects.get(title=tit, author=auth, publisher=pub, edition=ed, year=yr)
+def issue(request, pk1, pk2):
+    book=Book.objects.get(id=pk1)
+    user=User.objects.get(id=pk2)
+    if book.available & (user.active_no+user.reserve_no)<user.max_books:
+        user.active_books.append(book)
+        user.active_no+=1
+        book.count_available-=1
+        if book.count_available==0:
+            book.available=False
+@api_view(['GET'])
+def reserve(request, pk1, pk2):
+    book=Book.objects.get(id=pk1)
+    user=User.objects.get(id=pk2)
+    if (book.available==False) & (user.active_no+user.reserve_no)<user.max_books:
+        user.reserve_books.append(book)
+        user.active_no+=1
+@api_view(['GET'])
+def addCopy(request, pk):
+    Book.objects.get(id=pk).update(count_available=Book.objects.get(id=pk).count_available+1)
+    return Response('Added a new copy succesfully!')

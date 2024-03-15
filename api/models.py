@@ -61,6 +61,7 @@ class Book(models.Model):
     category=models.PositiveSmallIntegerField(choices=CATEGORIES, blank=True, null=True, default=0)
     # #ISBN[key][value-0/1]
     last_issue_date=models.DateField(default=datetime.date.today())
+    count_available=models.IntegerField(default=0, validators=[MinValueValidator(0)])
     # reserve_users=models.ForeignKey(Users)
     # count_available=0
     available=models.BooleanField(default=1)
@@ -101,9 +102,9 @@ class User(models.Model):
     password=models.CharField(max_length=12)
     notification=models.CharField(max_length=1000)
     type=models.PositiveSmallIntegerField(choices=TYPES, blank=True, null=True, default=0)
+    max_books=models.IntegerField(default=0, validators=[MinValueValidator(2), MaxValueValidator(10)])
     active_no=models.IntegerField(default=0)#, validators=[MinValueValidator(0), MaxValueValidator(max_books)])
     reserve_no=models.IntegerField(default=0)#, validators=[MinValueValidator(0), MaxValueValidator(max_books)])
-    max_books=models.IntegerField(default=0, validators=[MinValueValidator(2), MaxValueValidator(10)])
     active_books=models.ForeignKey(Book, on_delete=models.CASCADE, related_name='active_books', blank=True, null=True)
     reserve_books=models.ForeignKey(Book, on_delete=models.CASCADE, related_name='reserve_books', blank=True, null=True)
     class Meta():
