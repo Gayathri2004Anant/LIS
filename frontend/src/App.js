@@ -10,7 +10,9 @@ import "./styles/bookStyles.css";
 import "./styles/adminPage.css";
 import "./styles/userHome.css";
 import "./styles/bookHome.css";
-import "./styles/homeStyles.css";
+// import "./styles/homeStyles.css";
+import "./styles/homepage1.css";
+import "./styles/loginPage.css";
 
 import UserLogin from './pages/userlogin';
 import AdminLogin from './pages/adminlogin';

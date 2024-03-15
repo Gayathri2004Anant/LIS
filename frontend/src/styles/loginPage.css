@@ -1,0 +1,81 @@
+/* loginPage.css */
+.loginfull {
+    display: flex;
+    flex-direction: row;
+    flex:1;
+    height: 100vh;
+    background-image: url('../ankimg/b3.jpg');
+    background-size: cover;
+
+}
+.half1{
+    width:50%;
+    height:100%;
+    display: flex;
+    flex:1;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.half2{
+    width:50%;
+    height:100%;
+}
+.LoginPage {
+    margin-top: 10%;
+    left: 10px;
+    height: 10%;
+    color: fff;
+    letter-spacing: 3px;
+    font-size: x-large;
+}
+.selectbox
+{
+    width: 20%;
+    padding: 10px;
+    margin: 30px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    color: fff;
+    letter-spacing: 3px;
+    font-size: x-large;
+}
+.textbox
+{
+    width: 20%;
+    padding: 10px;
+    margin: 30px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    color: fff;
+    letter-spacing: 3px;
+    font-size: x-large;
+}
+.password{
+    width: 20%;
+    padding: 10px;
+    margin: 30px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    letter-spacing: 3px;
+    font-size: x-large;
+
+}
+.loginbutton{
+    width: 15%;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    color: #fff;
+    background-color: antiquewhite;
+    letter-spacing: 3px;
+    font-size: x-large;
+    cursor: pointer;
+}
+.underline1{
+    text-decoration: none;
+    color: fff;
+    letter-spacing: 3px;
+    font-size: x-large;
+
+}

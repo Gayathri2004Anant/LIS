@@ -31,15 +31,18 @@ const LoginPage = () => {
     };
 
     return (
-        <div>
-            <h2>Login Page</h2>
-            <select onChange={(e) => setUserType(e.target.value)}>
-                <option value="user">User</option>
-                <option value="admin">Admin</option>
-            </select>
-            <input type="text" placeholder="User ID" onChange={(e) => setUserId(e.target.value)} />
-            <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
-            <button onClick={handleLogin}><Link to='/search'>Login</Link></button>
+        <div className='loginfull'>
+            <div className='half1'> 
+                <h2 className='LoginPage'>Login Page</h2>
+                <select className='selectbox' onChange={(e) => setUserType(e.target.value)}>
+                    <option value="user">User</option>
+                    <option value="admin">Admin</option>
+                </select>
+                <input className='textbox' type="text" placeholder="User ID" onChange={(e) => setUserId(e.target.value)} />
+                <input className='password' type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
+                <button className='loginbutton' onClick={handleLogin}><Link className='underline1' to='/search'>Login</Link></button>
+            </div>
+            <div className='half2'></div>
         </div>
     );
 };
