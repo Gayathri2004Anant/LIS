@@ -39,7 +39,7 @@ const LoginPage = () => {
             </select>
             <input type="text" placeholder="User ID" onChange={(e) => setUserId(e.target.value)} />
             <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
-            <button onClick={handleLogin}><Link to='/userlogin'>Login</Link></button>
+            <button onClick={handleLogin}><Link to='/search'>Login</Link></button>
         </div>
     );
 };
