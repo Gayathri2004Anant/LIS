@@ -1,4 +1,5 @@
 import {Link} from 'react-router-dom';
+import "../styles/UserDetails.css";
 const UserDetails = ({user}) => {
     const url=`/userloginstatus/${user.code}`;
     console.log(user, "user");
@@ -15,10 +16,9 @@ const UserDetails = ({user}) => {
                 <h3>Code Number: {user.code}</h3>
                 <h3>Email: {user.email}</h3>
             </div>
-            <div><Link to ='/search'>Back to Search</Link></div>
-                <button className='statusbutton' > <Link to ={url}>
-                Status of User
-                </Link></button>
+            <div><button className='searchbutton'><Link to ='/search' className='underline'>Back to Search</Link></button></div>
+                <button className='statusbutton' > <Link to ={url} className='underline'>
+                User Status </Link></button>
             </div>
             </div>
         </div>

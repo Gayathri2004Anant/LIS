@@ -1,41 +1,50 @@
 import {Link} from 'react-router-dom';
+import "../styles/UserDetails.css";
 const StatusUserDetails = ({user}) => {
     console.log(user.active_books, "user");
     return ( 
-        <div className="userdetailspage">
-            <div className="userleftpage">
+        <div className="userfullpage">
+            <div className="notification">
+                <button className='notifications'><p className='textnote'>Notifications</p></button>
+                <p className='texts'> {user.notification}</p>
+            </div>
+        <div className="userstatusdetailspage">
+            <div className="userstatusleftpage">
             <div>
-        <div className="user">
-            <div className="userWrapper">
-                <div className="userContent">
-            <h2>{user.name}</h2>
+        <div className="userstatus">
+            <div className="userstatusWrapper">
+                <div className="userstatusContent">
+            <p>{user.name}</p>
             </div>
-                <h3> {user.notification}</h3>
-                <h3>Number of Active Books: {user.active_no}</h3>
-                {/* <h3>Active Books: {user.active_books}</h3> */}
-                <div className="books-list">
-                    <h1>Active Books: </h1>
+                <p>Number of Active Books: {user.active_no}</p>
+                <div className="books-liststatus">
+                    <p>Active Books: </p>
                     {user.active_books.map(id => (
-                        <Link to = {"/book/"+id} key={id}><div className="bookItem">
-                            <h2>{id}</h2>
+                        <button className='searchbutton'>
+                        <Link to = {"/book/"+id} key={id} className='underline'><div className="bookItemstatus">
+                            <p>{id}</p>
                             </div>
                         </Link>
+                        </button>
                     ))}
                 </div>
-                <h3>Number of Reserved Books: {user.reserve_no}</h3>
-                <div className="books-list">
-                    <h1>Reserved Books: </h1>
-                    {user.active_books.map(id => (
-                        <Link to = {"/book/"+id} key={id}><div className="bookItem">
-                            <h2>{id}</h2>
+                <p>Number of Reserved Books: {user.reserve_no}</p>
+                <div className="books-liststatus">
+                    <p>Reserved Books: </p>
+                    {user.reserved_books.map(id => (
+                        <button className='searchbutton'>
+                        <Link to = {"/book/"+id} key={id} className='underline'><div className="bookItemstatus">
+                            <p>{id}</p>
                             </div>
                         </Link>
+                        </button>
                     ))}
                 </div>
             </div>
-            <div><Link to ='/search'>Back to Search</Link></div>
+            <div><button className='searchbutton'><Link to ='/search' className='underline'>Back to Search</Link></button></div>
             </div>
             </div>
+        </div>
         </div>
         </div>
      );
