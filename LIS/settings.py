@@ -27,6 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+POSITION=0
+RACK=0
+CUPBOARD=0
 
 # Application definition
 
