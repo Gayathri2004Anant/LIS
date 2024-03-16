@@ -29,7 +29,12 @@ const UserLoginStatus = () => {
     console.log(user[0]);
 
     return (
-      <StatusUserDetails user={user[0]} />
+        <div className="wrapper">
+        {user.map((usr, index) => (
+        <div key={index} className='userDetails'>
+            <StatusUserDetails user={usr}/>
+        </div>))}
+        </div>
     );
 };
 

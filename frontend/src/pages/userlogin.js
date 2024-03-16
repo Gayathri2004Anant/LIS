@@ -63,10 +63,15 @@ const UserLogin = () => {
         }, [idNumber]);
     console.log(user[0], "user[0].name");
     return (
-        <UserDetails user={user[0]} />
-        // <div>Hello</div>
-        // <h1>{user[0].name}</h1>
-    );
-};
+        <div className="wrapper">
+        {user.map((usr, index) => (
+        <div key={index} className='userDetails'>
+            <UserDetails user={usr}/>
+        </div>))}
+        </div>
+    
+    )
+        };
+
 
 export default UserLogin;
