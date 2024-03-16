@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "api.apps.ApiConfig",
     "rest_framework",
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
@@ -52,6 +53,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
 ]
 
 ROOT_URLCONF = "LIS.urls"
@@ -84,6 +87,8 @@ DATABASES = {
         "NAME": BASE_DIR / "db.sqlite3",
     }
 }
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 
 # Password validation
