@@ -1,37 +1,83 @@
+// import React, { useState, useEffect } from 'react';
+// import { useParams } from 'react-router-dom';
+// import UserDetails from '../components/UserDetails';
+// import "../styles/userlogin.css";
+// import { Divider } from '@material-ui/core';
 
-import React from 'react';
-import { Link } from 'react-router-dom';
+// const UserLogin = () => {
+//     const { idNumber } = useParams();
+//     console.log(idNumber, "idNumber");
+//     const [user,setUser]=useState({
+//         name: "",
+//         code: "",
+//         email: "",
+//     });
+
+//     useEffect(() => {
+//         const getUser = async () => {
+//           try {
+//             let response = await fetch(`http://localhost:8000/api/users/code/${idNumber}`);
+//             let data = await response.json();
+//             // console.log(data);
+//             setUser(data);
+//             console.log(user);
+//             console.log(user.available, "available");
+//           } catch (error) {
+//             console.error("Error fetching user:", error);
+//           }
+//         };
+//         getUser();
+//     }, [idNumber]);
+
+//     return (
+//       <div className="userloginpage">
+//       {/* {user.map((usr,idx)=>{
+//         <div>
+//           <UserDetails user={usr}/>
+//         </div>
+//       }) }     */}
+//       {user.name}
+//       </div>   // <UserDetails user={user} />
+//       );
+// };
+
+// export default UserLogin;
+
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import UserDetails from '../components/UserDetails';
+import "../styles/userlogin.css";
+import { Divider } from '@material-ui/core';
 
 const UserLogin = () => {
-    // Replace these with actual user data
-    const user = {
-        name: 'John Doe',
-        membershipValidity: 'Valid',
-        idNumber: '123456',
-        codeNumber: 'ABC123',
-        email: 'johndoe@example.com',
-        username: 'johndoe',
-        password: 'password'
-    };
+    const { idNumber } = useParams();
+    console.log(idNumber, "idNumber");
+    const [user, setUser] = useState([]);
+
+    useEffect(() => {
+        const getUser = async () => {
+            try {
+                let response = await fetch(`http://localhost:8000/api/users/code/${idNumber}`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                let data = await response.json();
+                setUser(data);
+            } catch (error) {
+                console.error("Error fetching user:", error);
+            }
+        };
+        getUser();
+    }, [idNumber]);
+
+    // Log user outside useEffect to see the updated value
+    console.log(user);
 
     return (
-        <div>
-            <h1>User Login</h1>
-                   <h2>User Details</h2>
-                    <p>Name: {user.name}</p>
-                    <p>Membership Validity: {user.membershipValidity}</p>
-                    <p>ID Number: {user.idNumber}</p>
-                    <p>Code Number: {user.codeNumber}</p>
-                    <p>Email: {user.email}</p>
-                    <p>Username: {user.username}</p>
-                    <p>Password: {user.password}</p>
-                    <Link to='/search'>
-                        Search for Books
-                    </Link>
-                    <Link to='/userstatus'>
-                        Status of Books
-                    </Link>
-        </div>
+        <div className="userloginpage">
+            {user&&user.name}
+          
+        </div>   // <UserDetails user={user} />
     );
 };
 

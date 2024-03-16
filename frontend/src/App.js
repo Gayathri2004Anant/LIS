@@ -16,7 +16,6 @@ import "./styles/homepage1.css";
 import "./styles/loginPage.css";
 
 import UserLogin from './pages/userlogin';
-import AdminLogin from './pages/adminlogin';
 import UserStatus from './pages/userstatus';
 import {
   BrowserRouter as Router,
@@ -52,14 +51,11 @@ function App() {
           <Route path="/search">
             <Search />
           </Route>
-          <Route path="/userlogin">
+          <Route path="/userlogin/:idNumber">
             <UserLogin />
           </Route>
           <Route path="/userstatus">
             <UserStatus />
-          </Route>
-          <Route path="/adminlogin">
-            <AdminLogin />
           </Route>
           <Route path="/book/:id">
             <BookPage/>
