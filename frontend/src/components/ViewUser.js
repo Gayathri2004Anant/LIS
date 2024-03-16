@@ -34,7 +34,9 @@ const ViewUser = () => {
     };
 
     return (
-        <div>
+        <div className='viewBook'>
+            <h2>Search/ Delete</h2>
+            <div className="searchWrapperLight">
             <input
                 type="text"
                 placeholder="Enter user code"
@@ -45,15 +47,32 @@ const ViewUser = () => {
             {userData && (
             <div className="wrapper">
                 {userData.map((user, index) => (
-                <div key={index}>
-                    <h2>{user.name}</h2>
-                    <p>{user.code}</p>
+                <div key={index} className='userDetails'>
+                    <div className="user-wrappe">
+                    <h3>User Info</h3>
+                    <p>Name: {user.name}</p>
+                    <p>Code: {user.code}</p>
+                    <p>Email: {user.email}</p>
+                    <p>Username: {user.username}</p>
+                    <p>Password: {user.password}</p>
+                    <p>Notification: {user.notification}</p>
+                    <p>Type: {(user.type === 1 && "UG") || (user.type === 2 && "PG" || (user.type === 3) && "RS" || (user.type === 4) && "Faculty")}</p>
+                    <p>Max Books: {user.max_books}</p>
+                    <p>Active No: {user.active_no}</p>
+                    <p>Reserve No: {user.reserve_no}</p>
+                    <p>Fine: {user.fine}</p>
+                    <p>Valid Till: {user.valid_till}</p>
+                    <p>Active Books: {user.active_books}</p>
+                    <p>Reserved Books: {user.reserved_books}</p>
+                </div>
                 </div>
                 ))}
-                <button className="delete" onClick={() => deleteUser(userData.id)}>Delete</button>
+                <button className="delete" onClick={() => {console.log(userData[0].id);deleteUser(userData[0].id);}}>Delete</button>
+                
             </div>
+            
             )}
-            <Link to = "/issue-reserve"><h3>Issue/Return</h3></Link>
+        </div>
         </div>
     );
 };

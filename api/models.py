@@ -6,27 +6,27 @@ from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.utils import timezone
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.conf import settings
 
 import datetime
 
-class AllotISBN(models.Model):
-    lastcupboard=models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(24)])
-    lastrack=models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(4)])
-    lastposn=models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(9)])
+# class AllotISBN(models.Model):
+#     lastcupboard=models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(24)])
+#     lastrack=models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(4)])
+#     lastposn=models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(9)])
 
-    def __str__(self):
-        return self.lastcupboard
+#     def __str__(self):
+#         return self.lastcupboard
+# class ISBN(models.Model):
+#     cupboardno=models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(24)])
+#     rackno=models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(4)])
+#     position=models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(9)])
+#     track=models.ForeignKey(AllotISBN, on_delete=models.CASCADE, related_name='track', blank=True, null=True)
 
-class ISBN(models.Model):
-    cupboardno=models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(24)])
-    rackno=models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(4)])
-    position=models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(9)])
-    track=models.ForeignKey(AllotISBN, on_delete=models.CASCADE, related_name='track', blank=True, null=True)
+#     def __str__(self):
+#         return self.cupboardno
 
-    def __str__(self):
-        return self.cupboardno
-
-# Create your models here.
+# Create your models here..
 class Book(models.Model):
 
     ADVENTURE=1
@@ -56,12 +56,16 @@ class Book(models.Model):
     title=models.CharField(max_length=200)
     author=models.CharField(max_length=100)
     publisher=models.CharField(max_length=100)
+    issued_code=models.CharField(default='0', max_length=9)
+    reserved_code=models.CharField(default='0', max_length=9)
+    # issued_code=models.CharField(max_length=9)
+    # reserve_code=models.CharField(max_length=9)
     edition=models.IntegerField(default=0, validators=[MinValueValidator(1), MaxValueValidator(10000)])
     year=models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(2101)])
     category=models.PositiveSmallIntegerField(choices=CATEGORIES, blank=True, null=True, default=0)
     # #ISBN[key][value-0/1]
     last_issue_date=models.DateField(default=datetime.date.today())
-    # reserve_users=models.ForeignKey(Users)
+    # count_available=models.IntegerField(default=0,d_user validators=[MinValueValidator(0)])
     # count_available=0
     available=models.BooleanField(default=1)
     reserved=models.BooleanField(default=0)
@@ -101,11 +105,17 @@ class User(models.Model):
     password=models.CharField(max_length=12)
     notification=models.CharField(max_length=1000)
     type=models.PositiveSmallIntegerField(choices=TYPES, blank=True, null=True, default=0)
+    max_books=models.IntegerField(default=0, validators=[MinValueValidator(2), MaxValueValidator(10)])
     active_no=models.IntegerField(default=0)#, validators=[MinValueValidator(0), MaxValueValidator(max_books)])
     reserve_no=models.IntegerField(default=0)#, validators=[MinValueValidator(0), MaxValueValidator(max_books)])
-    max_books=models.IntegerField(default=0, validators=[MinValueValidator(2), MaxValueValidator(10)])
-    active_books=models.ForeignKey(Book, on_delete=models.CASCADE, related_name='active_books', blank=True, null=True)
-    reserve_books=models.ForeignKey(Book, on_delete=models.CASCADE, related_name='reserve_books', blank=True, null=True)
+    # active_books=models.ForeignKey(Book, on_delete=models.CASCADE, related_name='active_books', blank=True, null=True)
+    # reserve_books=models.ForeignKey(Book, on_delete=models.CASCADE, related_name='reserve_books', blank=True, null=True)
+    active_books=models.ManyToManyField(Book, blank=True, null=True, related_name='active_books')
+    reserved_books=models.ManyToManyField(Book, blank=True, null=True, related_name='reserved_books')
+    # active_list=[]
+    # reserved_list=[]
+    fine=models.IntegerField(default=0, validators=[MinValueValidator(0)])
+    valid_till=models.DateField(default=datetime.date.today())
     class Meta():
         if type==1:
             max_books=2
