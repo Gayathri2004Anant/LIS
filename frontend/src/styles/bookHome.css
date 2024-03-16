@@ -128,3 +128,32 @@
     background-color:chocolate;
     color:aliceblue;
 }
+
+.ta{
+    width: 100%;
+    height: 200px;
+    color: black;
+    font-size: 20px;
+    margin: 10px 0px;
+    padding: 5px 5px;
+}
+
+.userDetails{
+    background-color: rgb(244, 164, 96, 0.7);
+}
+
+.user-wrappe{
+    color: black;
+    padding: 10px;
+}
+
+.user-wrappe h3{
+    font-size: 30px;
+    margin-bottom: 10px;
+    color: black;
+}
+
+.user-wrappe p{
+    color:black;
+    line-height: 1.5rem;
+}

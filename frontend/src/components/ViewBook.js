@@ -15,6 +15,7 @@ const ViewBook = () => {
         } catch (error) {
             console.error('Error fetching book data:', error);
         }
+        console.log(bookData)
     };
 
     const deleteBook = async (id) => {
@@ -57,6 +58,8 @@ const ViewBook = () => {
                     <p>Last Issue Date: {bookData.last_issue_date}</p>
                     <p>Available: {bookData.available ? 'Yes' : 'No'}</p>
                     <p>Reserved: {bookData.reserved ? 'Yes' : 'No'}</p>
+                    <p>Code of issued user: {bookData.issued_code}</p>
+                    <p>Code of reserved user: {bookData.reserved_code}</p>
                     <button onClick={() => deleteBook(bookData.id)}>Delete</button>
                 </div>
                 
