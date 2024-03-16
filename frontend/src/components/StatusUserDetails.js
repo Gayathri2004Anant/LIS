@@ -1,7 +1,6 @@
 import {Link} from 'react-router-dom';
-const UserDetails = ({user}) => {
-    const url=`/userloginstatus/${user.code}`;
-    console.log(user, "user");
+const StatusUserDetails = ({user}) => {
+
     return ( 
         <div className="userdetailspage">
             <div className="userleftpage">
@@ -11,14 +10,13 @@ const UserDetails = ({user}) => {
                 <div className="userContent">
             <h2>{user.name}</h2>
             </div>
-                <h3>Name: {user.name}</h3>
-                <h3>Code Number: {user.code}</h3>
-                <h3>Email: {user.email}</h3>
+                <h3> {user.notification}</h3>
+                <h3>Number of Active Books: {user.active_no}</h3>
+                <h3>Active Books: {user.active_books}</h3>
+                <h3>Number of Reserved Books: {user.reserve_no}</h3>
+                <h3>Reserved Books: {user.reserve_books}</h3>
             </div>
             <div><Link to ='/search'>Back to Search</Link></div>
-                <button className='statusbutton' > <Link to ={url}>
-                Status of User
-                </Link></button>
             </div>
             </div>
         </div>
@@ -26,4 +24,4 @@ const UserDetails = ({user}) => {
      );
 }
  
-export default UserDetails;
+export default StatusUserDetails;
