@@ -11,11 +11,15 @@ import AddUser from '../components/AddUser';
 import ViewUser from '../components/ViewUser';
 const BookHome = () => {
     return ( 
-        <div className="userHome">
+        <div className="bookHome">
            {/* <h1>Manage Books</h1> */}
            <div className="homeContainer">
-           <AddUser className="left_bh"/>
+            <div className="left_bh">
+           <AddUser/>
+           </div>
+           <div className="right_bh">
               <ViewUser className="right_bh"/>
+              </div>
               </div>
         </div>
      );
