@@ -15,5 +15,5 @@ class UserSerializer(ModelSerializer):
 
 class TransactionSerializer(ModelSerializer):
     class Meta:
-        model=User
+        model=Transaction
         fields='__all__'

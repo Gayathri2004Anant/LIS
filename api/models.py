@@ -86,6 +86,34 @@ class Book(models.Model):
 #     max_date_of_reserve=models.DateField(default=datetime.date.today())
 #     def __str__(self):
 #         return self.book
+    
+class Transaction(models.Model):
+    ISSUE=1
+    RETURN=2
+    RESERVE=3
+    KINDS=(
+        (ISSUE, 'Issue Book'),
+        (RETURN, 'Return Book'),
+        (RESERVE, 'Reserve Book'),
+    )
+    # name=models.CharField(default='0', max_length=10)
+    category=models.PositiveSmallIntegerField(choices=KINDS, blank=True, null=True, default=0)
+    max_date_of_reserve=models.DateField(default=datetime.date.today())
+    issue_date=models.DateField(default=datetime.date.today())
+    due_date=models.DateField(default=datetime.date.today())
+    return_date=models.DateField(default=datetime.date.today())
+    dues=models.IntegerField(default=0, validators=[MinValueValidator(0)])
+    user_code=models.CharField(max_length=9, default='0')
+    book_id=models.IntegerField(default=0)
+    active=models.BooleanField(default=0)
+    def __str__(self):
+        if self.category==1:
+            return 'Issue Book'
+        elif self.category==2:
+            return 'Return Book'
+        elif self.category==3:
+            return 'Reserve Book'
+
 class User(models.Model):
 
     UG=1
@@ -114,6 +142,7 @@ class User(models.Model):
     # reserve_books=models.ForeignKey(Book, on_delete=models.CASCADE, related_name='reserve_books', blank=True, null=True)
     active_books=models.ManyToManyField(Book, blank=True, null=True, related_name='active_books')
     reserved_books=models.ManyToManyField(Book, blank=True, null=True, related_name='reserved_books')
+    transactions=models.ManyToManyField(Transaction, blank=True, null=True, related_name='transactions')
     # active_list=[]
     # reserved_list=[]
     fine=models.IntegerField(default=0, validators=[MinValueValidator(0)])
@@ -130,28 +159,3 @@ class User(models.Model):
     def __str__(self):
         return self.name
     
-class Transaction(models.Model):
-    ISSUE=1
-    RETURN=2
-    RESERVE=3
-    KINDS=(
-        (ISSUE, 'Issue Book'),
-        (RETURN, 'Return Book'),
-        (RESERVE, 'Reserve Book'),
-    )
-    # name=models.CharField(default='0', max_length=10)
-    category=models.PositiveSmallIntegerField(choices=KINDS, blank=True, null=True, default=0)
-    max_date_of_reserve=models.DateField(default=datetime.date.today())
-    issue_date=models.DateField(default=datetime.date.today())
-    due_date=models.DateField(default=datetime.date.today())
-    return_date=models.DateField(default=datetime.date.today())
-    dues=models.IntegerField(default=0, validators=[MinValueValidator(0)])
-    user_code=models.CharField(max_length=9, default='0')
-    book_id=models.IntegerField(default=0)
-    def __str__(self):
-        if self.category==1:
-            return 'Issue Book'
-        elif self.category==2:
-            return 'Return Book'
-        elif self.category==3:
-            return 'Reserve Book'
