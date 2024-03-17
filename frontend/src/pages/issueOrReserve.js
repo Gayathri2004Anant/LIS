@@ -206,6 +206,7 @@ const IssueOrReservePage = () => {
     };
 
     const returnBook = async () => {
+    
         if (userData.length > 0 && userData[0].active_books.includes(bookId)) {
             try {
                 const response = await fetch(`http://localhost:8000/api/adm/return/${bookId}/${userId}`);
@@ -224,7 +225,8 @@ const IssueOrReservePage = () => {
     
 
     const issueBook = async () => {
-        if ((bookData.available === 1 && bookData.reserved === 0)||(userData && (bookData.available === 0 && bookData.reserved_code === userData[0].code))) {
+        console.log(bookData.available, bookData.reserved, bookData.reserved_code, userData[0].code, (bookData.reserved_code === userData[0].code));
+        if ((((userData[0].max_books>userData[0].active_no+userData[0].reserve_no)&&(bookData.available === true) && (bookData.reserved === false))||(userData && ((bookData.available === false) && (bookData.reserved_code === userData[0].code))))) {
             try {
                 const response = await fetch(`http://localhost:8000/api/adm/issue/${bookId}/${userId}`, {
                     method: 'POST',

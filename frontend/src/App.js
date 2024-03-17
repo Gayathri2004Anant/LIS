@@ -7,6 +7,7 @@ import BookHome from './pages/bookHome';
 import UserHome from './pages/userHome';
 import IssueOrReservePage from './pages/issueOrReserve';
 import Transactions from './pages/transaction';
+import ViewDefaulters from './pages/viewDefaulters';
 import "./styles/searchStyles.css";
 import "./styles/bookStyles.css";
 import "./styles/adminPage.css";

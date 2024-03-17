@@ -181,9 +181,9 @@ def issue(request, pk1, pk2):
     if (book.available==False):
         if(book.reserved==True):
             if (user.reserved_books.contains(book)):
-                if(datetime.date.today()<=book.max_reserve_date):
+                if(date.today()<=book.max_reserve_date):
                     user.active_no=user.active_no+1
-                    user.reserved_no=user.reserved_no-1
+                    user.reserve_no=user.reserve_no-1
                     book.reserved=False
                     book.available=False
                     book.issued_code=user.code
@@ -200,8 +200,9 @@ def issue(request, pk1, pk2):
                         MONTHS=6
                     due_dates=issue_dates+relativedelta(months=MONTHS)
                     trans=Transaction(category=1, issue_date=issue_dates, due_date=due_dates, user_code=user.code, book_id=book.ISBN)
-                    transSerializer=TransactionSerializer(trans, many=True)
+                    transSerializer=TransactionSerializer(trans, many=False)
                     trans.save()
+                    book.save()
                     return Response(transSerializer.data)
     return Response(book.available)
 
