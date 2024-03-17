@@ -31,7 +31,7 @@ const UserLoginStatus = () => {
     return (
         <div className="wrapper">
         {user.map((usr, index) => (
-        <div key={index} className='userDetails'>
+        <div key={index} className='userdetails'>
             <StatusUserDetails user={usr}/>
         </div>))}
         </div>

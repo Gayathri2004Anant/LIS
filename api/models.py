@@ -69,6 +69,8 @@ class Book(models.Model):
     # count_available=0
     available=models.BooleanField(default=1)
     reserved=models.BooleanField(default=0)
+    max_reserve_date=models.DateField(default=datetime.date.today())
+    ISBN=models.IntegerField(default=0)
     def __str__(self):
         return self.title
 # class Jugaad:
@@ -76,14 +78,14 @@ class Book(models.Model):
 #     rackno=models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(4)])
 #     position=models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(9)])
 
-class ActiveBooks(models.Model):
-    book=models.ForeignKey(Book, on_delete=models.CASCADE, related_name='book', blank=True, null=True)
-    date_of_issue=models.DateField(default=datetime.date.today())
-    date_of_return=models.DateField(default=datetime.date.today())
-    due_date=models.DateField(default=datetime.date.today())
-    max_date_of_reserve=models.DateField(default=datetime.date.today())
-    def __str__(self):
-        return self.book
+# class ActiveBooks(models.Model):
+#     book=models.ForeignKey(Book, on_delete=models.CASCADE, related_name='book', blank=True, null=True)
+#     date_of_issue=models.DateField(default=datetime.date.today())
+#     date_of_return=models.DateField(default=datetime.date.today())
+#     due_date=models.DateField(default=datetime.date.today())
+#     max_date_of_reserve=models.DateField(default=datetime.date.today())
+#     def __str__(self):
+#         return self.book
 class User(models.Model):
 
     UG=1
@@ -127,3 +129,29 @@ class User(models.Model):
             max_books=10
     def __str__(self):
         return self.name
+    
+class Transaction(models.Model):
+    ISSUE=1
+    RETURN=2
+    RESERVE=3
+    KINDS=(
+        (ISSUE, 'Issue Book'),
+        (RETURN, 'Return Book'),
+        (RESERVE, 'Reserve Book'),
+    )
+    # name=models.CharField(default='0', max_length=10)
+    category=models.PositiveSmallIntegerField(choices=KINDS, blank=True, null=True, default=0)
+    max_date_of_reserve=models.DateField(default=datetime.date.today())
+    issue_date=models.DateField(default=datetime.date.today())
+    due_date=models.DateField(default=datetime.date.today())
+    return_date=models.DateField(default=datetime.date.today())
+    dues=models.IntegerField(default=0, validators=[MinValueValidator(0)])
+    user_code=models.CharField(max_length=9, default='0')
+    book_id=models.IntegerField(default=0)
+    def __str__(self):
+        if self.category==1:
+            return 'Issue Book'
+        elif self.category==2:
+            return 'Return Book'
+        elif self.category==3:
+            return 'Reserve Book'

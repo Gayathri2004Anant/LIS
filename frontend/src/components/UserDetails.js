@@ -16,7 +16,7 @@ const UserDetails = ({user}) => {
                 <h3>Code Number: {user.code}</h3>
                 <h3>Email: {user.email}</h3>
             </div>
-            <div><button className='searchbutton'><Link to ='/search' className='underline'>Back to Search</Link></button></div>
+            <div><button className='searchbutton'><Link to ='/' className='underline'>Back to Home</Link></button></div>
                 <button className='statusbutton' > <Link to ={url} className='underline'>
                 User Status </Link></button>
             </div>

@@ -65,7 +65,8 @@ const UserLogin = () => {
     return (
         <div className="wrapper">
         {user.map((usr, index) => (
-        <div key={index} className='userDetails'>
+        <div key={index} className='userdetails'>
+            {/* <h1>Hello</h1> */}
             <UserDetails user={usr}/>
         </div>))}
         </div>

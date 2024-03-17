@@ -8,11 +8,10 @@ urlpatterns=[
     path('books/category/<int:pk>', views.getCategory),
     path('books/author/<str:search>', views.getAuthor),
     path('users/', views.getUsers),
-    path('users/<int:pk>', views.getUser),
+    path('users/<int:pk>', views.getBook),
     path('users/code/<str:ucode>', views.getUserCode),
     # path('users/reserve_n/<int:reserve>', views.getUserReserve),
     path('users/login/<str:username>/<str:passwd>', views.login),
-
     # path('adm/books/add/<str:tit>/<str:auth>/<str:pub>/<int:ed>/<int:yr>', views.addbook),
     # path('adm/books/remove/<str:tit>/<str:auth>/<str:pub>/<int:ed>/<int:yr>', views.removebook),
     path('adm/books/add', views.addBook),
@@ -21,9 +20,10 @@ urlpatterns=[
     path('adm/users/edit_user/<int:pk>', views.edituser),
     path('adm/users/delete/<int:pk>', views.deleteuser),
     path('adm/issue/<int:pk1>/<int:pk2>', views.issue),
-    path('adm/reserve/<int:pk1>/<int:pk2>', views.reserve),
+    # path('adm/reserve/<int:pk1>/<int:pk2>', views.reserve),
     path('books/titavail/<str:search>', views.getTitAvailable),
     path('books/titreserve/<str:search>', views.getTitReserve),
+    path('books/returnbook/<int:pk1>/<int:pk2>', views.returnbook),
+    path('adm/gennotice/', views.cross),
     # path('adm/addcopy/<int:pk>', views.addCopy),
-
 ]

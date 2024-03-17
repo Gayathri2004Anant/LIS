@@ -1,17 +1,19 @@
-body{
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    background-image: url('../images/book3.jpg');
+.wrapper{
+    width: 100%;
+    height: 100vh;
+}
 
+.userdetails{
+    width: 100%;
+    height: 100vh;
 }
 .userdetailspage{
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-top: 50px;
-    margin-bottom: 50px;
+
+   
 }
 .userleftpage{
     width: 50%;
@@ -44,7 +46,7 @@ body{
     border: none;
     border-radius: 5px;
     margin: 10px 0px;
-    background-color: #4CAF50;
+    background-color: chocolate;
     color: white;
     cursor: pointer;
 }
@@ -55,29 +57,69 @@ body{
     border: none;
     border-radius: 5px;
     margin: 10px 0px;
-    background-color: #f44336;
+    background-color: chocolate;
     color: white;
     cursor: pointer;
 }
 .underline{
     text-decoration: none;
+    /* color: black; */
 }
 
-.fullpage{
+.userfullpage{
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 100%;
     width: 100%;
+    background-image: url('../images/book4.jpg');
+    background-size: cover;
+}
+.notifications{
+    width: 100%;
+    height: 30%;
+    align-items: center;
+    font-size: 20px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    background-image: url('../ankimg/b2.jpg');
+    color: white;
 }
 
+.notifications p{
+    width: 100%;
+    background-color: rgb(0,0,0,0.7);
+}
+
+.notification{
+    width: 100%;
+    padding: 10px;
+    font-size: 20px;
+    border-radius: 5px;
+    margin: 10px 0px;
+    cursor: pointer;
+    background-color: cornsilk;
+}
+.notification p{
+    background-color: cornsilk;
+    color: black;
+}
+.textnote{
+    font-size: 18px;
+}
+.texts{
+    font-size: 14px;
+    text-align: center;
+}
 .userstatusdetailspage{
+    width: 100%;
+    height: 70%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-top: 300px;
+    /* height:40%; */
 }
 .userstatusleftpage{
     width: 50%;
@@ -103,35 +145,10 @@ body{
     align-items: center;
     justify-content: center;
 }
-.textnote{
-    color: white;
-    font-size: 18px;
-    text-decoration: underline;
-}
-.texts{
-    color: white;
-    font-size: 14px;
-    text-align: center;
-}
-.notification{
+
+.userdetailspage{
     width: 100%;
-    padding: 10px;
-    font-size: 20px;
-    border: none;
-    border-radius: 5px;
-    margin: 10px 0px;
-    background-color: #e4ad07;
-    color: white;
-    cursor: pointer;
-}
-.notifications{
-    width: 100%;
-    padding: 10px;
-    font-size: 20px;
-    border: none;
-    border-radius: 5px;
-    margin: 10px 0px;
-    background-color: #e4ad07;
-    color: white;
-    cursor: pointer;
+    height: 100%;
+    background-image: url('../ankimg/b2.jpg');
+    background-size: cover;
 }
