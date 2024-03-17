@@ -23,7 +23,5 @@ urlpatterns=[
     # path('adm/reserve/<int:pk1>/<int:pk2>', views.reserve),
     path('books/titavail/<str:search>', views.getTitAvailable),
     path('books/titreserve/<str:search>', views.getTitReserve),
-    path('books/returnbook/<int:pk1>/<int:pk2>', views.returnbook),
-    path('adm/gennotice/', views.cross),
     # path('adm/addcopy/<int:pk>', views.addCopy),
 ]

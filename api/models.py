@@ -78,14 +78,14 @@ class Book(models.Model):
 #     rackno=models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(4)])
 #     position=models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(9)])
 
-# class ActiveBooks(models.Model):
-#     book=models.ForeignKey(Book, on_delete=models.CASCADE, related_name='book', blank=True, null=True)
-#     date_of_issue=models.DateField(default=datetime.date.today())
-#     date_of_return=models.DateField(default=datetime.date.today())
-#     due_date=models.DateField(default=datetime.date.today())
-#     max_date_of_reserve=models.DateField(default=datetime.date.today())
-#     def __str__(self):
-#         return self.book
+class ActiveBooks(models.Model):
+    book=models.ForeignKey(Book, on_delete=models.CASCADE, related_name='book', blank=True, null=True)
+    date_of_issue=models.DateField(default=datetime.date.today())
+    date_of_return=models.DateField(default=datetime.date.today())
+    due_date=models.DateField(default=datetime.date.today())
+    max_date_of_reserve=models.DateField(default=datetime.date.today())
+    def __str__(self):
+        return self.book
 class User(models.Model):
 
     UG=1
@@ -114,6 +114,7 @@ class User(models.Model):
     # reserve_books=models.ForeignKey(Book, on_delete=models.CASCADE, related_name='reserve_books', blank=True, null=True)
     active_books=models.ManyToManyField(Book, blank=True, null=True, related_name='active_books')
     reserved_books=models.ManyToManyField(Book, blank=True, null=True, related_name='reserved_books')
+    transactions = models.ManyToManyField(Transaction, blank=True, null=True, related_name='transactions')
     # active_list=[]
     # reserved_list=[]
     fine=models.IntegerField(default=0, validators=[MinValueValidator(0)])

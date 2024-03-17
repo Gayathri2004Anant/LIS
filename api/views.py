@@ -50,7 +50,7 @@ def getTitReserve(request, search):
         books=books.filter(title__icontains=search, available=False, reserved=True)
         bookSerializer=BookSerializer(books, many=True)
     return Response(bookSerializer.data)
-api_view(['GET'])
+@api_view(['GET'])
 def getCategory(request, pk):
     # book = Book.objects.get(category = pk)
     # bookSerializer = BookSerializer(book, many=False)
@@ -163,45 +163,6 @@ def issue(request, pk1, pk2):
                 user.active_books.add(book)
                 user.save()
                 book.save()
-                issue_dates=date.today()
-                if user.type==1:
-                    MONTHS=1
-                elif user.type==2:
-                    MONTHS=1
-                elif user.type==3:
-                    MONTHS=3
-                elif user.type==4:
-                    MONTHS=6
-                due_dates=issue_dates+relativedelta(months=MONTHS)
-                trans=Transaction(category=1, issue_date=issue_dates, due_date=due_dates, user_code=user.code, book_id=book.ISBN)
-                transSerializer=TransactionSerializer(trans, many=True)
-                trans.save()
-                return Response(transSerializer.data)
-    if (book.available==False):
-        if(book.reserved==True):
-            if (user.reserved_books.contains(book)):
-                if(datetime.date.today()<=book.max_reserve_date):
-                    user.active_no=user.active_no+1
-                    user.reserved_no=user.reserved_no-1
-                    book.reserved=False
-                    book.available=False
-                    book.issued_code=user.code
-                    user.reserved_books.remove(book)
-                    user.active_books.add(book)
-                    issue_dates=date.today()
-                    if user.type==1:
-                        MONTHS=1
-                    elif user.type==2:
-                        MONTHS=1
-                    elif user.type==3:
-                        MONTHS=3
-                    elif user.type==4:
-                        MONTHS=6
-                    due_dates=issue_dates+relativedelta(months=MONTHS)
-                    trans=Transaction(category=1, issue_date=issue_dates, due_date=due_dates, user_code=user.code, book_id=book.ISBN)
-                    transSerializer=TransactionSerializer(trans, many=True)
-                    trans.save()
-                    return Response(transSerializer.data)
     return Response(book.available)
 
 #crossed the due date and didnt return book yet
@@ -224,11 +185,42 @@ def cross(request):
 def returnbook(request, pk1, pk2):
     book=Book.objects.get(id=pk1)
     user=User.objects.get(id=pk2)
-    if (book.available==False):
-        user.active_no=user.active_no-1
-        user.active_books.remove(book)
-        user.save()
-        if (book.reserved==False):
-            book.available=True
-            book.save()
-    return Response(book.available)
+
+
+# @api_view(['GET'])
+# def addbook(request, tit, auth, pub, ed, yr):
+#     bookc=Book.objects.all()
+#     bookcSerializer=BookSerializer(bookc, many=True)
+#     b=Book(title=tit, author=auth, publisher=pub, edition=ed, year=yr, category=1)
+#     if Book.objecjts.filter(title=tit, author=auth, publisher=pub, edition=ed, year=yr):
+#         return Response(bookcSerializer.data)
+#     else:
+#         b.save()
+#         books=Book.objects.all()
+#         bookSerializer=BookSerializer(books, many=True)
+#         print("Succesfully Added!!\n")
+#         return Response(bookSerializer.data)    
+# @api_view(['GET'])
+# def removebook(request, tit, auth, pub, ed, yr):
+#     Book.objects.filter(title=tit, author=auth, publisher=pub, edition=ed, year=yr).delete()
+#     books=Book.objects.all()
+#     bookSerializer=BookSerializer(books, many=True)
+#     return Response(bookSerializer.data)
+
+@api_view(['GET'])
+def modifybook(request, tit, auth, pub, ed, yr):
+    book=Book.objects.get(title=tit, author=auth, publisher=pub, edition=ed, year=yr)
+
+@api_view(['POST'])
+def addBook(request):
+    data = request.data
+    bookSerializer = BookSerializer(data=data)
+    if bookSerializer.is_valid():
+        bookSerializer.save()
+    return Response(bookSerializer.data)
+
+@api_view(['DELETE'])
+def deleteBook(request, pk):
+    book = Book.objects.get(id = pk)
+    book.delete()
+    return Response('Book was deleted')

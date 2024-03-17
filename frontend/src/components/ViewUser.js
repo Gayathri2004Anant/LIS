@@ -32,7 +32,7 @@ const ViewUser = () => {
             console.error('Error deleting user:', error);
         }
     };
-
+    // console.log(userData[0].active_books);
     return (
         <div className='viewBook'>
             <h2>Search/ Delete</h2>
@@ -62,8 +62,24 @@ const ViewUser = () => {
                     <p>Reserve No: {user.reserve_no}</p>
                     <p>Fine: {user.fine}</p>
                     <p>Valid Till: {user.valid_till}</p>
-                    <p>Active Books: {user.active_books}</p>
-                    <p>Reserved Books: {user.reserved_books}</p>
+                    <p>Active Books:</p>
+                    <div className='active_books'>
+                    
+                    {user.active_books.map(id => (
+                    <Link to = {"book/"+id} key={id}>
+                        <p>{id}</p>
+                    </Link>
+                ))}
+            </div>
+            <p>Reserved Books:</p>
+            <div className='active_books'>
+                    
+                    {user.reserved_books.map(id => (
+                    <Link to = {"book/"+id} key={id}>
+                        <p>{id}</p>
+                    </Link>
+                ))}
+            </div>
                 </div>
                 </div>
                 ))}

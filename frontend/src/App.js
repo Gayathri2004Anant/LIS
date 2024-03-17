@@ -7,6 +7,7 @@ import BookHome from './pages/bookHome';
 import UserHome from './pages/userHome';
 import UserLoginStatus from './pages/userloginstatus';
 import IssueOrReservePage from './pages/issueOrReserve';
+import Transactions from './pages/transaction';
 import "./styles/searchStyles.css";
 import "./styles/bookStyles.css";
 import "./styles/adminPage.css";
@@ -32,6 +33,11 @@ function App() {
   return (
     <div className="app">
       <Router>
+        <Switch>
+          <Route path="/transactions/:id">
+            <Transactions />
+          </Route>
+        </Switch>
         <Switch>
         <Route path="/issue-reserve">
           <IssueOrReservePage />
