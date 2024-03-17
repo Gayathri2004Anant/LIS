@@ -91,6 +91,9 @@
 .BookSearchList{
     margin: 20px 10px;
 }
+.searchPagehome{
+    background-color: red;
+}
 
 .bookItem{
     background-color: rgba(0, 0, 0, 0.6);

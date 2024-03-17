@@ -1,5 +1,5 @@
 .fullPage{
-    height:100vh;
+    height:100%;
     width: 100%;
     display: flex;
     background-image: url('../images/book6.jpg');
@@ -8,14 +8,14 @@
 }
 
 .leftSection{
-    height: 100vh;
+    height: 100%;
     width: 50%;
     background-color: rgb(0,0,0,0.5);
     padding: 10px;
 }
 
 .rightSection{
-    height: 100vh;
+    height: 100%;
     width: 50%;
     background-color: rgb(0,0,0,0.5);
     padding: 10px;
@@ -84,4 +84,14 @@
 .l p, .r p{
     color: black;
     font-size: 20px;
+}
+.retrieveunderline
+{
+    text-decoration: none;
+    color: black;
+}
+.retrieveunderline:hover
+{
+    text-decoration: none;
+    color: beige;
 }

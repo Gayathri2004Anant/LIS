@@ -45,8 +45,9 @@ const LoginPage = () => {
                 </select>
                 <input className='textbox' type="text" placeholder="User ID" onChange={(e) => setUserId(e.target.value)} />
                 <input className='password' type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
-                <button className='loginbutton' onClick={handleLogin}>Save Changes</button>
-                <button className='loginbutton'><Link className to={url}>Login</Link></button>
+                <button className='savechangesbutton' onClick={handleLogin}><p className='viewBookContentunderline'>Save Changes</p></button>
+                <button className='loginbutton'><Link className='viewBookContentunderline' to={url}>Login</Link></button>
+                <button className='loginbutton'><Link className='viewBookContentunderline' to='/'>Back to Home</Link></button>
             </div>
             <div className='half2'></div>
         </div>

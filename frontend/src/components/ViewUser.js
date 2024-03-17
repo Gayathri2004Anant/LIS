@@ -84,10 +84,10 @@ const ViewUser = () => {
                 </div>
                 ))}
                 <button className="delete" onClick={() => {console.log(userData[0].id);deleteUser(userData[0].id);}}>Delete</button>
-                
             </div>
             
             )}
+            <button className='viewBookContentButton'><Link className='viewUserunderline' to='/'>Back To Home</Link></button>
         </div>
         </div>
     );
