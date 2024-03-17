@@ -13,6 +13,7 @@ import "./styles/adminPage.css";
 import "./styles/userHome.css";
 import "./styles/bookHome.css";
 import "./styles/issueReserve.css";
+import "./styles/receipt.css";
 
 import {
   BrowserRouter as Router,
