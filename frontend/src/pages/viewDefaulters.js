@@ -20,9 +20,9 @@ const ViewDefaulters = () => {
 
     return ( <div>
         <button onClick={GenNotifications}>send notification</button>
-        {user && (
+        {userData && (
             <div className="wrapper">
-                {user.map((user, index) => (
+                {userData.map((user, index) => (
                 <div key={index} className='userDetails'>
                     <div className="user-wrappe">
                     <h3>User Info</h3>

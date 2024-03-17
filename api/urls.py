@@ -26,5 +26,10 @@ urlpatterns=[
     path('books/returnbook/<int:pk1>/<int:pk2>', views.returnbook),
     path('adm/gennotice/', views.cross),
     path('transactions/<int:pk>', views.getTransaction),
+    path('adm/genmaxbooks', views.getMaxBooks),
+    path('adm/genISBN', views.genISBN),
     # path('adm/addcopy/<int:pk>', views.addCopy),
+    path('adm/return/<int:pk1>/<int:pk2>', views.returnbook),
+    path('adm/reserve/<int:pk1>/<int:pk2>', views.reservebook),
+    path('adm/latest_trans', views.getLatestTransaction),
 ]

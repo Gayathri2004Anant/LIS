@@ -50,6 +50,7 @@ const ViewBook = () => {
             {bookData&&
                 <div className="viewBookContent">
                     <h3>Book Info</h3>
+                    <p>ISBN: {bookData.ISBN}</p>
                     <p>Title: {bookData.title}</p>
                     <p>Author: {bookData.author}</p>
                     <p>Publisher: {bookData.publisher}</p>

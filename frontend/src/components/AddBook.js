@@ -15,6 +15,7 @@ const AddBook = () => {
 
     const [book, setBook] = useState(initialBookState);
     const [selectedCategory, setSelectedCategory] = useState(1);
+    const [isbn, setIsbn] = useState(0);
 
     const handleCategoryChange = (e) => {
         setSelectedCategory(parseInt(e.target.value));
@@ -37,6 +38,25 @@ const AddBook = () => {
                 // Handle error if needed
             }
         })
+        .catch(error => {
+            // Handle error if needed
+            console.error('Error:', error);
+        });
+
+    }
+
+    const genIsbn = () => {
+        fetch("http://localhost:8000/api/adm/genISBN")
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                // Handle error if needed
+            }
+        })
+        // .then(data => {
+        //     setIsbn(data.isbn);
+        // })
         .catch(error => {
             // Handle error if needed
             console.error('Error:', error);
@@ -93,8 +113,11 @@ const AddBook = () => {
         <input type="checkbox" checked={book.reserved} onChange={(e) => setBook({ ...book, reserved: e.target.checked })} />
     </div>
     <br />
+            <div className="buttonWrapper">
+            <div><button onClick={addBook}>Add Book</button></div>
+            <div><button onClick={genIsbn}>Generate ISBN</button></div>
+            </div>
 
-            <button onClick={addBook}>Add Book</button>
             </div>
         </div>
     );
