@@ -83,11 +83,12 @@ const ViewUser = () => {
                 </div>
                 </div>
                 ))}
-                <button className="delete" onClick={() => {console.log(userData[0].id);deleteUser(userData[0].id);}}>Delete</button>
+                <button className="delete" onClick={() => {console.log(userData[0].id);deleteUser(userData[0].id);}}>Delete</button> <br/>
+                <button className="delete" onClick={() => {window.location.href = '/admin'}}>Return</button> <br/>
+                <button className="delete" onClick={() => {window.location.href = '/'}}>Home</button>
             </div>
             
             )}
-            <button className='viewBookContentButton'><Link className='viewUserunderline' to='/'>Back To Home</Link></button>
         </div>
         </div>
     );

@@ -2,6 +2,7 @@ import {Link} from 'react-router-dom';
 import "../styles/UserDetails.css";
 const StatusUserDetails = ({user}) => {
     console.log(user.active_books, "user");
+    const url=`/userlogin/${user.code}`;
     return ( 
         <div className="userfullpage">
             <div className="notifications">
@@ -43,7 +44,8 @@ const StatusUserDetails = ({user}) => {
                             ))}
                         </div>
                     </div>
-                <div><button className='searchbutton'><Link to ='/' className='underline'>Back to Home</Link></button></div>
+                    <div><button className='searchbutton'><Link to ={url} className='underline'>Return</Link></button></div>
+                    <div><button className='searchbutton'><Link to ='/' className='underline'>Back to Home</Link></button></div>
                 </div>
                     </div>
                 </div>

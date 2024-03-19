@@ -128,6 +128,7 @@ const IssueOrReservePage = () => {
                     <button onClick={handleClickTransaction}>Transaction Details</button>
                 )}
                 <button className='retrieve' onClick={() => window.location.href = '/'}>Back to Home</button>
+                <button className='retrieve' onClick={() => window.location.href = '/admin'}>Return to Previous Page</button>
             </div>
             <div className="rightSection">
                 <div className="l">
