@@ -50,7 +50,7 @@ def getTitReserve(request, search):
         books=books.filter(title__icontains=search, available=False, reserved=True)
         bookSerializer=BookSerializer(books, many=True)
     return Response(bookSerializer.data)
-api_view(['GET'])
+@api_view(['GET'])
 def getCategory(request, pk):
     # book = Book.objects.get(category = pk)
     # bookSerializer = BookSerializer(book, many=False)
