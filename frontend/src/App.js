@@ -6,8 +6,10 @@ import AdminPage from './pages/adminPage';
 import BookHome from './pages/bookHome';
 import UserHome from './pages/userHome';
 import IssueOrReservePage from './pages/issueOrReserve';
+import UserLoginStatus from './pages/userloginstatus';
 import Transactions from './pages/transaction';
 import ViewDefaulters from './pages/viewDefaulters';
+import UserLogin from './pages/userlogin';
 import "./styles/searchStyles.css";
 import "./styles/bookStyles.css";
 import "./styles/adminPage.css";
@@ -15,6 +17,8 @@ import "./styles/userHome.css";
 import "./styles/bookHome.css";
 import "./styles/issueReserve.css";
 import "./styles/receipt.css";
+import "./styles/homepage1.css";
+import "./styles/loginPage.css";
 
 import {
   BrowserRouter as Router,
@@ -57,8 +61,14 @@ function App() {
           <Route path="/book/:id">
             <BookPage/>
           </Route>
+          <Route path="/userlogin/:idNumber">
+            <UserLogin />
+          </Route>
+          <Route path="/userloginstatus/:idNumber">
+            <UserLoginStatus />
+          </Route>
           <Route path="/">
-            <Home />
+          <Home />
           </Route>
         </Switch>
       </Router>

@@ -28,6 +28,13 @@ def getBook(request, pk):
     book = Book.objects.get(id = pk)
     bookSerializer = BookSerializer(book, many=False)
     return Response(bookSerializer.data)
+
+@api_view(['GET'])
+def getBookISBN(request, pk):
+    book = Book.objects.get(ISBN = pk)
+    bookSerializer = BookSerializer(book, many=False)
+    return Response(bookSerializer.data)
+
 @api_view(['GET'])
 def getQuery(request, search):
     # print(search)
@@ -141,25 +148,33 @@ def register(request):
     return Response(userSerializer.data)
 @api_view(['GET','POST'])
 def getMaxBooks(request):
-    user1=User.objects.filter(type=1)
-    for us1 in user1:
-        us1.max_books=2
-        us1.save()
-    user2=User.objects.filter(type=2)
-    for us2 in user2:
-        us2.max_books=4
-        us2.save()
-    user3=User.objects.filter(type=3)
-    for us3 in user3:
-        us3.max_books=6
-        us3.save()
-    user4=User.objects.filter(type=4)
-    for us4 in user4:
-        us4.max_books=10
-        us4.save()
-    users=User.objects.all()
-    userSerializer=UserSerializer(users, many=True)
-    return Response(userSerializer.data)
+    # user1=User.objects.filter(type=1)
+    # for us1 in user1:
+    #     us1.max_books=2
+    #     us1.save()
+    # user2=User.objects.filter(type=2)
+    # for us2 in user2:
+    #     us2.max_books=4
+    #     us2.save()
+    # user3=User.objects.filter(type=3)
+    # for us3 in user3:
+    #     us3.max_books=6
+    #     us3.save()
+    # user4=User.objects.filter(type=4)
+    # for us4 in user4:
+    #     us4.max_books=10
+    #     us4.save()
+    user=User.objects.latest("id")
+    if user.type == 1:
+        user.max_books = 2
+    if user.type == 2:
+        user.max_books = 4
+    if user.type == 3:
+        user.max_books = 6
+    if user.type == 4:
+        user.max_books = 10
+    user.save()
+    return Response(user.max_books)
 @api_view(['POST'])
 def edituser(request, pk):
     data=request.data

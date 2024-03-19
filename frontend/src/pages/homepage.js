@@ -4,10 +4,21 @@ import { Link } from 'react-router-dom';
 function Home() {
 
     return (
-        <div>
-            <h1>Welcome to our website!</h1>
-            <div><Link to ='/search'>Search for Books</Link></div>
-            <div><Link to ='/login'>Login</Link></div>
+        <div className='home'>
+            
+            <div className='topbar'>
+                <div className='logo'>
+                <button className='login'><Link to ='/login' className='underline'>Login</Link></button>
+                </div>
+                <div className='mainpage'>
+                    <div className='half'><h1 className='welcome'>Where Every Page Is A New Adventure</h1></div>
+                    <div className='half'></div>
+                    <div className='half'>
+                        <button className='button'><Link to ='/search' className='underline'>Search for Books</Link></button>
+                    </div>
+                </div>
+            </div>
+            
         </div>
     );
 }

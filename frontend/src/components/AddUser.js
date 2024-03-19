@@ -20,6 +20,26 @@ const AddUser = () => {
     };
 
     const [user, setUser] = useState(initialUserState);
+    const [max_books, setMaxBooks] = useState(0);
+
+    const genMaxbooks = () => {
+        fetch("http://localhost:8000/api/adm/genmaxbooks")
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                // Handle error if needed
+            }
+        })
+        .then(data => {
+            setMaxBooks(data.max_books);
+            setUser(initialUserState);
+        })
+        .catch(error => {
+            // Handle error if needed
+            console.error('Error:', error);
+        });
+    }
 
     const addUser = async () => {
         console.log(user);
@@ -34,7 +54,7 @@ const AddUser = () => {
         .then(response => {
             if (response.ok) {
                 console.log(response);
-                setUser(initialUserState); // Resetting the user state to initial values
+                // setUser(initialUserState); // Resetting the user state to initial values
             } else {
                 // Handle error if needed
             }
@@ -73,11 +93,16 @@ const AddUser = () => {
                 <option value={2}>Postgraduate Student</option>
                 <option value={3}>Research Scholar</option>
                 <option value={4}>Faculty Member</option>
-                <option value={5}>Administrator</option>
             </select>
             </div>
             <br />
-            <button onClick={addUser}>Add User</button>
+            <p>Membership Valid Till: </p>
+            <input type="date" placeholder="Membership validity" value={user.valid_till} onChange={(e) => setUser({ ...user, valid_till: e.target.value })} />
+            <br />
+            <div className='buttonJugaad'>
+            <button onClick={addUser}>Save Changes</button>
+            <button onClick={genMaxbooks}>Add User</button>
+            </div>
             </div>
         </div>
     );
