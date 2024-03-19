@@ -14,6 +14,9 @@ const AddBook = () => {
 
     const [book, setBook] = useState(initialBookState);
     const [selectedCategory, setSelectedCategory] = useState(1);
+    const [isbn, setIsbn] = useState(0);
+    const [isbnGenerated, setIsbnGenerated] = useState(false); // Track whether ISBN has been generated
+    const [bookAdded, setBookAdded] = useState(false); // Track whether book has been added
 
     const handleCategoryChange = (e) => {
         setSelectedCategory(parseInt(e.target.value));
@@ -32,9 +35,30 @@ const AddBook = () => {
         .then(response => {
             if (response.ok) {
                 setBook(initialBookState); // Resetting the book state to initial values
+                setBookAdded(true); // Set bookAdded to true after adding book
+                setIsbnGenerated(false);
             } else {
                 // Handle error if needed
             }
+        })
+        .catch(error => {
+            // Handle error if needed
+            console.error('Error:', error);
+        });
+
+    }
+
+    const genIsbn = () => {
+        fetch("http://localhost:8000/api/adm/genISBN")
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                // Handle error if needed
+            }
+        })
+        .then(data => {
+            setIsbn(data.isbn);
         })
         .catch(error => {
             // Handle error if needed
@@ -54,10 +78,12 @@ const AddBook = () => {
             
             <input type="text" placeholder="Publisher" value={book.publisher} onChange={(e) => setBook({ ...book, publisher: e.target.value })} />
             <br />
-            
+         
+            <label>Edition:</label>
+            <br />
             <input type="number" placeholder="Edition" value={book.edition} onChange={(e) => setBook({ ...book, edition: parseInt(e.target.value) })} />
             <br />
-            
+            <label>Year:</label>
             <input type="number" placeholder="Year" value={book.year} onChange={(e) => setBook({ ...book, year: parseInt(e.target.value) })} />
             <br />
             
@@ -80,7 +106,6 @@ const AddBook = () => {
             </select>
         </div>
            
-    <input type="date" placeholder="Last Issue Date" value={book.last_issue_date} onChange={(e) => setBook({ ...book, last_issue_date: e.target.value })} />
     <br />
     <div style={{ display: 'flex', alignItems: 'center', backgroundColor:'chocolate'}}>
     <label style={{ marginRight: '5px', fontSize:'20px', color:"aliceblue"}}>Available:</label>
@@ -92,9 +117,14 @@ const AddBook = () => {
         <input type="checkbox" checked={book.reserved} onChange={(e) => setBook({ ...book, reserved: e.target.checked })} />
     </div>
     <br />
+            <div className="buttonWrapper">
+            <div><button onClick={addBook}>Add Book</button></div>
+            {bookAdded && !isbnGenerated && // Show button only if book is added and ISBN is not generated
+                <div><button onClick={()=>{genIsbn();window.alert(book.ISBN);setIsbnGenerated(true);setBookAdded(false)}}>Generate ISBN</button></div>
+            }
+            </div>
+            {/* <p>ISBN of last added book: {book.ISBN}</p> */}
 
-            <button onClick={addBook}>Add Book</button>
-            {/* <button><Link to='/'>Back To Home</Link></button> */}
             </div>
         </div>
     );

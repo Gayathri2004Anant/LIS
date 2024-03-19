@@ -1,12 +1,31 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 const ViewBook = () => {
+
+    // Define category mappings
+const CATEGORY_MAPPING = {
+    1: 'Adventure',
+    2: 'Fantasy',
+    3: 'Crime',
+    4: 'Classics',
+    5: 'History',
+    6: 'Romance',
+    7: 'Biography',
+    8: 'Mathematics',
+    9: 'Computer Science',
+    10: 'Science',
+    11: 'Mechanics'
+};
+const getCategoryText = (category) => {
+    return CATEGORY_MAPPING[category] || 'Unknown';
+};
+
     const [searchKey, setSearchKey] = useState('');
     const [bookData, setBookData] = useState([]);
 
     const handleSearch = async () => {
         try {
-            const response = await fetch(`http://localhost:8000/api/books/${searchKey}`);
+            const response = await fetch(`http://localhost:8000/api/books/ISBN/${searchKey}`);
             if (!response.ok) {
                 throw new Error('Failed to fetch book data');
             }
@@ -50,12 +69,16 @@ const ViewBook = () => {
             {bookData&&
                 <div className="viewBookContent">
                     <h3>Book Info</h3>
+                    <p>ISBN: {bookData.ISBN}</p>
                     <p>Title: {bookData.title}</p>
                     <p>Author: {bookData.author}</p>
                     <p>Publisher: {bookData.publisher}</p>
                     <p>Edition: {bookData.edition}</p>
                     <p>Year: {bookData.year}</p>
-                    <p>Last Issue Date: {bookData.last_issue_date}</p>
+                    <p>Category: {getCategoryText(bookData.category)}</p>
+                    <p>Cupboard No.: </p>
+                    <p>Rack No.: </p>
+                    <p>Position No.: </p>
                     <p>Available: {bookData.available ? 'Yes' : 'No'}</p>
                     <p>Reserved: {bookData.reserved ? 'Yes' : 'No'}</p>
                     <p>Code of issued user: {bookData.issued_code}</p>

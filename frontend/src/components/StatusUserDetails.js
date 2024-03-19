@@ -13,7 +13,9 @@ const StatusUserDetails = ({user}) => {
                 <div className="userstatus">
                     <div className="userstatusWrapper">
                         <div className="userstatusContent">
-                            <p>{user.name}</p>
+                            <h2>{user.name}</h2>
+                            <p>User Type: {(user.type===1 && "UG")||(user.type===2 && "PG")||(user.type===3 && "RS")||(user.type===4 && "Faculty")}</p>
+                            <p>Maximum books that can be issued/reserved: {user.max_books}</p>
                         </div>
                         <p>Number of Active Books: {user.active_no}</p>
                         <div className="books-liststatus">
