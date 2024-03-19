@@ -5,7 +5,6 @@ import BookPage from './pages/bookPage';
 import AdminPage from './pages/adminPage';
 import BookHome from './pages/bookHome';
 import UserHome from './pages/userHome';
-import UserLoginStatus from './pages/userloginstatus';
 import IssueOrReservePage from './pages/issueOrReserve';
 import UserLoginStatus from './pages/userloginstatus';
 import Transactions from './pages/transaction';
@@ -21,7 +20,6 @@ import "./styles/receipt.css";
 import "./styles/homepage1.css";
 import "./styles/loginPage.css";
 
-import UserLogin from './pages/userlogin';
 import {
   BrowserRouter as Router,
   Switch,
@@ -54,27 +52,20 @@ function App() {
         <Route path="/admin">
           <AdminPage />
         </Route>
-
         <Route path="/login">
             <LoginPage />
           </Route>
           <Route path="/search">
             <Search />
           </Route>
-          <Route path="/userlogin/:idNumber">
-            <UserLogin />
-          </Route>
-          <Route path="/userloginstatus/:idNumber">
-            <UserLoginStatus />
-          </Route>
           <Route path="/book/:id">
             <BookPage/>
           </Route>
-          <Route path="/userlogin/:idNumber">
-            <UserLogin />
-          </Route>
           <Route path="/userloginstatus/:idNumber">
             <UserLoginStatus />
+          </Route>
+          <Route path="/userlogin/:idNumber">
+            <UserLogin />
           </Route>
           <Route path="/">
           <Home />

@@ -88,7 +88,7 @@ const Search = () => {
         {renderAdditionalField()}
 
         <button type="submit">Search</button>
-        <button type="searchPagehome" ><Link className='searchPageunderline' to='/'>Back to Home</Link></button>
+        <button type="searchPagehome" onClick={() => window.location.href = '/'}>Back to Home</button>
       </form>
       </div>
       </div>

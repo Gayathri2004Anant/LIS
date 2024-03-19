@@ -84,10 +84,11 @@ const getCategoryText = (category) => {
                     <p>Code of issued user: {bookData.issued_code}</p>
                     <p>Code of reserved user: {bookData.reserved_code}</p>
                     <button onClick={() => deleteBook(bookData.id)}>Delete</button>
+                    <button onClick={() => window.location.href = '/'}>Home</button>
+                    <button onClick={() => window.location.href = '/'}>Home</button>
                 </div>
                 
             } 
-            <button className='viewBookContentButton'><Link className='viewBookContentunderline' to='/'>Back To Home</Link></button>
         </div>
     );
 };

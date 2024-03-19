@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 
 const IssueOrReservePage = () => {
     const [userData, setUserData] = useState([]);
@@ -126,6 +127,7 @@ const IssueOrReservePage = () => {
                 {userData && (
                     <button onClick={handleClickTransaction}>Transaction Details</button>
                 )}
+                <button className='retrieve' onClick={() => window.location.href = '/'}>Back to Home</button>
             </div>
             <div className="rightSection">
                 <div className="l">
