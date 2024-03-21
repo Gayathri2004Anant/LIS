@@ -72,14 +72,14 @@ const AddUser = () => {
             <input type="text" placeholder="Name" value={user.name} onChange={(e) => setUser({ ...user, name: e.target.value })} />
             <br />
             
-            <input type="text" placeholder="Code" value={user.code} onChange={(e) => setUser({ ...user, code: e.target.value })} />
+            <input type="text" placeholder="Code" value={user.code} onChange={(e) => setUser({ ...user, code: e.target.value, username: e.target.value })} />
             <br />
             
             <input type="email" placeholder="Email" value={user.email} onChange={(e) => setUser({ ...user, email: e.target.value })} />
             <br />
             
-            <input type="text" placeholder="Username" value={user.username} onChange={(e) => setUser({ ...user, username: e.target.value })} />
-            <br />
+            {/* <input type="text" placeholder="Username" value={user.username} onChange={(e) => setUser({ ...user, username: e.target.value })} />
+            <br /> */}
             
             <input type="password" placeholder="Password" value={user.password} onChange={(e) => setUser({ ...user, password: e.target.value })} />
             <br />

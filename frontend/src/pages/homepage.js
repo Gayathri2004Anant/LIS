@@ -10,14 +10,14 @@ function Home() {
                 <div className='logo'>
                 <button className='login'><Link to ='/login' className='underline'>Login</Link></button>
                 </div>
-                <div className='mainpage'>
-                    <div className='half'><h1 className='welcome'>Where Every Page Is A New Adventure</h1></div>
-                    <div className='half'></div>
+                
+            </div>
+            <div className='mainpage'>
+                    <div className="blackback"><h1 className='welcome'>Where Every Page <br/>Is A New Adventure</h1></div>
                     <div className='half'>
                         <button className='button'><Link to ='/search' className='underline'>Search for Books</Link></button>
                     </div>
                 </div>
-            </div>
             
         </div>
     );

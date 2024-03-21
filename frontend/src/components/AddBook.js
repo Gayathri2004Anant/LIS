@@ -121,7 +121,7 @@ const AddBook = () => {
             <div className="buttonWrapper">
             <div><button onClick={addBook}>Add Book</button></div>
             {bookAdded && !isbnGenerated && // Show button only if book is added and ISBN is not generated
-                <div><button onClick={()=>{genIsbn();window.alert(book.ISBN);setIsbnGenerated(true);setBookAdded(false)}}>Generate ISBN</button></div>
+                <div><button onClick={()=>{genIsbn();setIsbnGenerated(true);setBookAdded(false)}}>Generate ISBN</button></div>
             }
             </div>
             {/* <p>ISBN of last added book: {book.ISBN}</p> */}

@@ -68,11 +68,10 @@ const BookDetails = ({ book }) => {
                             <h3>Edition: {book.edition}</h3>
                             <h3>Year: {book.year}</h3>
                             <h3>Category: {getCategoryText(book.category)}</h3>
-                            <h3>Last Issue Date: {book.last_issue_date}</h3>
+                            <h3>Cupboard no.: {book.cupboard}</h3>
+                            <h3>Rack no.: {book.rack}</h3>
+                            <h3>Position no.: {book.position}</h3>
                             <h3>Available: {(book.available===true && "Yes")||(book.available===false && "No")}</h3>
-                            <h3>Cupboard no.: </h3>
-                            <h3>Rack no.: </h3>
-                            <h3>Position no.: </h3>
                             <h3 className='break-here'>Reserved: {(book.reserved===true && "Yes")||(book.reserved===false && "No")}</h3>
                         </div>
                         <div><Link to='/search'>Back to Search</Link></div>

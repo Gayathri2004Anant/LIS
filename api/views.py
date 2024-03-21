@@ -15,8 +15,32 @@ from dateutil.relativedelta import relativedelta
 from django.utils import timezone
 from rest_framework.views import APIView
 from django.conf import settings
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
+from django.contrib.auth.models import User as auth_user
 
 # Create your views here.
+
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+
+        token['username'] = user.username
+
+        return token
+    
+class MyTokenObtainPairView(TokenObtainPairView):
+    serializer_class = MyTokenObtainPairSerializer
+
+
+@api_view(['GET'])
+def getRoutes(request):
+    routes=[
+        '/token',
+        '/token/refresh',
+    ]
+    return Response(routes)
 
 @api_view(['GET'])
 def getBooks(request):
@@ -131,6 +155,9 @@ def genISBN(request):
     cupboard=book.id//50
     isbn=cupboard*100+rack*10+position
     book.ISBN=isbn
+    book.cupboard=cupboard
+    book.rack=rack
+    book.position=position
     book.save()
     bookSerializer=BookSerializer(book, many=False)
     return Response(bookSerializer.data)
@@ -139,13 +166,32 @@ def deleteBook(request, pk):
     book=Book.objects.get(id=pk)
     book.delete()
     return Response('Book was deleted')
+# @api_view(['GET', 'POST'])
+# def register(request):
+#     data=request.data
+#     userSerializer=UserSerializer(data=data)
+#     if userSerializer.is_valid():
+#         userSerializer.save()
+#     return Response(userSerializer.data)
 @api_view(['GET', 'POST'])
 def register(request):
-    data=request.data
-    userSerializer=UserSerializer(data=data)
-    if userSerializer.is_valid():
-        userSerializer.save()
-    return Response(userSerializer.data)
+    data = request.data
+    user_serializer = UserSerializer(data=data)
+    if user_serializer.is_valid():
+        # Create a new user
+        auth_user.objects.create_user(
+            username=data['code'],
+            email=data['email'],
+            password=data['password']  # You may want to hash the password properly
+        )
+
+        # Save the user details provided during registration
+        user_serializer.save()
+
+        return Response(user_serializer.data)
+    else:
+        return Response(user_serializer.errors)
+
 @api_view(['GET','POST'])
 def getMaxBooks(request):
     # user1=User.objects.filter(type=1)
@@ -186,6 +232,8 @@ def edituser(request, pk):
 @api_view(['DELETE'])
 def deleteuser(request, pk):
     user=User.objects.get(id=pk)
+    u = auth_user.objects.get(username=user.code)
+    u.delete()
     user.delete()
     return Response('User was deleted')
 @api_view(['GET','POST'])
@@ -218,7 +266,7 @@ def issue(request, pk1, pk2):
                 user.transactions.add(trans)
                 user.save()
                 return Response(transSerializer.data)
-    if (book.available==False):
+    if (book.available==True):
         if(book.reserved==True):
             if (user.reserved_books.contains(book)):
                 if(date.today()<=book.max_reserve_date):
@@ -271,6 +319,11 @@ def cross(request):
         book.reserved=False
         book.available=True
         book.save()
+    for user in users:
+        for tran in trans:
+            if (user.code==trans.user_code):
+                user.notification='The book {} is no longer reserved for you!!'.format(trans.book_id)
+                user.save()
     userfilter=User.objects.filter(fine__gt=0)
     userSerializer=UserSerializer(userfilter, many=True)
     return Response(userSerializer.data)
@@ -316,8 +369,7 @@ def returnbook(request, pk1, pk2):
             if book in user.active_books.all():  # Checking if the book is in active_books
                 user.active_no -= 1
                 user.active_books.remove(book)
-                if not book.reserved:
-                    book.available = True
+                book.available = True
                 book.issued_code = '0'
                 book.save()  # Saving book changes
                 user.save()  # Saving user changes
@@ -336,7 +388,7 @@ def returnbook(request, pk1, pk2):
                 user.save()
 
                 if book.reserved:
-                    book.available = False
+                    book.available = True
                     max_date = return_dates + relativedelta(days=7)
                     tranres = Transaction.objects.get(category=3, book_id=book.ISBN)
                     tranres.max_date_of_reserve = max_date
@@ -378,5 +430,11 @@ def reservebook(request, pk1, pk2):
 @api_view(['GET'])
 def getLatestTransaction(request):
     trans = Transaction.objects.latest('id')
+    transSerializer = TransactionSerializer(trans, many=False)
+    return Response(transSerializer.data)
+
+@api_view(['GET'])
+def customTrans(request, isbn, uid, cat):
+    trans=Transaction.objects.filter(book_id=isbn, user_code=uid, category=cat).latest('id')
     transSerializer = TransactionSerializer(trans, many=False)
     return Response(transSerializer.data)
