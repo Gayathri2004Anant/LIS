@@ -7,6 +7,7 @@ from django.contrib.auth.base_user import AbstractBaseUser
 from django.utils import timezone
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.conf import settings
+from django.contrib.auth.models import User as auth_user
 
 import datetime
 
@@ -70,6 +71,9 @@ class Book(models.Model):
     available=models.BooleanField(default=1)
     reserved=models.BooleanField(default=0)
     max_reserve_date=models.DateField(default=datetime.date.today())
+    cupboard=models.IntegerField(default=0, validators=[MinValueValidator(0)])
+    rack=models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(4)])
+    position=models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(9)])
     ISBN=models.IntegerField(default=0)
     def __str__(self):
         return self.title
@@ -127,10 +131,11 @@ class User(models.Model):
         (RS, 'Research Scholar'),
         (ADMIN, 'Administrator'),
     )
+    username=models.CharField(max_length=20)
+    users = models.ForeignKey(auth_user, on_delete=models.CASCADE, related_name='users', blank=True, null=True)
     name=models.CharField(max_length=100)
     code=models.CharField(max_length=9)
     email=models.EmailField(unique=True)
-    username=models.CharField(max_length=20)
     password=models.CharField(max_length=12)
     notification=models.CharField(max_length=1000)
     type=models.PositiveSmallIntegerField(choices=TYPES, blank=True, null=True, default=0)

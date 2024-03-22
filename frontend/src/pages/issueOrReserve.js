@@ -43,7 +43,7 @@ const IssueOrReservePage = () => {
     };
 
     const returnBook = async () => {
-        console.log(userData.length>0, userData[0].active_books ,bookId, userData[0].active_books.includes(Number(bookId)));
+        console.log(userData.length>0, userData[0].active_no ,bookId, userData[0].active_books.includes(Number(bookId)));
         if (userData.length > 0 && userData[0].active_books.includes(Number(bookId))) {
             try {
                 const response = await fetch(`http://localhost:8000/api/adm/return/${bookId}/${userId}`);
@@ -63,7 +63,20 @@ const IssueOrReservePage = () => {
 
     const issueBook = async () => {
         console.log(bookData.available, bookData.reserved, bookData.reserved_code, userData[0].code, (bookData.reserved_code === userData[0].code));
-        if ((((userData[0].max_books>userData[0].active_no+userData[0].reserve_no)&&(bookData.available === true) && (bookData.reserved === false))||(userData && ((bookData.available === false) && (bookData.reserved_code === userData[0].code))))) {
+        console.log((userData[0].max_books > userData[0].active_no + userData[0].reserve_no));
+        if (
+            // Condition 1: Check if the user can borrow more books
+            (
+                (userData[0].max_books > userData[0].active_no + userData[0].reserve_no) &&
+                (bookData.available === true && bookData.reserved === false)
+            ) ||
+        
+            // Condition 2: Check if the user can borrow another reserved book
+            (
+                (userData[0].max_books >= userData[0].active_no + userData[0].reserve_no) &&
+                (bookData.available === true && bookData.reserved === true && bookData.reserved_code === userData[0].code)
+            )
+        ){
             try {
                 const response = await fetch(`http://localhost:8000/api/adm/issue/${bookId}/${userId}`, {
                     method: 'POST',
@@ -76,13 +89,14 @@ const IssueOrReservePage = () => {
             } catch (error) {
                 console.error('Error:', error);
             }
-        } else {
-            window.alert("Cannot issue the book. Please check availability and reservation status.");
+        }
+        else{
+            window.alert("Cannot issue book. Check user and book status.")
         }
     };
 
     const reserveBook = async () => {
-        if (bookData.available === false && bookData.reserved === false) {
+        if((userData[0].max_books>userData[0].active_no+userData[0].reserve_no)&&(bookData.available===false && bookData.reserved===false)){
             try {
                 const response = await fetch(`http://localhost:8000/api/adm/reserve/${bookId}/${userId}`, {
                     method: 'POST',
@@ -95,18 +109,21 @@ const IssueOrReservePage = () => {
             } catch (error) {
                 console.error('Error:', error);
             }
-        } else {
-            window.alert("Cannot reserve the book. Please check availability and reservation status.");
+        }
+        else{
+            window.alert("Cannot reserve book. Please check user and book status.")
         }
     };
 
-    const handleClickTransaction = () => {
-        const lastTransactionId = userData[0].transactions.slice(-1)[0];
-        history.replace(`/transactions/${lastTransactionId}`);
-    };
 
     return (
+        < div className="dummyWrapper">
+            <div className="topbar">
+            <div><Link to="/"><h3>Home</h3></Link></div>
+            <div><Link to="/userlogin/admin"><h3>Back</h3></Link></div>
+           </div>
         <div className='fullPage'>
+           
             <div className="leftSection">
                 <label>Enter User Code:</label>
                 <input type="text" value={code} onChange={(e) => setCode(e.target.value)} />
@@ -125,7 +142,7 @@ const IssueOrReservePage = () => {
                 )}
 
                 {userData && (
-                    <button onClick={handleClickTransaction}>Transaction Details</button>
+                    <Link to="/transactions"><button>Transaction Details</button></Link>
                 )}
                 <button className='retrieve' onClick={() => window.location.href = '/'}>Back to Home</button>
                 <button className='retrieve' onClick={() => window.location.href = '/admin'}>Return to Previous Page</button>
@@ -142,7 +159,8 @@ const IssueOrReservePage = () => {
                             <p>Max Books: {user.max_books}</p>
                             <p>Active No: {user.active_no}</p>
                             <p>Reserve No: {user.reserve_no}</p>
-                            <p>Valid Till: {user.valid_till}</p>
+                            <p>Membership Valid Till: {user.valid_till}</p>
+                            <p>Dues: {user.fine}</p>
                             <p>Active Books:</p>
                             <div className="active_books">
                                 {user.active_books.map(id => (
@@ -176,6 +194,8 @@ const IssueOrReservePage = () => {
                     )}
                 </div>
             </div>
+           
+        </div>
         </div>
     );
 }

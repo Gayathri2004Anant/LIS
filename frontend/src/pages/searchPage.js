@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Books from '../components/BookList';
 import { Link } from 'react-router-dom';
+
 const Search = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedOption, setSelectedOption] = useState('name');
@@ -88,6 +89,7 @@ const Search = () => {
         {renderAdditionalField()}
 
         <button type="submit">Search</button>
+        <Link to="/"><button>Home</button></Link>
         <button type="searchPagehome" onClick={() => window.location.href = '/'}>Back to Home</button>
       </form>
       </div>

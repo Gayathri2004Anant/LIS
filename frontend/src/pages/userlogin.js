@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import UserDetails from '../components/UserDetails';
-import "../styles/userlogin.css";
 
 const UserLogin = () => {
     const { idNumber } = useParams();

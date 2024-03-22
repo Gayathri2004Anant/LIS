@@ -58,7 +58,7 @@ const getCategoryText = (category) => {
             <div className="searchWrapperLight">
             <input
                 type="text"
-                placeholder="Enter book ID"
+                placeholder="Enter book ISBN"
                 value={searchKey}
                 onChange={(e) => setSearchKey(e.target.value)}
                 
@@ -76,9 +76,9 @@ const getCategoryText = (category) => {
                     <p>Edition: {bookData.edition}</p>
                     <p>Year: {bookData.year}</p>
                     <p>Category: {getCategoryText(bookData.category)}</p>
-                    <p>Cupboard No.: </p>
-                    <p>Rack No.: </p>
-                    <p>Position No.: </p>
+                    <p>Cupboard No.: {bookData.cupboard}</p>
+                    <p>Rack No.: {bookData.rack}</p>
+                    <p>Position No.: {bookData.position}</p>
                     <p>Available: {bookData.available ? 'Yes' : 'No'}</p>
                     <p>Reserved: {bookData.reserved ? 'Yes' : 'No'}</p>
                     <p>Code of issued user: {bookData.issued_code}</p>

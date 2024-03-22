@@ -1,7 +1,13 @@
 from django.urls import path, re_path
 from . import views
+from rest_framework_simplejwt.views import (
+    TokenRefreshView,
+)
 
 urlpatterns=[
+    path('token/', views.MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('', views.getRoutes),
     path('books/', views.getBooks),
     path('books/<int:pk>', views.getBook),
     path('books/ISBN/<int:pk>', views.getBookISBN),
@@ -33,4 +39,5 @@ urlpatterns=[
     path('adm/return/<int:pk1>/<int:pk2>', views.returnbook),
     path('adm/reserve/<int:pk1>/<int:pk2>', views.reservebook),
     path('adm/latest_trans', views.getLatestTransaction),
+    path('adm/custom_trans/<int:isbn>/<str:uid>/<int:cat>', views.customTrans),
 ]

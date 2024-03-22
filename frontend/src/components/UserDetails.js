@@ -1,7 +1,9 @@
 import {Link} from 'react-router-dom';
-import "../styles/UserDetails.css";
+import AuthContext from '../context/AuthContext';
+import {useContext} from 'react';
 const UserDetails = ({user}) => {
     const url=`/userloginstatus/${user.code}`;
+    let {logoutUser} = useContext(AuthContext); 
     console.log(user, "user");
     return ( 
         <div className="userdetailspage">
@@ -16,8 +18,10 @@ const UserDetails = ({user}) => {
                 <h3>Code Number: {user.code}</h3>
                 <h3>Email: {user.email}</h3>
             </div>
+            
                 <button className='statusbutton' > <Link to ={url} className='underline'>
                 User Status </Link></button>
+                <div><button className='searchbutton' onClick={(e) => logoutUser()}>Logout</button></div>
                 <div><button className='searchbutton'><Link to ='/login' className='underline'>Return</Link></button></div>
                 <div><button className='searchbutton'><Link to ='/' className='underline'>Back to Home</Link></button></div>
             </div>
