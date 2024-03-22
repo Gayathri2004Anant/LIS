@@ -103,6 +103,7 @@ import "./styles/loginPage.css";
 import "./styles/UserDetails.css";
 import "./styles/UserDetails.css";
 import "./styles/userlogin.css";
+import "./styles/defaulters.css";
 
 
 import {

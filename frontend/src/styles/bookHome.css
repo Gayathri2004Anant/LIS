@@ -187,3 +187,24 @@
 .buttonWrapper button{
     width: 90%;
 }
+
+.topbar{
+    background-color:rgb(250, 235, 215);
+    color: black;
+    display: flex;
+    justify-content: space-between;
+}
+
+.topbar a{
+    text-decoration: none;
+    color: black;
+}
+
+.topbar div{
+    padding: 10px;
+}
+
+.topbar div:hover{
+    background-color:chocolate;
+    color:aliceblue;
+}

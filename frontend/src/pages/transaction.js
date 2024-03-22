@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 // import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Transactions = () => {
   // const { id } = useParams();
@@ -23,7 +24,13 @@ const Transactions = () => {
   }, []); // Include id as a dependency to fetch data when id changes
 
   return (
+    <div className="dummyWrapper">
+      <div className="topbar">
+            <div><Link to="/"><h3>Home</h3></Link></div>
+            <div><Link to="/issue-reserve"><h3>Back</h3></Link></div>
+           </div>
     <div className="transactions">
+        
         <div className="transWrapper">
         <h2>Transaction Details</h2>
         <p>User code: {trans.user_code}</p>
@@ -37,6 +44,7 @@ const Transactions = () => {
             }
         </div>
         </div>
+    </div>
     </div>
   );
 };

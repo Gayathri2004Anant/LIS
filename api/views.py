@@ -311,22 +311,25 @@ def cross(request):
         for tran in trans:
             if (user.code==tran.user_code):
                 user.fine=(current-tran.due_date).days*20
+                tran.dues=user.fine
                 user.notification='You have pending books to return!! The book ISBN is: {}, Present fine is: {}'.format(tran.book_id, user.fine)
                 user.save()
     trans=Transaction.objects.filter(category=3, max_date_of_reserve__lt=current)
     for tran in trans:
-        book=Book.get(ISBN=tran.book_id)
+        book=Book.objects.get(ISBN=tran.book_id)
         book.reserved=False
         book.available=True
         book.save()
     for user in users:
         for tran in trans:
-            if (user.code==trans.user_code):
-                user.notification='The book {} is no longer reserved for you!!'.format(trans.book_id)
+            if (user.code==tran.user_code):
+                user.notification='The book {} is no longer reserved for you!!'.format(tran.book_id)
                 user.save()
-    userfilter=User.objects.filter(fine__gt=0)
-    userSerializer=UserSerializer(userfilter, many=True)
-    return Response(userSerializer.data)
+    # userfilter=User.objects.filter(fine__gt=0)
+    # userSerializer=UserSerializer(userfilter, many=True)
+    transfilter = Transaction.objects.filter(dues__gt=0)
+    transSerializer = TransactionSerializer(transfilter, many=True)
+    return Response(transSerializer.data)
 # @api_view(['GET', 'POST'])
 # def returnbook(request, pk1, pk2):
 #     book=Book.objects.get(id=pk1)
@@ -378,6 +381,7 @@ def returnbook(request, pk1, pk2):
                 # tranissue = Transaction.objects.filter(active=True, user_code=user.code, book_id=book.ISBN, category=1)
                 print(user.transactions.all())
                 tranissue = user.transactions.filter(book_id=book.ISBN).latest('id')
+                user.fine = 0
                 # tranissue = tranissue.objects.latest('id')
                 due = (return_dates - tranissue.due_date).days * 20
                 if due < 0:

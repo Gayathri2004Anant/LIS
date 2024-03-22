@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import StatusUserDetails from '../components/StatusUserDetails';
-import "../styles/userlogin.css";
+// import "../styles/userlogin.css";
 
 const UserLoginStatus = () => {
     const { idNumber } = useParams();

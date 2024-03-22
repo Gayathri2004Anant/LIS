@@ -6,7 +6,7 @@ function Home() {
     return (
         <div className='home'>
             
-            <div className='topbar'>
+            <div className='topBar'>
                 <div className='logo'>
                 <button className='login'><Link to ='/login' className='underline'>Login</Link></button>
                 </div>

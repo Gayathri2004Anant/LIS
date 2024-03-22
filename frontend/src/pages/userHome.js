@@ -13,6 +13,10 @@ const BookHome = () => {
     return ( 
         <div className="bookHome">
            {/* <h1>Manage Books</h1> */}
+           <div className="topbar">
+            <div><Link to="/"><h3>Home</h3></Link></div>
+            <div><Link to="/userlogin/admin"><h3>Back</h3></Link></div>
+           </div>
            <div className="homeContainer">
             <div className="left_bh">
            <AddUser/>

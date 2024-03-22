@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Books from '../components/BookList';
+import { Link } from 'react-router-dom';
 
 const Search = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -88,6 +89,7 @@ const Search = () => {
         {renderAdditionalField()}
 
         <button type="submit">Search</button>
+        <Link to="/"><button>Home</button></Link>
       </form>
       </div>
       </div>

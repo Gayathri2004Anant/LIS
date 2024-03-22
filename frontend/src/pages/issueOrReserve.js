@@ -116,7 +116,13 @@ const IssueOrReservePage = () => {
 
 
     return (
+        < div className="dummyWrapper">
+            <div className="topbar">
+            <div><Link to="/"><h3>Home</h3></Link></div>
+            <div><Link to="/userlogin/admin"><h3>Back</h3></Link></div>
+           </div>
         <div className='fullPage'>
+           
             <div className="leftSection">
                 <label>Enter User Code:</label>
                 <input type="text" value={code} onChange={(e) => setCode(e.target.value)} />
@@ -150,7 +156,8 @@ const IssueOrReservePage = () => {
                             <p>Max Books: {user.max_books}</p>
                             <p>Active No: {user.active_no}</p>
                             <p>Reserve No: {user.reserve_no}</p>
-                            <p>Valid Till: {user.valid_till}</p>
+                            <p>Membership Valid Till: {user.valid_till}</p>
+                            <p>Dues: {user.fine}</p>
                             <p>Active Books:</p>
                             <div className="active_books">
                                 {user.active_books.map(id => (
@@ -184,6 +191,8 @@ const IssueOrReservePage = () => {
                     )}
                 </div>
             </div>
+           
+        </div>
         </div>
     );
 }
