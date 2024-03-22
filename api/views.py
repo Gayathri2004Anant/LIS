@@ -352,25 +352,28 @@ def returnbook(request, pk1, pk2):
         return Response("Book does not exist.")
     except User.DoesNotExist:
         return Response("User does not exist.")
-
-
-
-
+    
 @api_view(['GET', 'POST'])
 def reservebook(request, pk1, pk2):
     book=Book.objects.get(id=pk1)
     user=User.objects.get(id=pk2)
     if (book.available==False):
-        user.active_no=user.active_no-1
-        user.active_books.remove(book)
-        user.save()
         if (book.reserved==False):
-            book.available=True
-            book.save()
+            if (user.active_no+user.reserve_no<user.max_books):
+                user.reserve_no=user.reserve_no+1
+                user.reserved_books.add(book)
+                book.available=False
+                book.reserved=True
+                book.reserved_code=user.code
+                trans=Transaction(category=3, user_code=user.code, book_id=book.ISBN)
+                trans.save()
+                user.transactions.add(trans)
+                book.save()
+                user.save()
     return Response(book.available)
 
 @api_view(['GET'])
-def getTransaction(request, pk):
-    trans = Transaction.objects.get(id = pk)
+def getLatestTransaction(request):
+    trans = Transaction.objects.latest('id')
     transSerializer = TransactionSerializer(trans, many=False)
     return Response(transSerializer.data)

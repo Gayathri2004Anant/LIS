@@ -125,7 +125,6 @@ class User(models.Model):
         (UG, 'Undergraduate Student'),
         (PG, 'Postgraduate Student'),
         (RS, 'Research Scholar'),
-        (FACULTY, 'Faculty Member'),
         (ADMIN, 'Administrator'),
     )
     name=models.CharField(max_length=100)
