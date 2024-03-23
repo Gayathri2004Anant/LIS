@@ -4,6 +4,7 @@ from . import views
 urlpatterns=[
     path('books/', views.getBooks),
     path('books/<int:pk>', views.getBook),
+    path('books/ISBN/<int:pk>', views.getBookISBN),
     path('books/<str:search>', views.getQuery),
     path('books/category/<int:pk>', views.getCategory),
     path('books/author/<str:search>', views.getAuthor),
@@ -31,4 +32,5 @@ urlpatterns=[
     # path('adm/addcopy/<int:pk>', views.addCopy),
     path('adm/return/<int:pk1>/<int:pk2>', views.returnbook),
     path('adm/reserve/<int:pk1>/<int:pk2>', views.reservebook),
+    path('adm/latest_trans', views.getLatestTransaction),
 ]
