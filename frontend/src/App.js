@@ -101,7 +101,6 @@ import "./styles/receipt.css";
 import "./styles/homepage1.css";
 import "./styles/loginPage.css";
 import "./styles/UserDetails.css";
-import "./styles/UserDetails.css";
 import "./styles/userlogin.css";
 import "./styles/defaulters.css";
 

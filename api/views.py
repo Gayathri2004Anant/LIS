@@ -305,7 +305,7 @@ def getTransaction(request, pk):
 @api_view(['GET', 'POST'])
 def cross(request):
     current=date.today()
-    trans=Transaction.objects.filter(due_date__lt=current)
+    trans=Transaction.objects.filter(due_date__lt=current, category = 1)
     users=User.objects.all()
     for user in users:
         for tran in trans:
@@ -327,7 +327,7 @@ def cross(request):
                 user.save()
     # userfilter=User.objects.filter(fine__gt=0)
     # userSerializer=UserSerializer(userfilter, many=True)
-    transfilter = Transaction.objects.filter(dues__gt=0)
+    transfilter = Transaction.objects.filter(dues__gt=0, category = 1)
     transSerializer = TransactionSerializer(transfilter, many=True)
     return Response(transSerializer.data)
 # @api_view(['GET', 'POST'])
@@ -381,6 +381,7 @@ def returnbook(request, pk1, pk2):
                 # tranissue = Transaction.objects.filter(active=True, user_code=user.code, book_id=book.ISBN, category=1)
                 print(user.transactions.all())
                 tranissue = user.transactions.filter(book_id=book.ISBN).latest('id')
+                tranissue.dues = 0
                 user.fine = 0
                 # tranissue = tranissue.objects.latest('id')
                 due = (return_dates - tranissue.due_date).days * 20
