@@ -1,6 +1,11 @@
 # Create your models here.
 import uuid
-
+import datetime
+from datetime import date
+from datetime import timedelta
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
+from django.utils import timezone
 from django.db import models
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser
@@ -65,12 +70,12 @@ class Book(models.Model):
     year=models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(2101)])
     category=models.PositiveSmallIntegerField(choices=CATEGORIES, blank=True, null=True, default=0)
     # #ISBN[key][value-0/1]
-    last_issue_date=models.DateField(default=datetime.date.today())
+    last_issue_date=models.DateField(default=date.today())
     # count_available=models.IntegerField(default=0,d_user validators=[MinValueValidator(0)])
     # count_available=0
     available=models.BooleanField(default=1)
     reserved=models.BooleanField(default=0)
-    max_reserve_date=models.DateField(default=datetime.date.today())
+    max_reserve_date=models.DateField(default=date.today())
     cupboard=models.IntegerField(default=0, validators=[MinValueValidator(0)])
     rack=models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(4)])
     position=models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(9)])
@@ -102,10 +107,10 @@ class Transaction(models.Model):
     )
     # name=models.CharField(default='0', max_length=10)
     category=models.PositiveSmallIntegerField(choices=KINDS, blank=True, null=True, default=0)
-    max_date_of_reserve=models.DateField(default=datetime.date.today())
-    issue_date=models.DateField(default=datetime.date.today())
-    due_date=models.DateField(default=datetime.date.today())
-    return_date=models.DateField(default=datetime.date.today())
+    max_date_of_reserve=models.DateField(default=date.today()+relativedelta(years=5))
+    issue_date=models.DateField(default=date.today()+relativedelta(years=5))
+    due_date=models.DateField(default=date.today()+relativedelta(years=5))
+    return_date=models.DateField(default=date.today()+relativedelta(years=5))
     dues=models.IntegerField(default=0, validators=[MinValueValidator(0)])
     user_code=models.CharField(max_length=9, default='0')
     book_id=models.IntegerField(default=0)
@@ -138,7 +143,7 @@ class User(models.Model):
     code=models.CharField(max_length=9)
     email=models.EmailField(unique=True)
     password=models.CharField(max_length=12)
-    notification=models.CharField(max_length=1000)
+    notification=models.CharField(max_length=1000, default='0')
     type=models.PositiveSmallIntegerField(choices=TYPES, blank=True, null=True, default=0)
     max_books=models.IntegerField(default=0, validators=[MinValueValidator(2), MaxValueValidator(10)])
     active_no=models.IntegerField(default=0)#, validators=[MinValueValidator(0), MaxValueValidator(max_books)])
@@ -151,7 +156,7 @@ class User(models.Model):
     # active_list=[]
     # reserved_list=[]
     fine=models.IntegerField(default=0, validators=[MinValueValidator(0)])
-    valid_till=models.DateField(default=datetime.date.today())
+    valid_till=models.DateField(default=date.today()+relativedelta(years=5))
     class Meta():
         if type==1:
             max_books=2
@@ -163,4 +168,5 @@ class User(models.Model):
             max_books=10
     def __str__(self):
         return self.name
+    
     

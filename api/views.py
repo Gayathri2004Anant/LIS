@@ -147,23 +147,51 @@ def addBook(request):
         bookSerializer.save()
         # bookSerializer.data['ISBN']=settings.CUPBOARD*100+settings.RACK*10+settings.POSITION
     return Response(bookSerializer.data)
+# @api_view(['GET', 'POST'])
+# def genISBN(request):
+#     book=Book.objects.latest('id')
+#     position=book.id%10
+#     rack=(book.id//10)%5
+#     cupboard=book.id//50
+#     isbn=cupboard*100+rack*10+position
+#     book.ISBN=isbn
+#     book.cupboard=cupboard
+#     book.rack=rack
+#     book.position=position
+#     book.save()
+#     bookSerializer=BookSerializer(book, many=False)
+#     return Response(bookSerializer.data)
 @api_view(['GET', 'POST'])
 def genISBN(request):
-    book=Book.objects.latest('id')
-    position=book.id%10
-    rack=(book.id//10)%5
-    cupboard=book.id//50
-    isbn=cupboard*100+rack*10+position
-    book.ISBN=isbn
-    book.cupboard=cupboard
-    book.rack=rack
-    book.position=position
-    book.save()
-    bookSerializer=BookSerializer(book, many=False)
+    # book=Book.objects.latest('id')
+    # position=book.id%10
+    # rack=(book.id//10)%5
+    # cupboard=book.id//50
+    # isbn=cupboard*100+rack*10+position
+    # book.ISBN=isbn
+    # book.cupboard=cupboard
+    # book.rack=rack
+    # book.position=position
+    # book.save()
+    # bookSerializer=BookSerializer(book, many=False)
+    books=Book.objects.all()
+    for book in books:
+        position=book.id%10
+        rack=(book.id//10)%10
+        cupboard=book.id//50
+        isbn=cupboard*100+rack*10+position
+        book.ISBN=isbn
+        book.cupboard=cupboard
+        book.rack
+        book.position=position
+        book.save()
+    bookSerializer=BookSerializer(books, many=True)
     return Response(bookSerializer.data)
 @api_view(['DELETE'])
 def deleteBook(request, pk):
     book=Book.objects.get(id=pk)
+    if (book.available==False or book.reserved==True):
+        return Response('Book is not available to delete')
     book.delete()
     return Response('Book was deleted')
 # @api_view(['GET', 'POST'])
@@ -324,7 +352,14 @@ def cross(request):
         for tran in trans:
             if (user.code==tran.user_code):
                 user.notification='The book {} is no longer reserved for you!!'.format(tran.book_id)
+                book1=Book.objects.get(ISBN=tran.book_id)
+                user.reserved_books.remove(book1)
+                book1.max_reserve_date=date.today()+relativedelta(years=5)
                 user.save()
+                user.reserve_no=user.reserved_books.count()
+                user.save()
+                book1.issued_code='0'
+                book1.save()
     # userfilter=User.objects.filter(fine__gt=0)
     # userSerializer=UserSerializer(userfilter, many=True)
     transfilter = Transaction.objects.filter(dues__gt=0, category = 1)
@@ -380,14 +415,14 @@ def returnbook(request, pk1, pk2):
                 return_dates = date.today()
                 # tranissue = Transaction.objects.filter(active=True, user_code=user.code, book_id=book.ISBN, category=1)
                 print(user.transactions.all())
-                tranissue = user.transactions.filter(book_id=book.ISBN).latest('id')
+                tranissue = user.transactions.filter(book_id=book.ISBN, category=1).latest('id')
                 tranissue.dues = 0
                 user.fine = 0
                 # tranissue = tranissue.objects.latest('id')
                 due = (return_dates - tranissue.due_date).days * 20
                 if due < 0:
                     due = 0
-                tranret = Transaction(category=2, return_date=return_dates, dues=due, user_code=user.code, book_id=book.ISBN)
+                tranret = Transaction(category=2, return_date=return_dates, dues=due, user_code=user.code, book_id=book.ISBN, issue_date=tranissue.issue_date)
                 tranret.save()
                 user.transactions.add(tranret)
                 user.save()
@@ -395,8 +430,9 @@ def returnbook(request, pk1, pk2):
                 if book.reserved:
                     book.available = True
                     max_date = return_dates + relativedelta(days=7)
-                    tranres = Transaction.objects.get(category=3, book_id=book.ISBN)
+                    tranres = Transaction.objects.filter(category=3, book_id=book.ISBN).latest('id')
                     tranres.max_date_of_reserve = max_date
+                    book.max_reserve_date=max_date
                     book.save()
                     tranres.save()
 
@@ -419,13 +455,15 @@ def reservebook(request, pk1, pk2):
     user=User.objects.get(id=pk2)
     if (book.available==False):
         if (book.reserved==False):
-            if (user.active_no+user.reserve_no<user.max_books):
-                user.reserve_no=user.reserve_no+1
+            if (user.active_no+user.reserve_no<user.max_books and user.code!=book.issued_code):
+                # user.reserve_no=user.reserve_no+1
                 user.reserved_books.add(book)
+                user.save()
+                user.reserve_no=user.reserved_books.count()
                 book.available=False
                 book.reserved=True
                 book.reserved_code=user.code
-                trans=Transaction(category=3, user_code=user.code, book_id=book.ISBN)
+                trans=Transaction(category=3, user_code=user.code, book_id=book.ISBN, issue_date=date.today(), max_date_of_reserve=user.valid_till)
                 trans.save()
                 user.transactions.add(trans)
                 book.save()
