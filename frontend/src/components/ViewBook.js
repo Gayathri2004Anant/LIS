@@ -22,6 +22,7 @@ const getCategoryText = (category) => {
 
     const [searchKey, setSearchKey] = useState('');
     const [bookData, setBookData] = useState([]);
+    
 
     const handleSearch = async () => {
         try {
@@ -38,6 +39,7 @@ const getCategoryText = (category) => {
     };
 
     const deleteBook = async (id) => {
+        window.alert('Are you sure you want to delete this book?');
         try {
             const response = await fetch(`http://localhost:8000/api/adm/books/delete/${id}`, {
                 method: 'DELETE',
@@ -45,8 +47,16 @@ const getCategoryText = (category) => {
             if (!response.ok) {
                 throw new Error('Failed to delete book');
             }
-            console.log('Book deleted successfully');
-            setBookData(null); // Clear bookData after deletion
+            else if(response==='Book is not available to delete')
+            {
+                console.log('Book was not deleted');
+                // window.alert(response);
+            }
+            else {
+                console.log('Book deleted successfully');
+                // window.alert(response);
+                setBookData(null);
+            }
         } catch (error) {
             console.error('Error deleting book:', error);
         }

@@ -6,7 +6,38 @@ const Transactions = () => {
   // const { id } = useParams();
   // console.log(id, "hello");
 
+//   const CATEGORY_MAPPING = {
+//     1: 'Adventure',
+//     2: 'Fantasy',
+//     3: 'Crime',
+//     4: 'Classics',
+//     5: 'History',
+//     6: 'Romance',
+//     7: 'Biography',
+//     8: 'Mathematics',
+//     9: 'Computer Science',
+//     10: 'Science',
+//     11: 'Mechanics'
+// };
+
+    // // Function to get text based on category value
+    // const getCategoryText = (category) => {
+    //     return CATEGORY_MAPPING[category] || 'Unknown';
+    // };
+
   const [trans, setTrans] = useState([]);
+  // const [book, setBook] = useState({
+  //   title: "",
+  //   author: "",
+  //   publisher: "",
+  //   edition: "",
+  //   year: "",
+  //   category: "",
+  //   last_issue_date: "",
+  //   available: "",
+  //   reserved: "",
+  // });
+
 
   useEffect(() => {
     const getTrans = async () => {
@@ -23,6 +54,22 @@ const Transactions = () => {
     getTrans();
   }, []); // Include id as a dependency to fetch data when id changes
 
+  // useEffect(() => {
+  //   const getBook = async () => {
+  //     try {
+  //       let response = await fetch(`http://localhost:8000/api/books/${trans.book_id}`);
+  //       let data = await response.json();
+  //       console.log(data);
+  //       setBook(data);
+  //       console.log(book.available, "available");
+  //     } catch (error) {
+  //       console.error("Error fetching book:", error);
+  //     }
+  //   };
+
+  //   getBook();
+  // }, [trans.book_id]); // Include id as a dependency to fetch data when id changes
+
   return (
     <div className="dummyWrapper">
       <div className="topbar">
@@ -32,14 +79,20 @@ const Transactions = () => {
     <div className="transactions">
         
         <div className="transWrapper">
-        <h2>Transaction Details</h2>
+        {/* <h2>Transaction Details</h2>
+        <h3>Book Title: {book.title}</h3> */}
         <p>User code: {trans.user_code}</p>
         <p>Book ISBN: {trans.book_id}</p>
-        <p>Type: {(trans.category===1 && "ISSUE") || (trans.category===2 && "RETURN") || (trans.category===3 && "RESERVE")}</p>
+        {/* <p>Author: {book.author}</p>
+        <p>Publisher: {book.publisher}</p>
+        <p>Edition: {book.edition}</p>
+        <p>Year: {book.year}</p>
+        <p>Category: {getCategoryText(book.category)}</p>
+        <p>Type: {(trans.category===1 && "ISSUE") || (trans.category===2 && "RETURN") || (trans.category===3 && "RESERVE")}</p> */}
         <div>
             {
                 (trans.category===1 && <div><p>Issue Date: {trans.issue_date}</p> <p>Due on: {trans.due_date}</p></div>) || 
-                (trans.category===3 && <div><p>Reserve Date: {trans.issue_date}</p></div>) || 
+                (trans.category===3 && <div><p>Reserve Date: {trans.issue_date}</p> <p>Reserved Till: {trans.max_date_of_reserve}</p></div> ) || 
                 (trans.category===2 &&  <div><p>Issue Date: {trans.issue_date}</p> <p>Return Date: {trans.return_date}</p> <p>Fine: {trans.dues}</p></div>)
             }
         </div>

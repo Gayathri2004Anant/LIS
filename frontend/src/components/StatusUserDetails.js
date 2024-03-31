@@ -28,9 +28,9 @@ const StatusUserDetails = ({ user }) => {
     }, [user.active_books, user.reserved_books, user.code]); // Fetch transaction when active_books, reserved_books, or code changes
 
     return (
-        <div className="userfullpage">
+        <div className="ankuserfullpage">
             <div className="notifications">
-                <button className='notification'><p className='textnote'>Notifications</p></button>
+                <h1><p className='textnote'>Notifications</p></h1>
                 <h2 className='texts'> {user.notification}</h2>
             </div>
             <div className="userstatusdetailspage">
