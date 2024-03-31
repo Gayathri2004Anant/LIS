@@ -1,6 +1,7 @@
 import {Link} from 'react-router-dom';
 import AuthContext from '../context/AuthContext';
 import {useContext} from 'react';
+import Recommended from './Recommended';
 const UserDetails = ({user}) => {
     const url=`/userloginstatus/${user.code}`;
     let {logoutUser} = useContext(AuthContext); 
@@ -22,6 +23,11 @@ const UserDetails = ({user}) => {
                 <button className='statusbutton' > <Link to ={url} className='underline'>
                 User Status </Link></button>
                 <div><button className='searchbutton' onClick={(e) => logoutUser()}>Logout</button></div>
+                <Link to="/request"><div><button className='searchbutton'>Make Request</button></div></Link>
+            </div>
+            <div className = "Recommended">
+                <Recommended />
+
             </div>
             </div>
         </div>

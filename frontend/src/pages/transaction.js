@@ -39,7 +39,7 @@ const Transactions = () => {
         <div>
             {
                 (trans.category===1 && <div><p>Issue Date: {trans.issue_date}</p> <p>Due on: {trans.due_date}</p></div>) || 
-                (trans.category===3 && <div><p>Reserve Date: {trans.issue_date}</p></div>) || 
+                 
                 (trans.category===2 &&  <div><p>Issue Date: {trans.issue_date}</p> <p>Return Date: {trans.return_date}</p> <p>Fine: {trans.dues}</p></div>)
             }
         </div>

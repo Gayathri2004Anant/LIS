@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import {Link} from 'react-router-dom';
 
 const ViewBook = () => {
 
@@ -22,6 +23,7 @@ const getCategoryText = (category) => {
 
     const [searchKey, setSearchKey] = useState('');
     const [bookData, setBookData] = useState([]);
+    const [found, setFound] = useState(false);
 
     const handleSearch = async () => {
         try {
@@ -31,6 +33,7 @@ const getCategoryText = (category) => {
             }
             const bookData = await response.json();
             setBookData(bookData);
+            setFound(true);
         } catch (error) {
             console.error('Error fetching book data:', error);
             window.alert("Book not found")
@@ -48,6 +51,7 @@ const getCategoryText = (category) => {
             }
             console.log('Book deleted successfully');
             setBookData(null); // Clear bookData after deletion
+            setFound(false);
         } catch (error) {
             console.error('Error deleting book:', error);
         }
@@ -84,7 +88,8 @@ const getCategoryText = (category) => {
                     <p>Reserved: {bookData.reserved ? 'Yes' : 'No'}</p>
                     <p>Code of issued user: {bookData.issued_code}</p>
                     <p>Code of reserved user: {bookData.reserved_code}</p>
-                    <button onClick={() => deleteBook(bookData.id)}>Delete</button>
+                    {found&&<button onClick={() => deleteBook(bookData.id)}>Delete</button>}
+                    {found&&<Link to={"/edit/"+bookData.id} ><button>Edit</button></Link>}
                 </div>
                 
             } 

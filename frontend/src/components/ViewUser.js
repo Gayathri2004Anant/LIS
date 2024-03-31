@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom';
 const ViewUser = () => {
     const [searchKey, setSearchKey] = useState('');
     const [userData, setUserData] = useState([]);
+    const [found, setFound] = useState(false);
 
     const handleSearch = async () => {
         try {
@@ -13,6 +14,7 @@ const ViewUser = () => {
             }
             const data = await response.json();
             setUserData(data);
+            setFound(true);
         } catch (error) {
             console.error('Error fetching user data:', error);
         }
@@ -28,6 +30,7 @@ const ViewUser = () => {
             }
             console.log('User deleted successfully');
             setUserData([]); 
+            setFound(false);
         } catch (error) {
             console.error('Error deleting user:', error);
         }
@@ -83,8 +86,8 @@ const ViewUser = () => {
                 </div>
                 </div>
                 ))}
-                <button className="delete" onClick={() => {console.log(userData[0].id);deleteUser(userData[0].id);}}>Delete</button>
-                
+                {found&&<button className="delete" onClick={() => {console.log(userData[0].id);deleteUser(userData[0].id);}}>Delete</button>}
+                {found&&<Link to={"/editUser/"+userData[0].id}><button>Edit</button></Link>}
             </div>
             
             )}

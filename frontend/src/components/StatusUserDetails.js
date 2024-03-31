@@ -5,25 +5,29 @@ const StatusUserDetails = ({ user }) => {
     const [trans, setTrans] = useState({});
 
     useEffect(() => {
-        const fetchTransaction = async (isbn, code, cat) => {
+        const fetchTransaction = async (id, code, cat) => {
             try {
+                let position=Math.floor(id%10)
+                let rack=Math.floor((id/10)%5)
+                let cupboard=Math.floor((id/50))
+                let isbn=cupboard*100+rack*10+position
                 const url = `http://localhost:8000/api/adm/custom_trans/${isbn}/${code}/${cat}`;
                 const response = await fetch(url);
                 const data = await response.json();
-                setTrans(prevTrans => ({ ...prevTrans, [isbn]: data }));
+                setTrans(prevTrans => ({ ...prevTrans, [id]: data }));
             } catch (error) {
                 console.error("Error fetching transaction:", error);
             }
         };
 
         // Fetch transaction for each active book
-        user.active_books.forEach(isbn => {
-            fetchTransaction(isbn, user.code, 1);
+        user.active_books.forEach(id => {
+            fetchTransaction(id, user.code, 1);
         });
 
         // Fetch transaction for each reserved book
-        user.reserved_books.forEach(isbn => {
-            fetchTransaction(isbn, user.code, 3); // Assuming category 3 is for reserved books
+        user.reserved_books.forEach(id => {
+            fetchTransaction(id, user.code, 3); // Assuming category 3 is for reserved books
         });
     }, [user.active_books, user.reserved_books, user.code]); // Fetch transaction when active_books, reserved_books, or code changes
 
@@ -45,12 +49,12 @@ const StatusUserDetails = ({ user }) => {
                             <p>Number of Active Books: {user.active_no}</p>
                             <div className="books-liststatus">
                                 <p>Active Books: </p>
-                                {user.active_books.map(isbn => (
-                                    <button className='searchbutton' key={isbn}>
-                                        <Link to={"/book/" + isbn} className='underline'>
+                                {user.active_books.map(id => (
+                                    <button className='searchbutton' key={id}>
+                                        <Link to={"/book/" + id} className='underline'>
                                             <div className="bookItemstatus">
-                                                <p>ISBN: {isbn}</p>
-                                                <p>Due Date: {trans[isbn]?.due_date}</p>
+                                                <p>ID: {id}</p>
+                                                <p>Due Date: {trans[id]?.due_date}</p>
                                             </div>
                                         </Link>
                                     </button>
@@ -58,12 +62,12 @@ const StatusUserDetails = ({ user }) => {
                                 <p>Number of Reserved Books: {user.reserve_no}</p>
                                 <p>Reserved Books: </p>
                                 
-                                {user.reserved_books.map(isbn => (
-                                    <button className='searchbutton' key={isbn}>
-                                        <Link to={"/book/" + isbn} className='underline'>
+                                {user.reserved_books.map(id => (
+                                    <button className='searchbutton' key={id}>
+                                        <Link to={"/book/" + id} className='underline'>
                                             <div className="bookItemstatus">
-                                                <p>ISBN: {isbn}</p>
-                                                <p>Max date of reserve: {trans[isbn]?.max_date_of_reserve}</p>
+                                                <p>ID: {id}</p>
+                                                <p>Max date of reserve: {trans[id]?.max_date_of_reserve}</p>
                                             </div>
                                         </Link>
                                     </button>

@@ -10,6 +10,10 @@ import UserLoginStatus from './pages/userloginstatus';
 import Transactions from './pages/transaction';
 import ViewDefaulters from './pages/viewDefaulters';
 import UserLogin from './pages/userlogin';
+import AllTransactions from './pages/allTransactions';
+import RequestPage from './pages/requestPage';
+import EditBook from './pages/EditBook';
+import EditUser from './pages/EditUser';
 import "./styles/searchStyles.css";
 import "./styles/bookStyles.css";
 import "./styles/adminPage.css";
@@ -22,7 +26,9 @@ import "./styles/loginPage.css";
 import "./styles/UserDetails.css";
 import "./styles/userlogin.css";
 import "./styles/defaulters.css";
-
+import "./styles/allTrans.css";
+import "./styles/requestPage.css";
+import "./styles/editBook.css";
 
 import {
   BrowserRouter as Router,
@@ -62,6 +68,15 @@ function App() {
           <AdminRoute path="/userlogin/admin">
             <AdminPage />
           </AdminRoute>
+          <AdminRoute path="/alltransactions">
+            <AllTransactions />
+          </AdminRoute>
+          <AdminRoute path='/edit/:id'>
+            <EditBook />
+          </AdminRoute>
+          <AdminRoute path='/editUser/:id'>
+            <EditUser />
+          </AdminRoute>
           <Route path="/login">
             <LoginPage />
           </Route>
@@ -76,6 +91,9 @@ function App() {
           </PrivateRoute>
           <PrivateRoute path="/userloginstatus/:idNumber">
             <UserLoginStatus />
+          </PrivateRoute>
+          <PrivateRoute path="/request">
+            <RequestPage />
           </PrivateRoute>
           <Route path="/">
             <Home />

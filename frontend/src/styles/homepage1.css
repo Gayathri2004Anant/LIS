@@ -1,5 +1,4 @@
-
-.home{
+  .home{
     width: 100%;
     min-height: 100vh;
     background-image: url('../ankimg/b1.jpg');
@@ -8,108 +7,59 @@
     flex-direction: column;
   }
   .mainpage{
-    flex:9;
+    flex-grow:1;
     display: flex;
+    flex-direction: column;
+    background-color: rgb(0,0,0,0.5);
   }
-  .welcome{
-    font:100;
-    font-style: italic;
-    word-spacing: 10px;
-    letter-spacing: 4px;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    color: snow;
-    /* line-height: 10rem; */
-    font-size: 50px;
-    width: 80%;
-    margin:50px;
-    margin-top: 100px;
-  }
+
   .topBar{
-    width: 100%;
-    /* background-color: rgba(0, 0, 0, 0.5); */
-    
-    flex: 1;
-  }
-  div.logo{
-    background-color: bisque;
-    position: absolute;
-    top: 0;
-    width: 100%;
-    height: 10%;
-    justify-content: space-around;
-    align-items: right;
-    text-align: right;
-  }
-  
-  
-  /* 
-
-  div.mainpage{
+    flex-grow: 1;
+    background-color: black;
     display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: left;
-  }
-  div.half{
-    flex:1;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  
-  
-
-  
-   */
-   .blackback{
-    background-color: rgba(0, 0, 0, 0.7);
-    padding: 20px;
+    position: fixed;
+    width: 100%;
+    justify-content: space-between;
   }
 
+  .topBar h2{
+    color: bisque;
+    font-family: 'Lora', serif;
+    padding: 10px;
+  }
 
-   .half{
-    width: 50%;
-    padding: 20px;
-   }
+  .welcome{
+    font-family: 'Lora', serif;
+    color: white;
+    font-size: 50px;
+    flex-grow: 1;
+    padding: 100px;
+  }
 
-   .button{
-    width: 50%;
-    height: 50%;
-    padding: 5px;
-    font-size: 30px;
+  .latest_wrapper{
+    width: 80%;
+    margin: 0 auto;
+    flex-grow: 3;
+  }
+
+  .loginButton{
+    background-color: bisque;
+    color: black;
+    font-family: 'Lora', serif;
+    font-size: 20px;
+    padding: 10px;
+    margin: 10px;
     border: none;
     border-radius: 8px;
-    margin: 10px 0px;
-    background-color: #77777728;
-  }
-  .button:hover {
-    background-color: transparent;
-    margin: 10px 0px;
   }
 
-  .underline {
+  .topButtons a{
     text-decoration: none;
-    color: snow;
-    letter-spacing: 4px;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color: black;
   }
 
-  .login{
-    width: 10%;
-    height: 40%;
-    margin: 10px;
-    color: bisque;
-    background-color: black;
-    border-radius: 8px;
-    font-size: x-large;
-    letter-spacing: 4px;
-    margin: 10px;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-  }
-  .login:hover {
-    background-color: chocolate;
-    margin: 10px 0px;
-  }
-  .login a{
-    text-decoration: none;
-  }
+  .topButtons button:hover{
+    background-color:darkgoldenrod;  }
+
+  
+

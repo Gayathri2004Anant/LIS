@@ -33,7 +33,7 @@ const IssueOrReservePage = () => {
 
     const retrieveBookInfo = async () => {
         try {
-            const response = await fetch(`http://localhost:8000/api/books/ISBN/${bookId}`);
+            const response = await fetch(`http://localhost:8000/api/books/${bookId}`);
             if (response.ok) {
                 const bookData = await response.json();
                 setBookData(bookData);
@@ -105,7 +105,7 @@ const IssueOrReservePage = () => {
     };
 
     const reserveBook = async () => {
-        if((userData[0].max_books>userData[0].active_no+userData[0].reserve_no)&&(bookData.available===false && bookData.reserved===false)){
+        if((userData[0].max_books>userData[0].active_no+userData[0].reserve_no)&&(bookData.available===false && bookData.reserved===false)&&bookData.issued_code!==userData[0].code){
             try {
                 const response = await fetch(`http://localhost:8000/api/adm/reserve/${bookId}/${userId}`, {
                     method: 'POST',
@@ -139,7 +139,7 @@ const IssueOrReservePage = () => {
                 <input type="text" value={code} onChange={(e) => setCode(e.target.value)} />
                 <button className='retrieve' onClick={retrieveUser}>Retrieve User</button>
 
-                <label>Enter Book ISBN:</label>
+                <label>Enter Book ID:</label>
                 <input type="text" value={bookId} onChange={(e) => setBookId(e.target.value)} />
                 <button className='retrieve' onClick={retrieveBookInfo}>Retrieve Book Info</button>
 

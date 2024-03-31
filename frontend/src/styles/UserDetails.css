@@ -67,6 +67,10 @@ body{
     color: white;
     cursor: pointer;
 }
+.searchbutton a{
+    text-decoration: none;
+    color: white;
+}
 .statusbutton{
     width: 100%;
     padding: 10px;
@@ -77,6 +81,11 @@ body{
     background-color: chocolate;
     color: white;
     cursor: pointer;
+}
+
+.statusbutton a{
+    text-decoration: none;
+    color: white;
 }
 .underline{
     text-decoration: none;

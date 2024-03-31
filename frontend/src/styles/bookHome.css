@@ -91,6 +91,24 @@
     color:aliceblue;
 }
 
+.searchWrapperLight2 button{
+    width: 40%;
+    padding: 5px;
+    font-size: 20px;
+    border: none;
+    border-radius: 0px;
+    margin: 10px 0px;
+    opacity: 1;
+    color: white;
+    background-color: #777;
+    cursor: pointer;
+}
+
+.searchWrapperLight2 button:hover{
+    background-color:chocolate;
+    color:aliceblue;
+}
+
 .viewBookContent{
     width:60%;
     margin:auto;
