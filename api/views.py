@@ -47,6 +47,13 @@ def getBooks(request):
     books=Book.objects.all()
     bookSerializer=BookSerializer(books, many=True)
     return Response(bookSerializer.data)
+
+@api_view(['GET'])
+def getlatestBooks(request):
+    last_ten=Book.objects.all().order_by('-id')[:10]
+    bookSerializer=BookSerializer(last_ten, many=True)
+    return Response(bookSerializer.data)
+
 @api_view(['GET'])
 def getBook(request, pk):
     book = Book.objects.get(id = pk)
@@ -163,30 +170,38 @@ def addBook(request):
 #     return Response(bookSerializer.data)
 @api_view(['GET', 'POST'])
 def genISBN(request):
-    # book=Book.objects.latest('id')
-    # position=book.id%10
-    # rack=(book.id//10)%5
-    # cupboard=book.id//50
-    # isbn=cupboard*100+rack*10+position
-    # book.ISBN=isbn
-    # book.cupboard=cupboard
-    # book.rack=rack
-    # book.position=position
-    # book.save()
-    # bookSerializer=BookSerializer(book, many=False)
+    
     books=Book.objects.all()
     for book in books:
         position=book.id%10
-        rack=(book.id//10)%10
+        rack=(book.id//10)%5
         cupboard=book.id//50
         isbn=cupboard*100+rack*10+position
         book.ISBN=isbn
         book.cupboard=cupboard
-        book.rack
+        book.rack = rack
         book.position=position
         book.save()
     bookSerializer=BookSerializer(books, many=True)
     return Response(bookSerializer.data)
+
+@api_view(['GET', 'POST'])
+def genISBNsingle(request):
+    
+    book=Book.objects.all().latest('id')
+   
+    position=book.id%10
+    rack=(book.id//10)%5
+    cupboard=book.id//50
+    isbn=cupboard*100+rack*10+position
+    book.ISBN=isbn
+    book.cupboard=cupboard
+    book.rack = rack
+    book.position=position
+    book.save()
+    bookSerializer=BookSerializer(book, many=False)
+    return Response(bookSerializer.data)
+
 @api_view(['DELETE'])
 def deleteBook(request, pk):
     book=Book.objects.get(id=pk)

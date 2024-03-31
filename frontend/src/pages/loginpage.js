@@ -42,10 +42,10 @@ const LoginPage = () => {
         <div className='loginfull'>
             <div className='half1'> 
                 <h2 className='LoginPage'>LOGIN PAGE</h2>
-                <select className='selectbox' onChange={(e) => setUserType(e.target.value)}>
+                {/* <select className='selectbox' onChange={(e) => setUserType(e.target.value)}>
                     <option value="user">User</option>
                     <option value="admin">Admin</option>
-                </select>
+                </select> */}
                 <input name="username" className='textbox' type="text" placeholder="User ID" onChange={(e) => setUserId(e.target.value)} />
                 <input name="password" className='password' type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
                 <button className='savechangesbutton' onClick={(e) => loginUser(userId, password)}><p className='viewBookContentunderline'>Login</p></button>

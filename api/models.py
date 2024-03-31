@@ -82,19 +82,6 @@ class Book(models.Model):
     ISBN=models.IntegerField(default=0)
     def __str__(self):
         return self.title
-# class Jugaad:
-#     cupboardno=models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(24)])
-#     rackno=models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(4)])
-#     position=models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(9)])
-
-# class ActiveBooks(models.Model):
-#     book=models.ForeignKey(Book, on_delete=models.CASCADE, related_name='book', blank=True, null=True)
-#     date_of_issue=models.DateField(default=datetime.date.today())
-#     date_of_return=models.DateField(default=datetime.date.today())
-#     due_date=models.DateField(default=datetime.date.today())
-#     max_date_of_reserve=models.DateField(default=datetime.date.today())
-#     def __str__(self):
-#         return self.book
     
 class Transaction(models.Model):
     ISSUE=1

@@ -50,7 +50,7 @@ const AddBook = () => {
     }
 
     const genIsbn = () => {
-        fetch("http://localhost:8000/api/adm/genISBN")
+        fetch("http://localhost:8000/api/adm/genISBNsingle")
         .then(response => {
             if (response.ok) {
                 return response.json();

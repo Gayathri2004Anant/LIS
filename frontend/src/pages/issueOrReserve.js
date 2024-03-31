@@ -19,6 +19,10 @@ const IssueOrReservePage = () => {
                 if (userData.length > 0) {
                     setUserId(userData[0].id); // Assuming user ID is the first element in userData array
                 }
+                else{
+                    window.alert('No user found.')
+                }
+            
             } else {
                 console.error('Failed to retrieve user data');
             }
@@ -29,15 +33,18 @@ const IssueOrReservePage = () => {
 
     const retrieveBookInfo = async () => {
         try {
-            const response = await fetch(`http://localhost:8000/api/books/${bookId}`);
+            const response = await fetch(`http://localhost:8000/api/books/ISBN/${bookId}`);
             if (response.ok) {
                 const bookData = await response.json();
                 setBookData(bookData);
+                console.log(bookData);
             } else {
                 console.error('Failed to retrieve book data');
+                window.alert("Book not found")
             }
         } catch (error) {
             console.error('Error:', error);
+            window.alert("Book not found")
         }
     };
 
@@ -48,6 +55,7 @@ const IssueOrReservePage = () => {
                 const response = await fetch(`http://localhost:8000/api/adm/return/${bookId}/${userId}`);
                 if (response.ok) {
                     console.log('Book returned successfully');
+                    history.replace('/transactions');
                 } else {
                     console.error('Failed to return book');
                 }
@@ -82,8 +90,10 @@ const IssueOrReservePage = () => {
                 });
                 if (response.ok) {
                     console.log('Book issued successfully');
+                    history.replace('/transactions');
                 } else {
                     console.error('Failed to issue book');
+                    
                 }
             } catch (error) {
                 console.error('Error:', error);
@@ -102,6 +112,7 @@ const IssueOrReservePage = () => {
                 });
                 if (response.ok) {
                     console.log('Book reserved successfully');
+                    history.replace('/transactions');
                 } else {
                     console.error('Failed to reserve book');
                 }
@@ -128,7 +139,7 @@ const IssueOrReservePage = () => {
                 <input type="text" value={code} onChange={(e) => setCode(e.target.value)} />
                 <button className='retrieve' onClick={retrieveUser}>Retrieve User</button>
 
-                <label>Enter Book ID:</label>
+                <label>Enter Book ISBN:</label>
                 <input type="text" value={bookId} onChange={(e) => setBookId(e.target.value)} />
                 <button className='retrieve' onClick={retrieveBookInfo}>Retrieve Book Info</button>
 

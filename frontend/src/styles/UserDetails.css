@@ -13,8 +13,9 @@ body{
     justify-content: center;
     min-height: 100vh;
     width: 100%;
-    background-image: url('../images/book4.jpg');
-    background-size: cover;
+    /* background-image: url('../images/book6.jpg'); */
+    /* background-color: red; */
+    /* background-size: cover; */
 }
 
 .userdetails{
@@ -27,11 +28,13 @@ body{
     align-items: center;
     justify-content: center;
     min-height: 100vh;
+    /* background-color: red; */
+    /* background-image: url('../images/book6.jpg'); */
    
 }
 .userleftpage{
     width: 50%;
-    background-color: rgb(0,0,0,0.7);
+    background-color: rgb(0,0,0,0.5);
     padding: 20px;
     border-radius: 10px;
     margin: 20px;
@@ -79,46 +82,52 @@ body{
     text-decoration: none;
     /* color: black; */
 }
-
-.notifications{
-    width: 100%;
-    height: 50%;
+.ankuserfullpage{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    font-size: 20px;
-    /* margin-bottom: 10px; */
-    cursor: pointer;
-    background-color: bisque;
+    /* background-color: red; */
+    background-image: url("../images/book6.jpg");
     background-size: cover;
-    color: black;
-    padding: 10px;
+}
+.notifications{
+    /* background-color: red; */
+    margin-top: 70px;
+    width: 80%;
+    height: 40%;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background-color: rgb(1,1,0,0.5);
+    padding: 40px;
+    border-radius: 10px;
 }
 
-.notifications p{
-    width: 100%;
-    background-color: rgb(0,0,0,0.7);
-}
 
 .notification{
-    width: 100%;
-    padding: 10px;
-    font-size: 20px;
+    width: 50%;
     border-radius: 5px;
-    margin: 10px 0px;
     cursor: pointer;
-    background-color: cornsilk;
 }
+
 .notification p{
     background-color: cornsilk;
-    color: black;
+    color: white;
 }
 .textnote{
-    font-size: 18px;
+    font-size: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+    color: white;
 }
 .texts{
     font-size: 14px;
     text-align: center;
+    color: white;
 }
 .userstatusdetailspage{
+    margin-top: 40px;
     width: 100%;
     height: 90%;
     display: flex;
@@ -129,7 +138,7 @@ body{
 }
 .userstatusleftpage{
     width: 50%;
-    background-color: rgb(0,0,0,0.7);
+    background-color: rgb(0,0,0,0.5);
     padding: 20px;
     border-radius: 10px;
     margin: 20px;
@@ -155,6 +164,19 @@ body{
 .userdetailspage{
     width: 100%;
     height: 100%;
-    background-image: url('../ankimg/b2.jpg');
+    background-image: url('../images/book6.jpg');
     background-size: cover;
+    /* background-color: brown; */
 }
+
+/* .userdetails{
+    min-height: 100vh;
+    width: 100%;
+}
+
+.userdetailspage{
+    min-height: 100%;
+    width: 100%;
+    display: flex;
+    background-color: red;
+} */

@@ -33,6 +33,7 @@ const getCategoryText = (category) => {
             setBookData(bookData);
         } catch (error) {
             console.error('Error fetching book data:', error);
+            window.alert("Book not found")
         }
         console.log(bookData)
     };
