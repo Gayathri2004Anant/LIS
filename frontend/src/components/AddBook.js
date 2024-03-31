@@ -9,7 +9,7 @@ const AddBook = () => {
         year: 1990,
         category: 1,
         last_issue_date: "2000-01-01",
-        available: false,
+        available: true,
         reserved: false
     };
 
@@ -18,6 +18,7 @@ const AddBook = () => {
     const [isbn, setIsbn] = useState(0);
     const [isbnGenerated, setIsbnGenerated] = useState(false); // Track whether ISBN has been generated
     const [bookAdded, setBookAdded] = useState(false); // Track whether book has been added
+    // const [loading, setLoading] = useState(false); // Track whether ISBN is being generated
 
     const handleCategoryChange = (e) => {
         setSelectedCategory(parseInt(e.target.value));
@@ -38,6 +39,7 @@ const AddBook = () => {
                 setBook(initialBookState); // Resetting the book state to initial values
                 setBookAdded(true); // Set bookAdded to true after adding book
                 setIsbnGenerated(false);
+                // console.log('Book added successfully Ankita ',book.ISBN);
             } else {
                 // Handle error if needed
             }
@@ -60,12 +62,43 @@ const AddBook = () => {
         })
         .then(data => {
             setIsbn(data.isbn);
+            console.log("Ankita mishra "+data.isbn);
+            // window.alert('ISBN generated successfully: ' + data.isbn);
         })
         .catch(error => {
             // Handle error if needed
             console.error('Error:', error);
         });
     }
+
+    // const genIsbn = () => {
+    //     // Display loading indicator
+    //     setLoading(true);
+    
+    //     fetch("http://localhost:8000/api/adm/genISBN")
+    //     .then(response => {
+    //         if (response.ok) {
+    //             return response.json();
+    //         } else {
+    //             // Handle error if needed
+    //             throw new Error('Failed to fetch ISBN');
+    //         }
+    //     })
+    //     .then(data => {
+    //         setIsbn(data.isbn);
+    //         // Hide loading indicator
+    //         setLoading(false);
+    //         setLoading(false);
+    //         window.alert('ISBN generated successfully: ' + data.isbn);
+    //     })
+    //     .catch(error => {
+    //         // Hide loading indicator
+    //         setLoading(false);
+    //         console.error('Error:', error);
+    //         // Handle error if needed
+    //     });
+    // }
+    
 
     return (
         <div className='addBook'>
@@ -108,20 +141,20 @@ const AddBook = () => {
         </div>
            
     <br />
-    <div style={{ display: 'flex', alignItems: 'center', backgroundColor:'chocolate'}}>
+    {/* <div style={{ display: 'flex', alignItems: 'center', backgroundColor:'chocolate'}}>
     <label style={{ marginRight: '5px', fontSize:'20px', color:"aliceblue"}}>Available:</label>
     <input type="checkbox" checked={book.available} onChange={(e) => setBook({ ...book, available: e.target.checked })} />
-    </div>
+    </div> */}
     <br />
-    <div style={{ display: 'flex', alignItems: 'center', backgroundColor:'chocolate'}}>
+    {/* <div style={{ display: 'flex', alignItems: 'center', backgroundColor:'chocolate'}}>
         <label style={{ marginRight: '5px', fontSize:'20px', color:"aliceblue" }}>Reserved:</label>
         <input type="checkbox" checked={book.reserved} onChange={(e) => setBook({ ...book, reserved: e.target.checked })} />
-    </div>
+    </div> */}
     <br />
             <div className="buttonWrapper">
             <div><button onClick={addBook}>Add Book</button></div>
             {bookAdded && !isbnGenerated && // Show button only if book is added and ISBN is not generated
-                <div><button onClick={()=>{genIsbn();setIsbnGenerated(true);setBookAdded(false)}}>Generate ISBN</button></div>
+                <div><button onClick={()=>{genIsbn();setIsbnGenerated(true);setBookAdded(false);}}>Generate ISBN</button></div>
             }
             </div>
             {/* <p>ISBN of last added book: {book.ISBN}</p> */}
