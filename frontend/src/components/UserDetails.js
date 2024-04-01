@@ -26,7 +26,7 @@ const UserDetails = ({user}) => {
                 <Link to="/request"><div><button className='searchbutton'>Make Request</button></div></Link>
             </div>
             <div className = "Recommended">
-                <Recommended />
+                <Recommended id={user.id} />
 
             </div>
             </div>

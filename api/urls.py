@@ -26,6 +26,7 @@ urlpatterns=[
     path('adm/books/delete/<int:pk>', views.deleteBook),
     path('adm/users/register', views.register),
     path('adm/users/edit_user/<int:pk>', views.edituser),
+    path('adm/books/edit_book/<int:pk>', views.editbook),
     path('adm/users/delete/<int:pk>', views.deleteuser),
     path('adm/issue/<int:pk1>/<int:pk2>', views.issue),
     # path('adm/reserve/<int:pk1>/<int:pk2>', views.reserve),
@@ -44,4 +45,9 @@ urlpatterns=[
     path('adm/reserve/<int:pk1>/<int:pk2>', views.reservebook),
     path('adm/latest_trans', views.getLatestTransaction),
     path('adm/custom_trans/<int:isbn>/<str:uid>/<int:cat>', views.customTrans),
+    path('adm/procreq/<int:pk>/<str:tit>/<str:auth>/<str:link>', views.takeprocreq),
+    path('adm/suggest/<int:pk>', views.autosuggest),
+    path('adm/MakeDB', views.makedb),
+    path('procreq/<int:pk>', views.takeprocreq),
+    path('notinshelf/<int:pk>/<int:isbn>', views.notinshelf),
 ]

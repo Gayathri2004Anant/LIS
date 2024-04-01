@@ -16,7 +16,8 @@ const AddUser = () => {
         fine: 0,
         valid_till: "2024-03-16",
         active_books: [],
-        reserved_books: []
+        reserved_books: [],
+        dept: "",
     };
 
     const [user, setUser] = useState(initialUserState);
@@ -95,6 +96,29 @@ const AddUser = () => {
                 <option value={4}>Faculty Member</option>
             </select>
             </div>
+            <div className="custom-select">
+            <select value={user.dept} onChange={(e) => setUser({ ...user, dept: e.target.value })}>
+            <option value={""}>Select Department</option>
+            <option value={"CS"}>Computer Science</option>
+            <option value={"EE"}>Electrical Engineering</option>
+            <option value={"MA"}>Mathematics</option>
+            <option value={"EC"}>Electronics and Communication</option>
+            <option value={"ME"}>Mechanical Engineering</option>
+            <option value={"CH"}>Chemical Engineering</option>
+            <option value={"CE"}>Civil Engineering</option>
+            <option value={"CY"}>Cryptography</option>
+            <option value={"PH"}>Physics</option>
+            <option value={"EX"}>Experimental Science</option>
+            <option value={"GG"}>Geology</option>
+            <option value={"NA"}>Naval Architecture</option>
+            <option value={"MT"}>Metallurgy</option>
+            <option value={"BS"}>Biological Sciences</option>
+            <option value={"AR"}>Architecture</option>
+            <option value={"AG"}>Agriculture</option>
+            <option value={"MI"}>Mining</option>
+            </select>
+            </div>
+
             <br />
             <p>Membership Valid Till: </p>
             <input type="date" placeholder="Membership validity" value={user.valid_till} onChange={(e) => setUser({ ...user, valid_till: e.target.value })} />

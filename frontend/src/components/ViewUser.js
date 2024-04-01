@@ -54,6 +54,7 @@ const ViewUser = () => {
                     <div className="user-wrappe">
                     <h3>User Info</h3>
                     <p>Name: {user.name}</p>
+                    <p>Department: {user.dept}</p>
                     <p>Code: {user.code}</p>
                     <p>Email: {user.email}</p>
                     <p>Username: {user.username}</p>

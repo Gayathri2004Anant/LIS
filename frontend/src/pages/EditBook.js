@@ -7,15 +7,23 @@ const EditBook = () => {
   const history = useHistory();
 
   const [book, setBook] = useState({
+    id: 0,
     title: "",
     author: "",
     publisher: "",
-    edition: "",
-    year: "",
-    category: "",
+    issued_code: "",
+    reserved_code: "",
+    edition: 0,
+    year: 0,
+    category: 0,
     last_issue_date: "",
-    available: "",
-    reserved: "",
+    available: true,
+    reserved: false,
+    max_reserve_date: "",
+    cupboard: 0,
+    rack: 0,
+    position: 0,
+    ISBN: 0
   });
 
   useEffect(() => {
@@ -27,6 +35,7 @@ const EditBook = () => {
         }
         const data = await response.json();
         setBook(data);
+        console.log(data);
       } catch (error) {
         console.error("Error fetching book:", error);
         // Handle error (e.g., show an error message, redirect)
@@ -40,12 +49,30 @@ const EditBook = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setBook({ ...book, [name]: value });
+    const parsedValue = name === 'year' || name === 'edition' || name==='category' ? parseInt(value) : value;
+    setBook({ ...book, [name]: parsedValue });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(book);
+    console.log(JSON.stringify(book));
+    try {
+      const response = await fetch(`http://localhost:8000/api/adm/books/edit_book/${id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(book),
+      });
+      if (!response.ok) {
+        throw new Error(`Failed to update book with id ${id}`);
+      }
+      // Assuming successful update, you can redirect the user or do any other necessary action
+      // For example, redirect to the book details page
+    } catch (error) {
+      console.error("Error updating book:", error);
+      // Handle error (e.g., show an error message)
+    }
   };
 
   const handleBack = () => {
@@ -62,23 +89,23 @@ const EditBook = () => {
         <br />
         <input type="text" name="publisher" placeholder="Publisher" value={book.publisher} onChange={handleInputChange} />
         <br />
-        <input type="text" name="edition" placeholder="Edition" value={book.edition} onChange={handleInputChange} />
+        <input type="number" name="edition" placeholder="Edition" value={book.edition} onChange={handleInputChange} />
         <br />
-        <input type="text" name="year" placeholder="Year" value={book.year} onChange={handleInputChange} />
+        <input type="number" name="year" placeholder="Year" value={book.year} onChange={handleInputChange} />
         <br />
         <div className="custom-select">
           <select name="category" value={book.category} onChange={handleInputChange}>
-            <option value="Adventure">Adventure</option>
-            <option value="Fantasy">Fantasy</option>
-            <option value="Crime">Crime</option>
-            <option value="Classics">Classics</option>
-            <option value="History">History</option>
-            <option value="Romance">Romance</option>
-            <option value="Biography">Biography</option>
-            <option value="Mathematics">Mathematics</option>
-            <option value="Computer Science">Computer Science</option>
-            <option value="Science">Science</option>
-            <option value="Mechanics">Mechanics</option>
+            <option value="1">Adventure</option>
+            <option value="2">Fantasy</option>
+            <option value="3">Crime</option>
+            <option value="4">Classics</option>
+            <option value="5">History</option>
+            <option value="6">Romance</option>
+            <option value="7">Biography</option>
+            <option value="8">Mathematics</option>
+            <option value="9">Computer Science</option>
+            <option value="10">Science</option>
+            <option value="11">Mechanics</option>
           </select>
         </div>
         <br />
@@ -90,3 +117,4 @@ const EditBook = () => {
 };
 
 export default EditBook;
+
