@@ -123,9 +123,9 @@ class Req(models.Model):
     request=models.PositiveSmallIntegerField(choices=REQUESTS, blank=True, null=True, default=0)
     ucode=models.CharField(max_length=9)
     bISBN=models.IntegerField(default=0)
-    bname=models.CharField(max_length=200, default='')
-    bauthor=models.CharField(max_length=100, default='0')
-    blink=models.CharField(max_length=10000, default='0')
+    bname=models.CharField(max_length=200, default="")
+    bauthor=models.CharField(max_length=100, default="")
+    blink=models.CharField(max_length=10000, default="")
     def __str__(self):
         return self.bname
     

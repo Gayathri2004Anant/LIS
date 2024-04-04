@@ -23,7 +23,7 @@ const UserDetails = ({user}) => {
                 <button className='statusbutton' > <Link to ={url} className='underline'>
                 User Status </Link></button>
                 <div><button className='searchbutton' onClick={(e) => logoutUser()}>Logout</button></div>
-                <Link to="/request"><div><button className='searchbutton'>Make Request</button></div></Link>
+                <Link to={"/request/"+user.code}><div><button className='searchbutton'>Make Request</button></div></Link>
             </div>
             <div className = "Recommended">
                 <Recommended id={user.id} />

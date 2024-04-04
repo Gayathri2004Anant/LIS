@@ -14,6 +14,7 @@ import AllTransactions from './pages/allTransactions';
 import RequestPage from './pages/requestPage';
 import EditBook from './pages/EditBook';
 import EditUser from './pages/EditUser';
+import Requests from './pages/viewRequests';
 import "./styles/searchStyles.css";
 import "./styles/bookStyles.css";
 import "./styles/adminPage.css";
@@ -71,6 +72,9 @@ function App() {
           <AdminRoute path="/alltransactions">
             <AllTransactions />
           </AdminRoute>
+          <AdminRoute path="/allrequests">
+            <Requests />
+          </AdminRoute>
           <AdminRoute path='/edit/:id'>
             <EditBook />
           </AdminRoute>
@@ -92,7 +96,7 @@ function App() {
           <PrivateRoute path="/userloginstatus/:idNumber">
             <UserLoginStatus />
           </PrivateRoute>
-          <PrivateRoute path="/request">
+          <PrivateRoute path="/request/:id">
             <RequestPage />
           </PrivateRoute>
           <Route path="/">

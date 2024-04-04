@@ -114,6 +114,13 @@ def getUsers(request):
     users=User.objects.all()
     userSerializer=UserSerializer(users, many=True)
     return Response(userSerializer.data)
+
+@api_view(['GET'])
+def getReqs(request):
+    reqs=Req.objects.all()
+    reqSerializer=ReqSerializer(reqs, many=True)
+    return Response(reqSerializer.data)
+
 @api_view(['GET'])
 def getUser(request, pk):
     user = User.objects.get(id = pk)
@@ -144,6 +151,14 @@ def addBook(request):
         
         bookSerializer.save()
     return Response(bookSerializer.data)
+
+@api_view(['POST'])
+def addReq(request):
+    data=request.data
+    reqSerializer=ReqSerializer(data=data)
+    if reqSerializer.is_valid():
+        reqSerializer.save()
+    return Response(reqSerializer.data)
 
 @api_view(['GET', 'POST'])
 def genISBN(request):

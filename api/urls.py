@@ -41,6 +41,8 @@ urlpatterns=[
     path('adm/latest_trans', views.getLatestTransaction),
     path('adm/custom_trans/<int:isbn>/<str:uid>/<int:cat>', views.customTrans),
     path('adm/procreq/<int:pk>/<str:tit>/<str:auth>/<str:link>', views.takeprocreq),
+    path('adm/makereq', views.addReq),
+    path('adm/reqs', views.getReqs),
     path('adm/suggest/<int:pk>', views.autosuggest),
     path('adm/MakeDB', views.makedb),
     path('procreq/<int:pk>', views.takeprocreq),
