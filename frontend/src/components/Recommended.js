@@ -27,6 +27,10 @@ const Recommended = ({id}) => {
           <Link to={`/book/${book.id}`}><div className="book-box" key={index}>
             <p>{book.title}</p>
             <p>by {book.author}</p>
+            <hr />
+            <div className="overflow">
+            <p>{book.description}</p>
+            </div>
           </div></Link>
         ))}
       </div>

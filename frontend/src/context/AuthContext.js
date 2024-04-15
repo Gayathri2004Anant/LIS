@@ -30,12 +30,15 @@ export const AuthProvider = ({children}) => {
             'username' : username,
             'password' : password
         })
+
+
     });
 
     
 
     if (!response.ok) {
         console.error('Failed to fetch:', response.status, response.statusText);
+        window.alert('Invalid Credentials');
         return;
     }
 

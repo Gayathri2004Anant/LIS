@@ -15,6 +15,7 @@ import RequestPage from './pages/requestPage';
 import EditBook from './pages/EditBook';
 import EditUser from './pages/EditUser';
 import Requests from './pages/viewRequests';
+import LatestBook from './pages/bookAdded';
 import "./styles/searchStyles.css";
 import "./styles/bookStyles.css";
 import "./styles/adminPage.css";
@@ -80,6 +81,9 @@ function App() {
           </AdminRoute>
           <AdminRoute path='/editUser/:id'>
             <EditUser />
+          </AdminRoute>
+          <AdminRoute path='/bookadded'>
+            <LatestBook />
           </AdminRoute>
           <Route path="/login">
             <LoginPage />

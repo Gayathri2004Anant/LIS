@@ -60,7 +60,7 @@ const Search = () => {
       <div className="halfScreen">
         <div className="searchWrapper">
           <h1>EXPLORE</h1>
-          <h3>We have a wide range of books with 10+ categories. Go ahead and hit the search bar</h3>
+          <h3>We have a wide range of books with 20+ categories. Go ahead and hit the search bar</h3>
           <form onSubmit={handleSearch}>
             <div className="custom-select">
               <select

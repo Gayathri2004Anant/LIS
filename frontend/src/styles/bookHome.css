@@ -30,6 +30,16 @@
     color:bisque;
 }
 
+.addBook textarea{
+    width: 100%;
+    height: 200px;
+    color: black;
+    font-size: 20px;
+    margin: 10px 0px;
+    padding: 5px 5px;
+    background-color: bisque;
+}
+
 .addBook h2{
     width: 60%;
     margin: auto;
@@ -84,6 +94,7 @@
     color: white;
     background-color: #777;
     cursor: pointer;
+    margin-left: 10px;
 }
 
 .searchWrapperLight button:hover{

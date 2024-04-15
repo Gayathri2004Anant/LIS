@@ -25,8 +25,13 @@ const LatestBooks = () => {
       <div className="book-grid">
         {latestBooks.slice(0, 8).map((book, index) => (
           <Link to = {"book/"+book.id} key={book.id}><div className="book-box" key={index}>
+            <div className="bookupar">
             <p>{book.title}</p>
             <p>by {book.author}</p>
+            </div>
+            <div className="description">
+            <p>{book.description}</p>
+            </div>
           </div></Link>
         ))}
       </div>

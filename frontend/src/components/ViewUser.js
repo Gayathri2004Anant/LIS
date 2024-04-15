@@ -47,7 +47,7 @@ const ViewUser = () => {
                 onChange={(e) => setSearchKey(e.target.value)}
             />
             <button onClick={handleSearch}>Search</button>
-            {userData && (
+            {userData.length>0 && found && (
             <div className="wrapper">
                 {userData.map((user, index) => (
                 <div key={index} className='userDetails'>
@@ -88,7 +88,7 @@ const ViewUser = () => {
                 </div>
                 ))}
                 {found&&<button className="delete" onClick={() => {console.log(userData[0].id);deleteUser(userData[0].id);}}>Delete</button>}
-                {found&&<Link to={"/editUser/"+userData[0].id}><button>Edit</button></Link>}
+                {found&&<Link to={"/editUser/"+userData[0].id}><button className='delete'>Edit</button></Link>}
             </div>
             
             )}

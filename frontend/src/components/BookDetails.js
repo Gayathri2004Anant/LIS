@@ -73,7 +73,19 @@ const CATEGORY_MAPPING = {
     8: 'Mathematics',
     9: 'Computer Science',
     10: 'Science',
-    11: 'Mechanics'
+    11: 'Mechanics',
+    12: 'Electronics and Electrical Engineering',
+    13: 'Physics',
+    14: 'Chemistry',
+    15: 'Chemical Engineering',
+    16: 'Geology',
+    17: 'Ocean and Naval Engineering',
+    18: 'Metallurgy',
+    19: 'Biotechnology and Biochemistry',
+    20: 'Architecture',
+    21: 'Agriculture and Farming',
+    22: 'Mining',
+    23: 'Civil Engineering',
 };
 
 const BookDetails = ({ book }) => {
@@ -96,8 +108,11 @@ const BookDetails = ({ book }) => {
                 <div className="bookWrapper">
                     <div className="bookContent">
                         <h2>{book.title}</h2>
+                        <h3 className='finalEdit'>{book.description}</h3>
+                        <hr />
                         <div>
                             <h3>ISBN: {book.ISBN}</h3>
+                            
                             <h3>ID: {book.id}</h3>
                             <h3>Author: {book.author}</h3>
                             <h3>Publisher: {book.publisher}</h3>

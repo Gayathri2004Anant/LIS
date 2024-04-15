@@ -34,10 +34,15 @@
     width: 100%;
 }
 
+.finalEdit{
+    color: white;
+    margin-bottom: 20px;
+}
+
 .bookContent h2{
     font-size: 40px;
     margin-bottom: 10px;
-    color: black;
+    color: white;
 }
 
 .bookContent h3{

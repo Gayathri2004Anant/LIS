@@ -10,3 +10,9 @@
 .buttonJugaad button{
     margin: 0 5px;
 }
+
+.overflow{
+    margin-top: 10px;
+    max-height: 80px;
+    overflow-y:scroll;
+}

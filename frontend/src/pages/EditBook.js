@@ -23,7 +23,8 @@ const EditBook = () => {
     cupboard: 0,
     rack: 0,
     position: 0,
-    ISBN: 0
+    ISBN: 0,
+    description: "",
   });
 
   useEffect(() => {
@@ -109,6 +110,7 @@ const EditBook = () => {
           </select>
         </div>
         <br />
+        <textarea name="description" id="description" placeholder='Description' value={book.description} onChange={handleInputChange}></textarea>
         <button type="submit">Update Book</button>
         <button type="button" onClick={handleBack}>Back</button> {/* Back button */}
       </form>

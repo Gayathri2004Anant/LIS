@@ -58,6 +58,12 @@ def getlatestBooks(request):
     return Response(bookSerializer.data)
 
 @api_view(['GET'])
+def getlatestBook(request):
+    last = Book.objects.all().latest('id')
+    bookSerializer=BookSerializer(last, many=False)
+    return Response(bookSerializer.data)
+
+@api_view(['GET'])
 def getBook(request, pk):
     book = Book.objects.get(id = pk)
     bookSerializer = BookSerializer(book, many=False)
@@ -177,22 +183,42 @@ def genISBN(request):
     bookSerializer=BookSerializer(books, many=True)
     return Response(bookSerializer.data)
 
+# @api_view(['GET', 'POST'])
+# def genISBNsingle(request):
+    
+#     book=Book.objects.all().latest('id')
+   
+#     position=book.id%10
+#     rack=(book.id//10)%5
+#     cupboard=book.id//50
+#     isbn=cupboard*100+rack*10+position
+#     book.ISBN=isbn
+#     book.cupboard=cupboard
+#     book.rack = rack
+#     book.position=position
+#     book.save()
+#     latest_book=Book.objects.get(id=book.id)
+#     bookSerializer=BookSerializer(latest_book, many=False)
+#     return Response(bookSerializer.data)
+
 @api_view(['GET', 'POST'])
 def genISBNsingle(request):
-    
-    book=Book.objects.all().latest('id')
-   
-    position=book.id%10
-    rack=(book.id//10)%5
-    cupboard=book.id//50
-    isbn=cupboard*100+rack*10+position
-    book.ISBN=isbn
-    book.cupboard=cupboard
-    book.rack = rack
-    book.position=position
-    book.save()
-    bookSerializer=BookSerializer(book, many=False)
-    return Response(bookSerializer.data)
+    try:
+        book = Book.objects.all().latest('id')
+        position = book.id % 10
+        rack = (book.id // 10) % 5
+        cupboard = book.id // 50
+        isbn = cupboard * 100 + rack * 10 + position
+        book.ISBN = isbn
+        book.cupboard = cupboard
+        book.rack = rack
+        book.position = position
+        book.save()
+        book_serializer = BookSerializer(book, many=False)
+        return Response({"mydata": book_serializer.data, "message": "ISBN generated successfully"})
+    except Book.DoesNotExist:
+        return Response({'error': 'No books found'}, status=404)
+
 
 @api_view(['DELETE'])
 def deleteBook(request, pk):
@@ -335,6 +361,7 @@ def cross(request):
                 user.fine=(current-tran.due_date).days*20
                 tran.dues=user.fine
                 user.notification='You have pending books to return!! The book ISBN is: {}, Present fine is: {}'.format(tran.book_id, user.fine)
+                tran.save()
                 user.save()
     trans=Transaction.objects.filter(category=3, max_date_of_reserve__lt=current)
     for tran in trans:
@@ -356,7 +383,7 @@ def cross(request):
                 book1.save()
     # userfilter=User.objects.filter(fine__gt=0)
     # userSerializer=UserSerializer(userfilter, many=True)
-    transfilter = Transaction.objects.filter(dues__gt=0, category = 1)
+    transfilter = Transaction.objects.filter(dues__gt=0, category = 1, active=True)
     transSerializer = TransactionSerializer(transfilter, many=True)
     return Response(transSerializer.data)
 
@@ -379,7 +406,7 @@ def returnbook(request, pk1, pk2):
                 return_dates = date.today()
                 # tranissue = Transaction.objects.filter(active=True, user_code=user.code, book_id=book.ISBN, category=1)
                 print(user.transactions.all())
-                tranissue = user.transactions.filter(book_id=book.ISBN, category=1).latest('id')
+                tranissue = user.transactions.filter(book_id=book.ISBN, category=1, active=True).latest('id')
                 tranissue.dues = 0
                 user.fine = 0
                 # tranissue = tranissue.objects.latest('id')
@@ -388,6 +415,8 @@ def returnbook(request, pk1, pk2):
                     due = 0
                 tranret = Transaction(category=2, return_date=return_dates, dues=due, user_code=user.code, book_id=book.ISBN, issue_date=tranissue.issue_date)
                 tranret.save()
+                tranissue.active=False
+                tranissue.save()
                 user.transactions.add(tranret)
                 user.save()
 
@@ -450,6 +479,13 @@ def getUserTransactions(request, code):
     trans = Transaction.objects.all().filter(user_code=code).order_by('-id')
     transSerializer = TransactionSerializer(trans, many=True)
     return Response(transSerializer.data)
+
+@api_view(['GET'])
+def getBookTransactions(request, code):
+    trans = Transaction.objects.all().filter(book_id=code).order_by('-id')
+    transSerializer = TransactionSerializer(trans, many=True)
+    return Response(transSerializer.data)
+
 @api_view(['GET'])
 def getAllTransactions(request):
     trans = Transaction.objects.all().order_by('-id')

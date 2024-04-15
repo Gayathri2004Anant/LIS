@@ -61,5 +61,15 @@
   .topButtons button:hover{
     background-color:darkgoldenrod;  }
 
-  
+  .description{
+    margin-top: 10px;
+    max-height: 75px;
+    overflow-y: scroll;
+  }
+
+  .bookupar{
+    font-weight: bolder;
+    color: white;
+    font-size: 1.2rem;
+  }
 
