@@ -353,7 +353,7 @@ def getTransaction(request, pk):
 @api_view(['GET', 'POST'])
 def cross(request):
     current=date.today()
-    trans=Transaction.objects.filter(due_date__lt=current, category = 1)
+    trans=Transaction.objects.filter(due_date__lt=current, category = 1, active=True)
     users=User.objects.all()
     for user in users:
         for tran in trans:
@@ -397,6 +397,7 @@ def returnbook(request, pk1, pk2):
         if not book.available:
             if book in user.active_books.all():  # Checking if the book is in active_books
                 user.active_no -= 1
+                user.notification = "Step into a world where imagination knows no bounds and stories come to life. Whether you're seeking adventures in distant lands, unraveling mysteries, or simply seeking solace in the pages of a good book, you've found your sanctuary here. Take a deep breath, let the scent of knowledge envelop you, and embark on your literary journey. Welcome, adventurer!"
                 user.active_books.remove(book)
                 book.available = True
                 book.issued_code = '0'

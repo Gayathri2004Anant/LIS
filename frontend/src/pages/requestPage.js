@@ -179,6 +179,14 @@ const RequestPage = () => {
     
             if (response.ok) {
                 console.log('Request submitted successfully');
+                setFormData({
+                    request: 0,
+                    ucode: id,
+                    bISBN: 0,
+                    bname: 'NA',
+                    bauthor: 'NA',
+                    blink: 'NA'
+                });
             } else {
                 console.error('Request submission failed');
             }

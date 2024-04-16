@@ -65,6 +65,7 @@
     background-color: rgb(255, 228, 196, 0.5);
     margin-bottom: 1%;
     padding: 10px;
+    overflow-y: scroll;
 }
 
 .r{
