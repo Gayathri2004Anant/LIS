@@ -495,119 +495,118 @@ def getAllTransactions(request):
 
 @api_view(['GET', 'POST'])
 def takeprocreq(request, pk, tit, auth, link):
-    # data=request.data
-    r=Req(ucode=User.objects.get(id=pk).code, bname=tit, bauthor=auth, blink=link, request=1)
-    r.save()
-    return Response(r.bname)
+
+    require=Req(ucode=User.objects.get(id=pk).code, bname=tit, bauthor=auth, blink=link, request=1)
+    require.save()
+    return Response(require.bname)
 @api_view(['GET', 'POST'])
 def notinshelf(request, pk, isbn):
-    r=Req(ucode=User.objects.get(id=pk).code, bISBN=isbn, bname=Book.objects.get(ISBN=isbn).title, bauthor=Book.objects.get(ISBN=isbn).author, request=2)
-    r.save()
-    return Response(r.ucode)
+    require=Req(ucode=User.objects.get(id=pk).code, bISBN=isbn, bname=Book.objects.get(ISBN=isbn).title, bauthor=Book.objects.get(ISBN=isbn).author, request=2)
+    require.save()
+    return Response(require.ucode)
 
 @api_view(['GET', 'POST'])
 def makedb(request):
-    all_books=Book.objects.all()
-    for book in all_books:
-        book.delete()
-    for i in range(0, 10):
-        b=Book(title='Switching and Finite Automata Theory', author='Zvi Kohavi', publisher='Cambridge', available=True, reserved=False, category=9)
-        b.save()
-    for i in range(0, 10):
-        b=Book(title='Let us C', author='Byron Gottfried', publisher='Tata McGraw-Hill', available=True, reserved=False, category=9)
-        b.save()
-    for i in range(0, 10):
-        b=Book(title='Automata and Computability', author='Dexter Kozen', publisher='Springer', available=True, reserved=False, category=9)
-        b.save()
-    for i in range(0, 10):
-        b=Book(title='Software Engineering at Google', author='Titus, Manshreck and Wright', publisher='O Reilly', available=True, reserved=False, category=9)
-        b.save()
-    for i in range(0, 10):
-        b=Book(title='An Introduction to GCC', author='Brian Gough', publisher='Network Theory Ltd.', available=True, reserved=False, category=9)
-        b.save()
-    for i in range(0, 10):
-        b=Book(title='Algorithm Design', author='Kleinberg and Tardos', publisher='Pearson', available=True, reserved=False, category=9)
-        b.save()
-    for i in range(0, 10):
-        b=Book(title='Compilers - Principles, Techniques and Tools', author='Aho, Sethi and Ullman', publisher='Addison-Wesley', available=True, reserved=False, category=9)
-        b.save()
-    for i in range(0, 10):
-        b=Book(title='Machine Learning', author='Tom Mitchell', publisher='McGraw Hill', available=True, reserved=False, category=9)
-        b.save()
-    for i in range(0, 10):
-        b=Book(title='Operating Systems Concepts', author='A. Silverschatz, Galvin and Gagne', publisher='Wiley', available=True, reserved=False, category=9)
-        b.save()
-    for i in range(0, 10):
-        b=Book(title='Mastering Blockchain', author='Imran Bashir', publisher='Packt Publishing', available=True, reserved=False, category=9)
-        b.save()
-    for i in range(0, 10):
-        b=Book(title='Strength of Materials', author='R.K. Bansal', publisher='Laxmi Publications', available=True, reserved=False, category=23)
-        b.save()
-    for i in range(0, 10):
-        b=Book(title='Surveying: Theory and Practice', author='B.C. Punmia', publisher='Laxmi Publications', available=True, reserved=False, category=23)
-        b.save()
-    for i in range(0, 10):
-        b=Book(title='Fluid Mechanics', author='Cengel and Cimbala', publisher='McGraw-Hill', available=True, reserved=False, category=23)
-        b.save()
-    for i in range(0, 10):
-        b=Book(title='Design of Reinforced Concrete Structures', author='N. Subramanian', publisher='Oxford University Press', available=True, reserved=False, category=23)
-        b.save()
-    books=Book.objects.all()
-    bookSerializer=BookSerializer(books, many=True)
+    all_book=Book.objects.all()
+    for books in all_book:
+        books.delete()
+    for i in range( 0, 10 ):
+        c=Book(title=' Switching and Finite Automata Theory ', author='Zvi Kohavi', publisher='Cambridge', available=True, reserved=False, category=9)
+        c.save()
+    for i in range( 0, 10 ):
+        c=Book(title=' Let us C ', author='Byron Gottfried', publisher='Tata McGraw-Hill', available=True, reserved=False, category=9)
+        c.save()
+    for i in range( 0, 10 ):
+        c=Book(title=' Automata and Computability ', author='Dexter Kozen', publisher='Springer', available=True, reserved=False, category=9)
+        c.save()
+    for i in range( 0, 10 ):
+        c=Book(title=' Software Engineering at Google ', author='Titus, Manshreck and Wright', publisher='O Reilly', available=True, reserved=False, category=9)
+        c.save()
+    for i in range( 0, 10 ):
+        c=Book(title=' An Introduction to GCC ', author='Brian Gough', publisher='Network Theory Ltd.', available=True, reserved=False, category=9)
+        c.save()
+    for i in range( 0, 10 ):
+        c=Book(title=' Algorithm Design ', author='Kleinberg and Tardos', publisher='Pearson', available=True, reserved=False, category=9)
+        c.save()
+    for i in range( 0, 10 ):
+        c=Book(title=' Compilers - Principles, Techniques and Tools ', author='Aho, Sethi and Ullman', publisher='Addison-Wesley', available=True, reserved=False, category=9)
+        c.save()
+    for i in range( 0, 10 ):
+        c=Book(title=' Machine Learning ', author='Tom Mitchell', publisher='McGraw Hill', available=True, reserved=False, category=9)
+        c.save()
+    for i in range( 0, 10 ):
+        c=Book(title=' Operating Systems Concepts ', author='A. Silverschatz, Galvin and Gagne', publisher='Wiley', available=True, reserved=False, category=9)
+        c.save()
+    for i in range( 0, 10 ):
+        c=Book(title=' Mastering Blockchain ', author='Imran Bashir', publisher='Packt Publishing', available=True, reserved=False, category=9)
+        c.save()
+    for i in range( 0, 10 ):
+        c=Book(title=' Strength of Materials ', author='R.K. Bansal', publisher='Laxmi Publications', available=True, reserved=False, category=23)
+        c.save()
+    for i in range( 0, 10 ):
+        c=Book(title=' Surveying: Theory and Practice ', author='B.C. Punmia', publisher='Laxmi Publications', available=True, reserved=False, category=23)
+        c.save()
+    for i in range( 0, 10 ):
+        c=Book(title=' Fluid Mechanics ', author='Cengel and Cimbala', publisher='McGraw-Hill', available=True, reserved=False, category=23)
+        c.save()
+    for i in range( 0, 10 ):
+        c=Book(title=' Design of Reinforced Concrete Structures ', author='N. Subramanian', publisher='Oxford University Press', available=True, reserved=False, category=23)
+        c.save()
+    books1=Book.objects.all()
+    bookSerializer=BookSerializer(books1, many=True)
     return Response(bookSerializer.data)
 
 @api_view(['GET', 'POST'])
 def autosuggest(request, pk):
-    user=User.objects.get(id=pk)
-    dep=user.dept
-    if (user.count<5):
-        if dep=='CS':
-            rel=9
-        elif dep=='EE':
-            rel=12
-        elif dep=='MA':
-            rel=8
-        elif dep=='EC':
-            rel=12
-        elif dep=='ME':
-            rel=11
-        elif dep=='CH':
-            rel=15
-        elif dep=='CE':
-            rel=23
-        elif dep=='CY':
-            rel=14
-        elif dep=='PH':
-            rel=13
-        elif dep=='EX':
-            rel=16
-        elif dep=='GG':
-            rel=16
-        elif dep=='NA':
-            rel=17
-        elif dep=='MT':
-            rel=18
-        elif dep=='BS':
-            rel=19
-        elif dep=='AR':
-            rel=20
-        elif dep=='AG':
-            rel=21
-        elif dep=='MI':
-            rel=22
-        books=Book.objects.filter(category=rel, available=True, reserved=False)
-    else:
-        cat_counter = Counter(user.cat)
-        most_common_cat, frequency = cat_counter.most_common(1)[0]
-        books=Book.objects.filter(category=most_common_cat, available=True, reserved=False)
-        
-    name=[]
-    mybooks = []
-    for book in books:
-        if ((book.title in name)==False):
-            name.append(book.title)
-            mybooks.append(book)
-    i = min(8, len(mybooks))
-    mybooks = mybooks[:i]
-    bookSerializer=BookSerializer(mybooks, many=True)
+    users=User.objects.get(id=pk)
+    department=users.dept
+    if (users.count<5):
+        if department=='CS':
+            reln=9
+        elif department=='EE':
+            reln=12
+        elif department=='MA':
+            reln=8
+        elif department=='EC':
+            reln=12
+        elif department=='ME':
+            reln=11
+        elif department=='CH':
+            reln=15
+        elif department=='CE':
+            reln=23
+        elif department=='CY':
+            reln=14
+        elif department=='PH':
+            reln=13
+        elif department=='EX':
+            reln=16
+        elif department=='GG':
+            reln=16
+        elif department=='NA':
+            reln=17
+        elif department=='MT':
+            reln=18
+        elif department=='BS':
+            reln=19
+        elif department=='AR':
+            reln=20
+        elif department=='AG':
+            reln=21
+        elif department=='MI':
+            reln=22
+        books=Book.objects.filter(category=reln, available=True, reserved=False)
+    else :
+        category_counter = Counter(users.cat)
+        most_common_category, frequency = category_counter.most_common(1)[0]
+        books=Book.objects.filter(category=most_common_category, available=True, reserved=False)
+    names = []
+    mybook = []
+    for book1 in books:
+        if ((book1.title in names)==False):
+            names.append(book1.title)
+            mybook.append(book1)
+    i = min(8, len(mybook))
+    mybook = mybook[:i]
+    bookSerializer=BookSerializer(mybook, many=True)
     return Response(bookSerializer.data)
