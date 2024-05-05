@@ -387,124 +387,124 @@ def cross(request):
     transSerializer = TransactionSerializer(transfilter, many=True)
     return Response(transSerializer.data)
 
-
+#Return a book from an entered user
 @api_view(['GET', 'POST'])
 def returnbook(request, pk1, pk2):
     try:
-        book = Book.objects.get(id=pk1)
-        user = User.objects.get(id=pk2)
-
-        if not book.available:
-            if book in user.active_books.all():  # Checking if the book is in active_books
-                user.active_no -= 1
-                user.notification = "Step into a world where imagination knows no bounds and stories come to life. Whether you're seeking adventures in distant lands, unraveling mysteries, or simply seeking solace in the pages of a good book, you've found your sanctuary here. Take a deep breath, let the scent of knowledge envelop you, and embark on your literary journey. Welcome, adventurer!"
-                user.active_books.remove(book)
-                book.available = True
-                book.issued_code = '0'
-                book.save()  # Saving book changes
-                user.save()  # Saving user changes
-
-                return_dates = date.today()
-                # tranissue = Transaction.objects.filter(active=True, user_code=user.code, book_id=book.ISBN, category=1)
-                print(user.transactions.all())
-                tranissue = user.transactions.filter(book_id=book.ISBN, category=1, active=True).latest('id')
-                tranissue.dues = 0
-                user.fine = 0
-                # tranissue = tranissue.objects.latest('id')
-                due = (return_dates - tranissue.due_date).days * 20
-                if due < 0:
-                    due = 0
-                tranret = Transaction(category=2, return_date=return_dates, dues=due, user_code=user.code, book_id=book.ISBN, issue_date=tranissue.issue_date)
-                tranret.save()
-                tranissue.active=False
-                tranissue.save()
-                user.transactions.add(tranret)
-                user.save()
-
-                if book.reserved:
-                    book.available = True
-                    max_date = return_dates + relativedelta(days=7)
-                    tranres = Transaction.objects.filter(category=3, book_id=book.ISBN).latest('id')
-                    tranres.max_date_of_reserve = max_date
-                    book.max_reserve_date=max_date
-                    book.save()
-                    tranres.save()
-
-                return Response(book.available)
+        book_entered = Book.objects.get(id=pk1)
+        user_entered = User.objects.get(id=pk2)
+        if not book_entered.available:
+            if book_entered in user_entered.active_books.all():  # Checking if the book is in active_books
+                user_entered.active_no -= 1
+                user_entered.notification = "Step into a world where imagination knows no bounds and stories come to life. Whether you're seeking adventures in distant lands, unraveling mysteries, or simply seeking solace in the pages of a good book, you've found your sanctuary here. Take a deep breath, let the scent of knowledge envelop you, and embark on your literary journey. Welcome, adventurer!"
+                user_entered.active_books.remove(book_entered)
+                book_entered.available = True
+                book_entered.issued_code = '0'
+                book_entered.save()  # Saving book changes
+                user_entered.save()  # Saving user changes
+                return_date = date.today()
+                print(user_entered.transactions.all())
+                transissue = user_entered.transactions.filter(book_id=book_entered.ISBN, category=1, active=True).latest('id')
+                transissue.dues = 0
+                user_entered.fine = 0
+                due_amt = (return_date - transissue.due_date).days * 20
+                if due_amt < 0:
+                    due_amt = 0
+                transret = Transaction(category=2, return_date=return_date, dues=due_amt, user_code=user_entered.code, book_id=book_entered.ISBN, issue_date=tranissue.issue_date)
+                transret.save()
+                transissue.active=False
+                transissue.save()
+                user_entered.transactions.add(transret)
+                user_entered.save()
+                if book_entered.reserved:
+                    book_entered.available = True
+                    max_date = return_date + relativedelta(days=7)
+                    transres = Transaction.objects.filter(category=3, book_id=book_entered.ISBN).latest('id')
+                    transres.max_date_of_reserve = max_date
+                    book_entered.max_reserve_date=max_date
+                    book_entered.save()
+                    transres.save()
+                return Response(book_entered.available)
             else:
-                return Response("Book is not issued to this user.")
+                return Response("Book is not issued to this user!")
         else:
-            return Response("Book is already available.")
+            return Response("Book is already available!")
     except Book.DoesNotExist:
-        return Response("Book does not exist.")
+        return Response("Book does not exist!")
     except User.DoesNotExist:
-        return Response("User does not exist.")
+        return Response("User does not exist!")
 
-
-
-
+#Reserve an entered book for a user
 @api_view(['GET', 'POST'])
 def reservebook(request, pk1, pk2):
-    book=Book.objects.get(id=pk1)
-    user=User.objects.get(id=pk2)
-    if (book.available==False):
-        if (book.reserved==False):
-            if (user.active_no+user.reserve_no<user.max_books and user.code!=book.issued_code):
-                # user.reserve_no=user.reserve_no+1
-                user.reserved_books.add(book)
-                user.save()
-                user.reserve_no=user.reserved_books.count()
-                book.available=False
-                book.reserved=True
-                book.reserved_code=user.code
-                trans=Transaction(category=3, user_code=user.code, book_id=book.ISBN, issue_date=date.today(), max_date_of_reserve=user.valid_till)
-                trans.save()
-                user.transactions.add(trans)
-                book.save()
-                user.save()
-    return Response(book.available)
+    book_entered=Book.objects.get(id=pk1)
+    user_entered=User.objects.get(id=pk2)
+    if (book_entered.available==False):
+        if (book_entered.reserved==False):
+            if (user_entered.active_no+user_entered.reserve_no<user_entered.max_books and user_entered.code!=book_entered.issued_code):
+                user_entered.reserved_books.add(book_entered)
+                user_entered.save()
+                user_entered.reserve_no=user_entered.reserved_books.count()
+                book_entered.available=False
+                book_entered.reserved=True
+                book_entered.reserved_code=user_entered.code
+                transact=Transaction(category=3, user_code=user_entered.code, book_id=book_entered.ISBN, issue_date=date.today(), max_date_of_reserve=user_entered.valid_till)
+                transact.save()
+                user_entered.transactions.add(transact)
+                book_entered.save()
+                user_entered.save()
+    return Response(book_entered.available)
 
+#Get the latest transaction done
 @api_view(['GET'])
 def getLatestTransaction(request):
-    trans = Transaction.objects.latest('id')
-    transSerializer = TransactionSerializer(trans, many=False)
-    return Response(transSerializer.data)
+    transaction = Transaction.objects.latest('id')
+    transacSerializer = TransactionSerializer(transaction, many=False)
+    return Response(transacSerializer.data)
 
+#Get transaction filtered by isbn, user code, and transaction category
 @api_view(['GET'])
 def customTrans(request, isbn, uid, cat):
     trans=Transaction.objects.filter(book_id=isbn, user_code=uid, category=cat).latest('id')
     transSerializer = TransactionSerializer(trans, many=False)
     return Response(transSerializer.data)
+
+#Get the transactions made by the entered user
 @api_view(['GET'])
 def getUserTransactions(request, code):
     trans = Transaction.objects.all().filter(user_code=code).order_by('-id')
     transSerializer = TransactionSerializer(trans, many=True)
     return Response(transSerializer.data)
 
+#Get the transactions related to a given book
 @api_view(['GET'])
 def getBookTransactions(request, code):
     trans = Transaction.objects.all().filter(book_id=code).order_by('-id')
     transSerializer = TransactionSerializer(trans, many=True)
     return Response(transSerializer.data)
 
+#Get all transactions made so far
 @api_view(['GET'])
 def getAllTransactions(request):
     trans = Transaction.objects.all().order_by('-id')
     transSerializer = TransactionSerializer(trans, many=True)
     return Response(transSerializer.data)
 
+#Take in request to procure a book not currently in the library
 @api_view(['GET', 'POST'])
 def takeprocreq(request, pk, tit, auth, link):
-
     require=Req(ucode=User.objects.get(id=pk).code, bname=tit, bauthor=auth, blink=link, request=1)
     require.save()
     return Response(require.bname)
+
+#Take in request to report a book not in its position in the bookshelf
 @api_view(['GET', 'POST'])
 def notinshelf(request, pk, isbn):
     require=Req(ucode=User.objects.get(id=pk).code, bISBN=isbn, bname=Book.objects.get(ISBN=isbn).title, bauthor=Book.objects.get(ISBN=isbn).author, request=2)
     require.save()
     return Response(require.ucode)
 
+#Create a database of books(Not in use currently, was in the previous build, database now generated by the faker)
 @api_view(['GET', 'POST'])
 def makedb(request):
     all_book=Book.objects.all()
@@ -556,6 +556,7 @@ def makedb(request):
     bookSerializer=BookSerializer(books1, many=True)
     return Response(bookSerializer.data)
 
+#Simple algorithm to autosuggest recommended books for a user
 @api_view(['GET', 'POST'])
 def autosuggest(request, pk):
     users=User.objects.get(id=pk)
