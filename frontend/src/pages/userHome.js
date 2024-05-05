@@ -1,21 +1,22 @@
-/* Search User</h2>
-                <h2>Add User</h2>
-                <h2>Issue Book</h2>
-                <h2>Return Book</h2>
-                <h2>Reserve Book</h2> */
-
-
 import React from 'react';
 import {Link} from 'react-router-dom';
 import AddUser from '../components/AddUser';
 import ViewUser from '../components/ViewUser';
 const BookHome = () => {
     return ( 
-        <div className="userHome">
+        <div className="bookHome">
            {/* <h1>Manage Books</h1> */}
+           <div className="topbar">
+            <div><Link to="/"><h3>Home</h3></Link></div>
+            <div><Link to="/userlogin/admin"><h3>Back</h3></Link></div>
+           </div>
            <div className="homeContainer">
-           <AddUser className="left_bh"/>
+            <div className="left_bh">
+           <AddUser/>
+           </div>
+           <div className="right_bh">
               <ViewUser className="right_bh"/>
+              </div>
               </div>
         </div>
      );

@@ -1,5 +1,5 @@
 .search{
-    height: 100%;
+    min-height: 100vh;
     background-image: url(../images/book1.jpg);
     background-size: cover;
     display: flex;
@@ -7,16 +7,22 @@
 
 .halfScreen{
     width: 60%;
-    height: 100%;
+    min-height: 100vh;
     background-color:rgba(0, 0, 0, 0.5);
     display: flex;
     flex-direction: column;
     justify-content: center;
+    /* position: absolute; */
+    /* top: 0; */
 }
 
 .restOfScreen{
     width: 40%;
-    height: 100%;
+    min-height: 100vh;
+    /* position: absolute; */
+    /* right: 0; */
+    /* top: 0; */
+    /* overflow-y: scroll; */
 }
 
 .searchWrapper{
@@ -63,6 +69,7 @@
     color: white;
     background-color: #777;
     cursor: pointer;
+    margin-left: 10px;
 }
 
 .searchWrapper button:hover{
@@ -109,4 +116,13 @@
 .bookItem :hover{
     background-color: bisque;
     color: black;
+}
+
+/* .books-list{
+    overflow-y: scroll;
+} */
+
+.books-list{
+    max-height: 100vh;
+    overflow-y: scroll;
 }
