@@ -23,7 +23,7 @@ from .serializers import ReqSerializer
 from collections import Counter
 
 # Create your views here.
-
+#For user authentication
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
@@ -45,36 +45,42 @@ def getRoutes(request):
     ]
     return Response(routes)
 
+#Get all books
 @api_view(['GET'])
 def getBooks(request):
     books=Book.objects.all()
     bookSerializer=BookSerializer(books, many=True)
     return Response(bookSerializer.data)
 
+#Get last 10 added books
 @api_view(['GET'])
 def getlatestBooks(request):
     last_ten=Book.objects.all().order_by('-id')[:10]
     bookSerializer=BookSerializer(last_ten, many=True)
     return Response(bookSerializer.data)
 
+#Get last added book
 @api_view(['GET'])
 def getlatestBook(request):
     last = Book.objects.all().latest('id')
     bookSerializer=BookSerializer(last, many=False)
     return Response(bookSerializer.data)
 
+#Get book by primary key search
 @api_view(['GET'])
 def getBook(request, pk):
     book = Book.objects.get(id = pk)
     bookSerializer = BookSerializer(book, many=False)
     return Response(bookSerializer.data)
 
+#Get book by entered ISBN
 @api_view(['GET'])
 def getBookISBN(request, pk):
     book = Book.objects.get(ISBN = pk)
     bookSerializer = BookSerializer(book, many=False)
     return Response(bookSerializer.data)
 
+#Get book by searched title substring
 @api_view(['GET'])
 def getQuery(request, search):
     # print(search)
@@ -83,6 +89,8 @@ def getQuery(request, search):
         books=books.filter(title__icontains=search)
         bookSerializer=BookSerializer(books, many=True)
     return Response(bookSerializer.data)
+
+#Get available book by title substring
 @api_view(['GET'])
 def getTitAvailable(request, search):
     books=Book.objects.all()
@@ -90,6 +98,8 @@ def getTitAvailable(request, search):
         books=books.filter(title__icontains=search, available=True, reserved=False)
         bookSerializer=BookSerializer(books, many=True)
     return Response(bookSerializer.data)
+
+#Get reserved book by title substring
 @api_view(['GET'])
 def getTitReserve(request, search):
     books=Book.objects.all()
@@ -97,6 +107,8 @@ def getTitReserve(request, search):
         books=books.filter(title__icontains=search, available=False, reserved=True)
         bookSerializer=BookSerializer(books, many=True)
     return Response(bookSerializer.data)
+
+#Get book by searched category
 @api_view(['GET'])
 def getCategory(request, pk):
     # book = Book.objects.get(category = pk)
@@ -107,6 +119,8 @@ def getCategory(request, pk):
         books=books.filter(category=pk)
         bookSerializer=BookSerializer(books, many=True)
     return Response(bookSerializer.data)
+
+#Search book by author name
 @api_view(['GET'])
 def getAuthor(request, search):
     # print(search)
@@ -115,23 +129,29 @@ def getAuthor(request, search):
         books=books.filter(author__icontains=search)
         bookSerializer=BookSerializer(books, many=True)
     return Response(bookSerializer.data)
+
+#Get all the users registered in the system
 @api_view(['GET'])
 def getUsers(request):
     users=User.objects.all()
     userSerializer=UserSerializer(users, many=True)
     return Response(userSerializer.data)
 
+#Get all the requests made so far
 @api_view(['GET'])
 def getReqs(request):
     reqs=Req.objects.all()
     reqSerializer=ReqSerializer(reqs, many=True)
     return Response(reqSerializer.data)
 
+#Get user by primary key
 @api_view(['GET'])
 def getUser(request, pk):
     user = User.objects.get(id = pk)
     userSerializer = UserSerializer(user, many=False)
     return Response(userSerializer.data)
+
+#Get user by user code
 @api_view(['GET'])
 def getUserCode(request, ucode):
     users = User.objects.all()
@@ -140,6 +160,7 @@ def getUserCode(request, ucode):
         userSerializer=UserSerializer(users, many=True)
     return Response(userSerializer.data)
 
+#User login
 @api_view(['GET'])
 def login(request, usern, passwd):
     users=User.objects.all()
@@ -149,15 +170,17 @@ def login(request, usern, passwd):
             users=users.filter(password=passwd)
             userSerializer=UserSerializer(users, many=True)
     return Response(userSerializer.data)
+
+#Add a book to the library
 @api_view(['POST'])
 def addBook(request):
     data=request.data
     bookSerializer=BookSerializer(data=data)
-    if bookSerializer.is_valid():
-        
+    if bookSerializer.is_valid():       
         bookSerializer.save()
     return Response(bookSerializer.data)
 
+#Get a request
 @api_view(['POST'])
 def addReq(request):
     data=request.data
@@ -166,9 +189,9 @@ def addReq(request):
         reqSerializer.save()
     return Response(reqSerializer.data)
 
+#Generate ISBN of all books
 @api_view(['GET', 'POST'])
-def genISBN(request):
-    
+def genISBN(request):    
     books=Book.objects.all()
     for book in books:
         position=book.id%10
@@ -201,6 +224,7 @@ def genISBN(request):
 #     bookSerializer=BookSerializer(latest_book, many=False)
 #     return Response(bookSerializer.data)
 
+#Allot ISBN to the last added book
 @api_view(['GET', 'POST'])
 def genISBNsingle(request):
     try:
@@ -219,7 +243,7 @@ def genISBNsingle(request):
     except Book.DoesNotExist:
         return Response({'error': 'No books found'}, status=404)
 
-
+#Delete a book from the library
 @api_view(['DELETE'])
 def deleteBook(request, pk):
     book=Book.objects.get(id=pk)
@@ -228,6 +252,7 @@ def deleteBook(request, pk):
     book.delete()
     return Response('Book was deleted')
 
+#Register a new user into the system
 @api_view(['GET', 'POST'])
 def register(request):
     data = request.data
@@ -247,6 +272,7 @@ def register(request):
     else:
         return Response(user_serializer.errors)
 
+#Allot the maximum number of books for a new user
 @api_view(['GET','POST'])
 def getMaxBooks(request):
     
@@ -261,6 +287,8 @@ def getMaxBooks(request):
         user.max_books = 10
     user.save()
     return Response(user.max_books)
+
+#Edit the details of a user
 @api_view(['POST'])
 def edituser(request, pk):
     data=request.data
@@ -269,6 +297,8 @@ def edituser(request, pk):
     if userSerializer.is_valid():
         userSerializer.save()
     return Response(userSerializer.data)
+
+#Edit the details of a book
 @api_view(['POST'])
 def editbook(request, pk):
     data=request.data
@@ -277,6 +307,8 @@ def editbook(request, pk):
     if bookSerializer.is_valid():
         bookSerializer.save()
     return Response(bookSerializer.data)
+
+#Delete a user
 @api_view(['DELETE'])
 def deleteuser(request, pk):
     user=User.objects.get(id=pk)
