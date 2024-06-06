@@ -1,74 +1,39 @@
-# Getting Started with Create React App
+# Library Information System (LIS)
 
+This project is aimed at automating the processes of a library and faciliating user transactions like issue, reserve or return books. Users also have the facility to make requests for procuring new books or reporting a book not in shelf. They are also sent notifications based on their pending books or books which have been reserved for them. We have also introduced user book recommendations, a unique feature that suggests books for users to issue next based on their preferences.
 
-<!-- This is changed by me  Author 1: Ankita Mishra-->
-<!-- pracheta comments -->
+## Installation
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+1. Clone the repository.
+2. Install dependencies with `npm install`.
+3. On a new terminal, prepare the backend of the project for running using these commands in their respective order:
+                                `python3 manage.py makemigrations`
+                                `python3 manage.py migrate`
+4. To create a super user for administrative access, run the following command:
+                                `python3 manage.py createsuperuser`
+    and enter your details as prompted. You may also want to create a sample database with a certain number of books with arbitrary names, for that run:
+                                `python3 manage.py shell`
+                                `from api.factory import BookFactory`
+                                `from BookFactory.create_batch(1000)`
+    The batch size can be adjusted and entered as per requirement
+5. Finally start the backend server using command:
+                                `python3 manage.py runserver`
+    NOTE: All these commands were written assuming the availability of python3 in the user's device. In case of earlier versions being installed, replace `python3` with `python` in the above commands.
+6. Open another new terminal simultaneously, and type in `cd frontend`
+7. Start the app with the command `npm start`
 
-## Available Scripts
+## Contributing
 
-In the project directory, you can run:
+We welcome contributions from the community. If you'd like to contribute, please follow these guidelines:
+- Fork the repository.
+- Create a new branch.
+- Make your changes and submit a pull request.
 
-### `npm start`
+## Credits
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- This project has been made as a part of the Software Engineering Laboratory Course Project (CS29006), Spring 2024, IIT Kharagpur, under the supervision of Prof. Sourangshu Bhattacharya and Prof. Debasis Samanta. We thank our professors for giving us such a wonderful opportunity to learn through this project.
+- Efforts for this project were put in by our team CodeGirls. We are Gayathri Anant(22CS30026), Pracheta Saha(22CS30042) and Ankita Mishra(22CS10010), second year undergraduate students from the Department of Computer Science and Engineering in Indian Institute of Technology, Kharagpur.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Contact
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+If you have any questions or feedback, feel free to reach out to Gayathri Anant: gayathrianant05@gmail.com, Pracheta Saha: prachetacs42@gmail.com, Ankita Mishra: ankitamishra30032005@gmail.com.
