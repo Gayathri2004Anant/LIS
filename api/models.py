@@ -156,7 +156,7 @@ class User(models.Model):
     active_no=models.IntegerField(default=0)#, validators=[MinValueValidator(0), MaxValueValidator(max_books)])
     reserve_no=models.IntegerField(default=0)#, validators=[MinValueValidator(0), MaxValueValidator(max_books)])
     count=models.IntegerField(default=0)
-    cat=ArrayField(models.IntegerField(default=0, validators=[MinValueValidator(1), MaxValueValidator(23)]), blank=True, default=list)
+    #cat=ArrayField(models.IntegerField(default=0, validators=[MinValueValidator(1), MaxValueValidator(23)]), blank=True, default=list)
     active_books=models.ManyToManyField(Book, blank=True, null=True, related_name='active_books')
     reserved_books=models.ManyToManyField(Book, blank=True, null=True, related_name='reserved_books')
     transactions=models.ManyToManyField(Transaction, blank=True, null=True, related_name='transactions')

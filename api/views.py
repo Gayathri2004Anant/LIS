@@ -162,10 +162,10 @@ def getUserCode(request, ucode):
 
 #User login
 @api_view(['GET'])
-def login(request, usern, passwd):
+def login(request, username, passwd):
     users=User.objects.all()
-    if usern is not None:
-        users=users.filter(username=usern)
+    if username is not None:
+        users=users.filter(username=username)
         if passwd is not None:
             users=users.filter(password=passwd)
             userSerializer=UserSerializer(users, many=True)
@@ -631,10 +631,10 @@ def autosuggest(request, pk):
         elif department=='MI':
             reln=22
         books=Book.objects.filter(category=reln, available=True, reserved=False)
-    else :
-        category_counter = Counter(users.cat)
-        most_common_category, frequency = category_counter.most_common(1)[0]
-        books=Book.objects.filter(category=most_common_category, available=True, reserved=False)
+    # else :
+    #     category_counter = Counter(users.cat)
+    #     most_common_category, frequency = category_counter.most_common(1)[0]
+    #     books=Book.objects.filter(category=most_common_category, available=True, reserved=False)
     names = []
     mybook = []
     for book1 in books:
