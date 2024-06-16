@@ -5,7 +5,7 @@ This project is aimed at automating the processes of a library and faciliating u
 ## Installation
 
 1. Clone the repository.
-2. Install dependencies with `npm install`.
+2. Install dependencies with `npm install` and `pip install requirements.txt`
 3. On a new terminal, prepare the backend of the project for running using these commands in their respective order:
                                 `python3 manage.py makemigrations`
                                 `python3 manage.py migrate`
